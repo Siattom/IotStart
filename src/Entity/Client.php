@@ -20,174 +20,140 @@ class Client
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $name;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $adresse;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $email;
+    private $Adresse;
 
     /**
      * @ORM\Column(type="integer")
      */
-    private $nd;
+    private $ND;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $activite;
+    private $Activity;
 
     /**
      * @ORM\Column(type="integer")
      */
-    private $codepostal;
+    private $CodePostal;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $ville;
+    private $Ville;
 
     /**
      * @ORM\Column(type="integer")
      */
-    private $tel;
+    private $Tel;
 
     /**
      * @ORM\Column(type="datetime_immutable")
      */
-    private $created_at;
+    private $Created_at;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $updated_at;
+    private $Updated_at;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
-
-    public function setName(string $name): self
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
     public function getAdresse(): ?string
     {
-        return $this->adresse;
+        return $this->Adresse;
     }
 
-    public function setAdresse(string $adresse): self
+    public function setAdresse(string $Adresse): self
     {
-        $this->adresse = $adresse;
+        $this->Adresse = $Adresse;
 
         return $this;
     }
 
-    public function getEmail(): ?string
+    public function getND(): ?int
     {
-        return $this->email;
+        return $this->ND;
     }
 
-    public function setEmail(string $email): self
+    public function setND(int $ND): self
     {
-        $this->email = $email;
+        $this->ND = $ND;
 
         return $this;
     }
 
-    public function getNd(): ?int
+    public function getActivity(): ?string
     {
-        return $this->nd;
+        return $this->Activity;
     }
 
-    public function setNd(int $nd): self
+    public function setActivity(?string $Activity): self
     {
-        $this->nd = $nd;
+        $this->Activity = $Activity;
 
         return $this;
     }
 
-    public function getActivite(): ?string
+    public function getCodePostal(): ?int
     {
-        return $this->activite;
+        return $this->CodePostal;
     }
 
-    public function setActivite(?string $activite): self
+    public function setCodePostal(int $CodePostal): self
     {
-        $this->activite = $activite;
-
-        return $this;
-    }
-
-    public function getCodepostal(): ?int
-    {
-        return $this->codepostal;
-    }
-
-    public function setCodepostal(int $codepostal): self
-    {
-        $this->codepostal = $codepostal;
+        $this->CodePostal = $CodePostal;
 
         return $this;
     }
 
     public function getVille(): ?string
     {
-        return $this->ville;
+        return $this->Ville;
     }
 
-    public function setVille(string $ville): self
+    public function setVille(string $Ville): self
     {
-        $this->ville = $ville;
+        $this->Ville = $Ville;
 
         return $this;
     }
 
     public function getTel(): ?int
     {
-        return $this->tel;
+        return $this->Tel;
     }
 
-    public function setTel(int $tel): self
+    public function setTel(int $Tel): self
     {
-        $this->tel = $tel;
+        $this->Tel = $Tel;
 
         return $this;
     }
 
     public function getCreatedAt(): ?\DateTimeImmutable
     {
-        return $this->created_at;
+        return $this->Created_at;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $created_at): self
+    public function setCreatedAt(\DateTimeImmutable $Created_at): self
     {
-        $this->created_at = $created_at;
+        $this->Created_at = $Created_at;
 
         return $this;
     }
 
     public function getUpdatedAt(): ?\DateTimeInterface
     {
-        return $this->updated_at;
+        return $this->Updated_at;
     }
 
-    public function setUpdatedAt(?\DateTimeInterface $updated_at): self
+    public function setUpdatedAt(?\DateTimeInterface $Updated_at): self
     {
-        $this->updated_at = $updated_at;
+        $this->Updated_at = $Updated_at;
 
         return $this;
     }

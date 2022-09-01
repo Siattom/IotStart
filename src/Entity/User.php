@@ -20,106 +20,123 @@ class User
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $name;
+    private $Surname;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $email;
+    private $Name;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $password;
+    private $Email;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $role;
+    private $Password;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $Role;
 
     /**
      * @ORM\Column(type="datetime_immutable")
      */
-    private $created_at;
+    private $Created_at;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $updated_at;
+    private $Updated_at;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getName(): ?string
+    public function getSurname(): ?string
     {
-        return $this->name;
+        return $this->Surname;
     }
 
-    public function setName(string $name): self
+    public function setSurname(string $Surname): self
     {
-        $this->name = $name;
+        $this->Surname = $Surname;
+
+        return $this;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->Name;
+    }
+
+    public function setName(string $Name): self
+    {
+        $this->Name = $Name;
 
         return $this;
     }
 
     public function getEmail(): ?string
     {
-        return $this->email;
+        return $this->Email;
     }
 
-    public function setEmail(string $email): self
+    public function setEmail(string $Email): self
     {
-        $this->email = $email;
+        $this->Email = $Email;
 
         return $this;
     }
 
     public function getPassword(): ?string
     {
-        return $this->password;
+        return $this->Password;
     }
 
-    public function setPassword(string $password): self
+    public function setPassword(string $Password): self
     {
-        $this->password = $password;
+        $this->Password = $Password;
 
         return $this;
     }
 
     public function getRole(): ?string
     {
-        return $this->role;
+        return $this->Role;
     }
 
-    public function setRole(string $role): self
+    public function setRole(string $Role): self
     {
-        $this->role = $role;
+        $this->Role = $Role;
 
         return $this;
     }
 
     public function getCreatedAt(): ?\DateTimeImmutable
     {
-        return $this->created_at;
+        return $this->Created_at;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $created_at): self
+    public function setCreatedAt(\DateTimeImmutable $Created_at): self
     {
-        $this->created_at = $created_at;
+        $this->Created_at = $Created_at;
 
         return $this;
     }
 
     public function getUpdatedAt(): ?\DateTimeInterface
     {
-        return $this->updated_at;
+        return $this->Updated_at;
     }
 
-    public function setUpdatedAt(?\DateTimeInterface $updated_at): self
+    public function setUpdatedAt(?\DateTimeInterface $Updated_at): self
     {
-        $this->updated_at = $updated_at;
+        $this->Updated_at = $Updated_at;
 
         return $this;
     }

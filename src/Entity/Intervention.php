@@ -20,123 +20,123 @@ class Intervention
     /**
      * @ORM\Column(type="integer")
      */
-    private $ot;
+    private $n°ot;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
+     * @ORM\Column(type="text")
      */
-    private $description;
-
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    private $start_work;
+    private $Description;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $cloture;
+    private $Start_work;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $Cloture;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $end_work;
+    private $Cloture_finale;
 
     /**
      * @ORM\Column(type="datetime_immutable")
      */
-    private $created_at;
+    private $Created_at;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $updated_at;
+    private $Updated_at;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getOt(): ?int
+    public function getN°ot(): ?int
     {
-        return $this->ot;
+        return $this->n°ot;
     }
 
-    public function setOt(int $ot): self
+    public function setN°ot(int $n°ot): self
     {
-        $this->ot = $ot;
+        $this->n°ot = $n°ot;
 
         return $this;
     }
 
     public function getDescription(): ?string
     {
-        return $this->description;
+        return $this->Description;
     }
 
-    public function setDescription(?string $description): self
+    public function setDescription(string $Description): self
     {
-        $this->description = $description;
+        $this->Description = $Description;
 
         return $this;
     }
 
     public function getStartWork(): ?\DateTimeInterface
     {
-        return $this->start_work;
+        return $this->Start_work;
     }
 
-    public function setStartWork(?\DateTimeInterface $start_work): self
+    public function setStartWork(?\DateTimeInterface $Start_work): self
     {
-        $this->start_work = $start_work;
+        $this->Start_work = $Start_work;
 
         return $this;
     }
 
-    public function getCloture(): ?\DateTimeInterface
+    public function isCloture(): ?bool
     {
-        return $this->cloture;
+        return $this->Cloture;
     }
 
-    public function setCloture(?\DateTimeInterface $cloture): self
+    public function setCloture(bool $Cloture): self
     {
-        $this->cloture = $cloture;
+        $this->Cloture = $Cloture;
 
         return $this;
     }
 
-    public function getEndWork(): ?\DateTimeInterface
+    public function getClotureFinale(): ?\DateTimeInterface
     {
-        return $this->end_work;
+        return $this->Cloture_finale;
     }
 
-    public function setEndWork(?\DateTimeInterface $end_work): self
+    public function setClotureFinale(?\DateTimeInterface $Cloture_finale): self
     {
-        $this->end_work = $end_work;
+        $this->Cloture_finale = $Cloture_finale;
 
         return $this;
     }
 
     public function getCreatedAt(): ?\DateTimeImmutable
     {
-        return $this->created_at;
+        return $this->Created_at;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $created_at): self
+    public function setCreatedAt(\DateTimeImmutable $Created_at): self
     {
-        $this->created_at = $created_at;
+        $this->Created_at = $Created_at;
 
         return $this;
     }
 
     public function getUpdatedAt(): ?\DateTimeInterface
     {
-        return $this->updated_at;
+        return $this->Updated_at;
     }
 
-    public function setUpdatedAt(?\DateTimeInterface $updated_at): self
+    public function setUpdatedAt(?\DateTimeInterface $Updated_at): self
     {
-        $this->updated_at = $updated_at;
+        $this->Updated_at = $Updated_at;
 
         return $this;
     }

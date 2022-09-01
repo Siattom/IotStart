@@ -18,19 +18,19 @@ class Rapport
     private $id;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
+     * @ORM\Column(type="text")
      */
-    private $content;
+    private $Content;
 
     /**
      * @ORM\Column(type="datetime_immutable")
      */
-    private $created_at;
+    private $Created_at;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $updated_at;
+    private $Updated_at;
 
     public function getId(): ?int
     {
@@ -39,36 +39,36 @@ class Rapport
 
     public function getContent(): ?string
     {
-        return $this->content;
+        return $this->Content;
     }
 
-    public function setContent(?string $content): self
+    public function setContent(string $Content): self
     {
-        $this->content = $content;
+        $this->Content = $Content;
 
         return $this;
     }
 
     public function getCreatedAt(): ?\DateTimeImmutable
     {
-        return $this->created_at;
+        return $this->Created_at;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $created_at): self
+    public function setCreatedAt(\DateTimeImmutable $Created_at): self
     {
-        $this->created_at = $created_at;
+        $this->Created_at = $Created_at;
 
         return $this;
     }
 
     public function getUpdatedAt(): ?\DateTimeInterface
     {
-        return $this->updated_at;
+        return $this->Updated_at;
     }
 
-    public function setUpdatedAt(?\DateTimeInterface $updated_at): self
+    public function setUpdatedAt(?\DateTimeInterface $Updated_at): self
     {
-        $this->updated_at = $updated_at;
+        $this->Updated_at = $Updated_at;
 
         return $this;
     }

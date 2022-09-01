@@ -20,12 +20,22 @@ class Securite
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $titre;
+    private $Titre;
 
     /**
      * @ORM\Column(type="text")
      */
-    private $description;
+    private $Description;
+
+    /**
+     * @ORM\Column(type="datetime_immutable")
+     */
+    private $Created_at;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $Updated_at;
 
     public function getId(): ?int
     {
@@ -34,24 +44,48 @@ class Securite
 
     public function getTitre(): ?string
     {
-        return $this->titre;
+        return $this->Titre;
     }
 
-    public function setTitre(string $titre): self
+    public function setTitre(string $Titre): self
     {
-        $this->titre = $titre;
+        $this->Titre = $Titre;
 
         return $this;
     }
 
     public function getDescription(): ?string
     {
-        return $this->description;
+        return $this->Description;
     }
 
-    public function setDescription(string $description): self
+    public function setDescription(string $Description): self
     {
-        $this->description = $description;
+        $this->Description = $Description;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->Created_at;
+    }
+
+    public function setCreatedAt(\DateTimeImmutable $Created_at): self
+    {
+        $this->Created_at = $Created_at;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->Updated_at;
+    }
+
+    public function setUpdatedAt(?\DateTimeInterface $Updated_at): self
+    {
+        $this->Updated_at = $Updated_at;
 
         return $this;
     }
