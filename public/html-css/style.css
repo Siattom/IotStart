@@ -1,0 +1,83 @@
+body {
+    max-width: 75%;
+    margin: auto;
+    margin-top: 2em;
+}
+
+h1 {
+    background-color: #ECF0F1;
+    text-align: center;
+    padding-bottom: 1.5rem;
+    padding-top: 1.5rem;
+    font-size: 3em;
+}
+
+.nav {
+    display: flex;
+    justify-content: space-around;
+    padding-bottom: 1.5em;
+    margin-right: 2em;
+}
+
+button {
+    
+    background-color: blueviolet;
+    font-size: large;
+    color: white;
+    padding: 0.8em;
+    border-radius: 10px;
+    border: none;
+}
+
+.btnConnexion {
+    background-color: limegreen;
+    margin-top: 8%;
+}
+
+.formConn {
+    margin: 2em;
+    font-size: large;
+/*     border: 1px solid black; */
+}
+
+.formControl {
+    border-radius: 3px;
+    height: 2.5em;
+    width: 50%;
+}
+
+.inter {
+    background-color: #ECF0F1;
+    padding: 1em;
+    margin: 1em;
+    max-width: 45%;
+}
+.inter-name {
+    font-size: large;
+}
+
+.divForm {
+    margin: 2em;
+    text-align: center;
+/*     border: 1px solid black; */
+}
+
+.accueil{
+    margin-right: 45%;
+    margin-left: 2em;
+}
+
+.footer {
+    display: flex;
+    padding: 2em;
+    padding-left: 0%;
+    padding-right: 0%;
+    background-color: #ECF0F1;
+    justify-content: space-around;
+    margin-bottom: 1em;
+    bottom:0;
+    width:75%;
+    margin: auto;
+    /* padding-top:50px; */
+    /* height:50px; */
+}

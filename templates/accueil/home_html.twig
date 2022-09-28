@@ -1,0 +1,20 @@
+
+{% extends 'base.html.twig' %}
+{% block body %}
+    {% for intervention in interventions %}    
+        <div class="inter">
+            <p class="inter-name"> {{ intervention.name }} </p>
+            <p class="inter-desc"> {{ intervention.description }} </p>
+            <p class="inter-ot"> {{ intervention.N°OT }} </p>
+        </div>        
+    {% endfor %}
+
+    {% for intervention in interventions %}    
+        <div class="inter">
+            <p class="inter-name"> {{ intervention.name }} </p>
+            <p class="inter-desc"> {{ intervention.adresse }} </p>
+            <a href="http://www.google.fr/maps?um=1&tab=pl&ie=UTF-8&hl=fr&q=<?php echo $valeur?>">lien </a>
+        </div>
+    {% endfor %}
+
+{% endblock %}

@@ -4,11 +4,15 @@ namespace App\Entity;
 
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
+ * @UniqueEntity(fields={"Email"}, message="There is already an account with this Email")
  */
-class User
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     /**
      * @ORM\Id
@@ -139,5 +143,27 @@ class User
         $this->Updated_at = $Updated_at;
 
         return $this;
+    }
+
+    public function eraseCredentials()
+    {
+    }
+
+    public function getSalt()
+    {
+    }
+    
+    public function getUserIdentifier(): ?string
+    {
+        return $this->Role;
+    }
+
+    public function getRoles(){
+
+    }
+
+    public function getUsername()
+    {
+        return $this->email;
     }
 }

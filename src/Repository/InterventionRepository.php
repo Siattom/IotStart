@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Intervention;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -12,6 +13,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Intervention|null find($id, $lockMode = null, $lockVersion = null)
  * @method Intervention|null findOneBy(array $criteria, array $orderBy = null)
  * @method Intervention[]    findAll()
+ * @method Intervention[]    findInt()
  * @method Intervention[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 class InterventionRepository extends ServiceEntityRepository
@@ -39,28 +41,56 @@ class InterventionRepository extends ServiceEntityRepository
         }
     }
 
+/*     public function adresseInt(Intervention $entity)
+    {
+        $valeur = $
+    } */
+
+    public function findByName(Intervention $name)
+    {
+        return $this->createQueryBuilder('i')
+            ->innerJoin('i.name', 'n')
+            ->andWhere('n = :name')
+            ->setParameter('name', $name)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findInt(int $operateur_id)
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT i, o
+			FROM App\Entity\Intervention i
+            Join i.operateur o
+			WHERE o.id = :id'
+        );
+
+        $query->setParameter('id', $operateur_id)
+            ->setMaxResults(3)
+        ;
+
+        return $query->getResult();
+    }
+
+
+
 //    /**
 //     * @return Intervention[] Returns an array of Intervention objects
 //     */
-//    public function findByExampleField($value): array
+//    public function findIntById($id): array
 //    {
 //        return $this->createQueryBuilder('i')
-//            ->andWhere('i.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('i.id', 'ASC')
-//            ->setMaxResults(10)
+//            ->andWhere('i.name = :id')
+//            ->setParameter('id', $id)
+//            ->orderBy('i.id', 'DESC')
+//            ->setMaxResults(3)
 //            ->getQuery()
 //            ->getResult()
 //        ;
 //    }
-
-//    public function findOneBySomeField($value): ?Intervention
-//    {
-//        return $this->createQueryBuilder('i')
-//            ->andWhere('i.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
 }
+
+
+

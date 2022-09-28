@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\InterventionRepository;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -21,6 +22,11 @@ class Intervention
      * @ORM\Column(type="integer")
      */
     private $n°ot;
+    
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $Name;
 
     /**
      * @ORM\Column(type="text")
@@ -51,6 +57,17 @@ class Intervention
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $Updated_at;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Operateur::class, inversedBy="interventions")
+     */
+    private $operateur;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $adresse;
+
 
     public function getId(): ?int
     {
@@ -137,6 +154,47 @@ class Intervention
     public function setUpdatedAt(?\DateTimeInterface $Updated_at): self
     {
         $this->Updated_at = $Updated_at;
+
+        return $this;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->Name;
+    }
+
+        // Register Magic Method to Print the name of the State e.g California
+        public function __toString() {
+            return $this->name;
+        }
+
+    public function setName(string $Name): self
+    {
+        $this->Name = $Name;
+
+        return $this;
+    }
+
+    public function getOperateur(): ?Operateur
+    {
+        return $this->operateur;
+    }
+
+    public function setOperateur(?Operateur $operateur): self
+    {
+        $this->operateur = $operateur;
+
+        return $this;
+    }
+
+    public function getAdresse(): ?string
+    {
+        return $this->adresse;
+    }
+
+    public function setAdresse(?string $adresse): self
+    {
+        $this->adresse = $adresse;
 
         return $this;
     }

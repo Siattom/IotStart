@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Connexion{% endblock %}
+
+{% block body %}
+
+<div class="container pt-5">
+    <div class="row mb-2">
+        <div class="col">
+
+            <h2>Connexion</h2>
+
+
+            <form action="{{ path('login_index') }}" method="post" class="formConn">
+                <div class="divForm">
+                    <label for="username">E-mail</label>
+                    <input type="email" class="formControl" id="username" name="_username">
+                </div>
+                <div class="divForm">
+                    <label for="password">Mot de passe</label>
+                    <input type="password" class="formControl" id="password" name="_password">
+                </div>
+                <button type="submit" class="btnConnexion">Connexion</button>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}
