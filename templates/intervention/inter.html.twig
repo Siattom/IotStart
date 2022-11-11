@@ -1,0 +1,17 @@
+
+{% extends 'base.html.twig' %}
+{% block body %}
+
+  <h2 class="register">Liste des interventions</h2>
+    <div class="globalInter">
+      {% for intervention in interventions %}    
+        <div class="inter">
+          <p href="" class="inter-name"> {{ intervention.name }} </p>
+          <p class="inter-desc"> {{ intervention.description }} </p>
+          <p class="inter-ot"> N°OT : {{ intervention.N°OT }} </p>
+          <a href="{{ path('intervention_edit', {id: intervention.id}) }}" class="editInter"> Modifier </a>
+          <a href="{{ path('intervention_affect_ope', {id: intervention.id}) }}" class="editInter">Affecter un operateur</a>
+        </div>        
+      {% endfor %}
+    </div>
+{% endblock %}

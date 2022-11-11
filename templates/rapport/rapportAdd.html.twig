@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Demander une intervention{% endblock %}
+
+{% block body %}
+    <h2 class="register">Rédigez ici votre rapport</h2>
+    <div class="rapportForm">
+        {{ form_start(rapportForm) }}
+            {{ form_row(rapportForm.Content) }}
+
+            <button type="submit" class="btn">Enregistrer</button>
+        {{ form_end(rapportForm) }}
+    </div>
+{% endblock %}

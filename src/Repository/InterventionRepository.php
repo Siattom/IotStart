@@ -41,7 +41,7 @@ class InterventionRepository extends ServiceEntityRepository
         }
     }
 
-/*     public function adresseInt(Intervention $entity)
+    /*public function adresseInt(Intervention $entity)
     {
         $valeur = $
     } */
@@ -61,10 +61,9 @@ class InterventionRepository extends ServiceEntityRepository
         $entityManager = $this->getEntityManager();
 
         $query = $entityManager->createQuery(
-            'SELECT i, o
+            'SELECT i
 			FROM App\Entity\Intervention i
-            Join i.operateur o
-			WHERE o.id = :id'
+			WHERE i.operateur = :id'
         );
 
         $query->setParameter('id', $operateur_id)
@@ -74,6 +73,21 @@ class InterventionRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
+    public function findIntByOpe(int $intervention)
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT i
+            FROM App\Entity\Intervention i
+            WHERE i.id = :id
+            ORDER BY i.id ASC'
+        );
+
+        $query->setParameter('id', $intervention);
+
+        return $query->getResult();
+    }
 
 
 //    /**

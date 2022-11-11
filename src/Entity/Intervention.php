@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\InterventionRepository;
 use Doctrine\ORM\Mapping as ORM;
@@ -67,6 +69,16 @@ class Intervention
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $adresse;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Rapport::class, mappedBy="intervention")
+     */
+    private $rapports;
+
+    public function __construct()
+    {
+        $this->rapports = new ArrayCollection();
+    }
 
 
     public function getId(): ?int
@@ -195,6 +207,36 @@ class Intervention
     public function setAdresse(?string $adresse): self
     {
         $this->adresse = $adresse;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Rapport>
+     */
+    public function getRapports(): Collection
+    {
+        return $this->rapports;
+    }
+
+    public function addRapport(Rapport $rapport): self
+    {
+        if (!$this->rapports->contains($rapport)) {
+            $this->rapports[] = $rapport;
+            $rapport->setIntervention($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRapport(Rapport $rapport): self
+    {
+        if ($this->rapports->removeElement($rapport)) {
+            // set the owning side to null (unless already changed)
+            if ($rapport->getIntervention() === $this) {
+                $rapport->setIntervention(null);
+            }
+        }
 
         return $this;
     }

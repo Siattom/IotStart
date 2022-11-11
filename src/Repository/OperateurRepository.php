@@ -39,6 +39,18 @@ class OperateurRepository extends ServiceEntityRepository
         }
     }
 
+
+    public function findForInter()
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT o.name, o.surname, o.id
+            FROM App\Entity\Operateur o'
+        );
+
+        return $query->getResult();
+    }
 //    /**
 //     * @return Operateur[] Returns an array of Operateur objects
 //     */

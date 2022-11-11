@@ -1,10 +1,8 @@
 security:
-    enable_authenticator_manager: true
-    # https://symfony.com/doc/current/security.html#registering-the-user-hashing-passwords
-    password_hashers:
-        Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
-    # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
-
+    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+    encoders:
+        App\Entity\User:
+            algorithm: bcrypt
 #*****************************************************
 #    providers:
 #        users_in_memory: { memory: null }
@@ -29,8 +27,7 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
-            lazy: true
-            provider: 
+            anonymous: lazy
 
             form_login:
                 # "app_login" is the name of the route created previously
@@ -38,6 +35,9 @@ security:
                 check_path: app_login
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall
+            logout:
+                path:   /start/logout
+                target: /
 
             # https://symfony.com/doc/current/security/impersonating_user.html
             # switch_user: true
@@ -45,15 +45,23 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-         - { path: ^/, roles: PUBLIC_ACCESS }
+         - { path: /start, roles: PUBLIC_ACCESS }
+         - { path: /logout, roles: PUBLIC_ACCESS }
+         - { path: /inter, roles: ROLE_ADMIN }
+         - { path: /ope, roles: [ROLE_ADMIN, ROLE_OPERATEUR] }
+        # - { path: /ope, roles: ROLE_OPERATEUR }
+         - { path: /client, roles: [ROLE_ADMIN, ROLE_CLIENT] }
+        # - { path: /client, roles: ROLE_CLIENT }
         # - { path: ^/profile, roles: ROLE_USER }
 
     role_hierarchy:
         # MANAGER hérite du rôle USER
         # => si on souhaite que les managers et admins postent des critiques en leur nom
-        ROLE_MANAGER: ROLE_USER
+        # ROLE_MANAGER: ROLE_USER
         # ADMIN hérite du rôle MANAGER
-        ROLE_ADMIN: ROLE_MANAGER
+        ROLE_ADMIN: ROLE_ADMIN
+        ROLE_OPERATEUR: ROLE_OPERATEUR
+        ROLE_CLIENT: ROLE_CLIENT
 
 when@test:
     security:

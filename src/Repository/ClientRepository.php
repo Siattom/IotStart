@@ -54,6 +54,18 @@ class ClientRepository extends ServiceEntityRepository
 //        ;
 //    }
 
+public function findId()
+{
+    $entityManager = $this->getEntityManager();
+
+    $query = $entityManager->createQuery(
+        'SELECT i.id
+        FROM App\Entity\Client i'
+    );
+
+    return $query->getResult();
+}
+
 //    public function findOneBySomeField($value): ?Client
 //    {
 //        return $this->createQueryBuilder('c')

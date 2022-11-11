@@ -2,12 +2,16 @@
 
 namespace App\Controller\Login;
 
+use App\Form\LoginType;
 use App\Repository\InterventionRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
+/**
+ * @Route("/start")
+ */
 class LoginController extends AbstractController
 {
     /**
@@ -22,12 +26,15 @@ class LoginController extends AbstractController
 
          // last username entered by the user
          $lastUsername = $authenticationUtils->getLastUsername();
-
-       return $this->render('login/index.html.twig', [
-             'controller_name' => 'LoginController',
-             'last_username' => $lastUsername,
-             'error'         => $error,
+         
+         $form = $this->createForm(LoginType::class, [
+            'login[_username]' => $lastUsername,
         ]);
+
+       return $this->render('login/index.html.twig', array(
+        'form' => $form->createView(),
+        'error'         => $error
+       ));
     }
 
     /**
@@ -41,7 +48,7 @@ class LoginController extends AbstractController
         // le composant de sécurité va intercepter la requête avant.
         $interventionId = $InterventionRepository->findAll();
 
-        return $this->redirectToRoute('app_register');
+        return $this->redirectToRoute('first');
 
         return $this->render ('/accueil/first.html.twig', [
             'interventions' => $interventionId,

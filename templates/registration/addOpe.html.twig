@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Votre profil{% endblock %}
+
+{% block body %}
+    <h2 class="register">Informations client</h2>
+        <div class="addOpe">
+            {{ form_start(postForm) }}
+                {{ form_row(postForm.name) }}
+                {{ form_row(postForm.surname) }}
+                    <button type="submit" class="btn">Register</button>
+            {{ form_end(postForm) }}
+        </div>
+{% endblock %}

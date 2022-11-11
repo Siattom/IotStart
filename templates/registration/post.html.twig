@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Votre profil{% endblock %}
+
+{% block body %}
+    <h2 class="register">Informations client</h2>
+
+    <div class="registrationForm">
+    {{ form_start(postForm) }}
+        {{ form_row(postForm.Adresse) }}
+        {{ form_row(postForm.Activity) }}
+        {{ form_row(postForm.CodePostal) }}
+        {{ form_row(postForm.Ville) }}
+        {{ form_row(postForm.Tel) }}
+    </div>
+
+        <button type="submit" class="btn">Register</button>
+    {{ form_end(postForm) }}
+{% endblock %}

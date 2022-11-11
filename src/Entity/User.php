@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -41,10 +43,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $Password;
 
-    /**
-     * @ORM\Column(type="string", length=255)
+     /**
+     * @ORM\Column(type="json")
      */
-    private $Role;
+    private $roles = [];
 
     /**
      * @ORM\Column(type="datetime_immutable")
@@ -55,6 +57,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $Updated_at;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Securite::class, mappedBy="user")
+     */
+    private $securites;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Operateur::class, inversedBy="users")
+     */
+    private $Operateur;
+
+    public function __construct()
+    {
+        $this->securites = new ArrayCollection();
+        $this->Operateur = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -109,15 +127,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getRole(): ?string
+    public function getRoles(): array
     {
-        return $this->Role;
+        $roles = $this->roles;
+    
+        return array_unique($roles);
     }
-
-    public function setRole(string $Role): self
+    
+    public function setRoles(array $roles): self
     {
-        $this->Role = $Role;
-
+        $this->roles = $roles;
+    
         return $this;
     }
 
@@ -155,15 +175,65 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     
     public function getUserIdentifier(): ?string
     {
-        return $this->Role;
-    }
-
-    public function getRoles(){
-
+        return $this->Email;
     }
 
     public function getUsername()
     {
-        return $this->email;
+        return $this->Email;
+    }
+
+    /**
+     * @return Collection<int, Securite>
+     */
+    public function getSecurites(): Collection
+    {
+        return $this->securites;
+    }
+
+    public function addSecurite(Securite $securite): self
+    {
+        if (!$this->securites->contains($securite)) {
+            $this->securites[] = $securite;
+            $securite->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSecurite(Securite $securite): self
+    {
+        if ($this->securites->removeElement($securite)) {
+            // set the owning side to null (unless already changed)
+            if ($securite->getUser() === $this) {
+                $securite->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Operateur>
+     */
+    public function getOperateur(): Collection
+    {
+        return $this->Operateur;
+    }
+
+    public function addOperateur(Operateur $operateur): self
+    {
+        if (!$this->Operateur->contains($operateur)) {
+            $this->Operateur[] = $operateur;
+        }
+
+        return $this;
+    }
+
+    public function removeOperateur(Operateur $operateur): self
+    {
+        $this->Operateur->removeElement($operateur);
+
+        return $this;
     }
 }

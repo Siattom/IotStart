@@ -1,0 +1,25 @@
+
+{% extends 'base.html.twig' %}
+{% block body %}
+
+    <div class="globalAffect">
+        <p class="pAffectOpe"> Voici la page qui va permettre d'affecter un opérateur à une intervention.</p>
+        
+        {% for intervention in interventions %}    
+            <div class="interAffect">
+                <p class="inter-name"> {{ intervention.name }} </p>
+                <p class="inter-desc"> {{ intervention.description }} </p>
+                <p class="inter-ot"> N°OT : {{ intervention.N°OT }} </p>
+            </div>        
+        {% endfor %}
+
+        <div class="formAffect">
+        {{ form_start(form) }}
+           {{ form_row(form) }}
+
+            <button type="submit" class="btn">Enregistrer</button>
+        {{ form_end(form) }}
+        </div>
+    </div>
+
+{% endblock %}

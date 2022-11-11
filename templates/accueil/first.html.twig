@@ -1,13 +1,23 @@
 
 {% extends 'base.html.twig' %}
 {% block body %}
-        <div>
-        <p> Bienvenue sur Iot Start, l'application qui va vous permettre de faciliter l'organisation de votre entreprise et la communnication avec les professionnels qui interviennent dans vos travaux du quotidien</p>
-        <a href="/login">
-            <button type="submit" class="btnConnexion">Connection</button> 
-        </a>
-        <a href="/register">
-            <button type="submit" class="btnConnexion">Inscription</button> 
-        </a>
+
+
+    <div class="firstGlobal">
+        <div class="firstDiv">
+        <h2> Bienvenue sur l'application qui va vous permettre de faciliter l'organisation de votre entreprise et la communnication avec les professionnels qui interviennent dans vos travaux du quotidien.
+        </h2>
+            <p>
+                Si vous êtes un professionnel l'application vous permettra de gérer l'emploi du temps de vos employés, de gérer leur interventions  mais     également de suivre en temps réel les rapports effectués. Vous pourrez également faire une validation des rapports et les   classés avec  en prime un document pdf.
+            </p>
         </div>
+        <div class="btnFirst">
+            <a href="/start/login">
+                <button type="submit" class="btnConnexion">Connection</button> 
+            </a>
+            <a href="/start/register">
+                <button type="submit" class="btnConnexion">Inscription</button> 
+            </a>
+        </div>
+    </div>
 {% endblock %}

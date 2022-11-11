@@ -23,15 +23,17 @@ class CoreController extends AbstractController
     public function first(InterventionRepository $InterventionRepository)
     {
         $interventionId = $InterventionRepository->findAll();
+        $user = $this->getUser();
         
         return $this->render ('/accueil/first.html.twig', [
             'interventions' => $interventionId,
+            'user' => $user,
         ]);
     }
 
     /**
-     * show page test
-     * @Route("/home/{id}", name="show_inter_ope",requirements={"id"="\d+"})
+     * affiche la page d'accueil
+     * @Route("/start/home/{id}", name="show_inter_ope",requirements={"id"="\d+"})
      * @return Response
      */
     public function showHome(Int $id, InterventionRepository $InterventionRepository, ManagerRegistry $doctrine): Response
@@ -53,5 +55,12 @@ class CoreController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/start/choice", name="choice")
+     */
+    public function choice()
+    {
+        return $this->render('registration/choice.html.twig');
+    }
     
 } 

@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{# ... #}
+
+{% block body %}
+
+    <h2 class="register"> Choix du profil </h2>
+    <div class="firstGlobal2">
+        <div class="choiceDiv">
+            <p> Maintenant que vous êtes inscrit il ne vous reste qu'une étape. Il vous faudra choisir entre opérateur et client pour nous fournir les informations nécessaires </p>
+        </div>
+        <div class="btnFirstChoice">
+            <a href="/addoperateur">
+                <button type="submit" class="btnConnexion">Opérateur</button> 
+            </a>
+            <a href="/addclient">
+                <button type="submit" class="btnConnexion">Client</button> 
+            </a>
+        </div>
+    </div>
+
+{% endblock %}

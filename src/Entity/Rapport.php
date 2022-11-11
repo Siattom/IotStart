@@ -32,6 +32,16 @@ class Rapport
      */
     private $Updated_at;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Operateur::class, inversedBy="rapports")
+     */
+    private $user;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Intervention::class, inversedBy="rapports")
+     */
+    private $intervention;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -69,6 +79,32 @@ class Rapport
     public function setUpdatedAt(?\DateTimeInterface $Updated_at): self
     {
         $this->Updated_at = $Updated_at;
+
+        return $this;
+    }
+
+    public function getUser(): ?Operateur
+    {
+        // il faudrait essayer de passer d'abord par l'operateur pour récupérer le user
+        return $this->user;
+    }
+
+    public function setUser(?Operateur $user): self
+    {
+        // pareil que getUser
+        $this->user = $user;
+
+        return $this;
+    }
+
+    public function getIntervention(): ?Intervention
+    {
+        return $this->intervention;
+    }
+
+    public function setIntervention(?Intervention $intervention): self
+    {
+        $this->intervention = $intervention;
 
         return $this;
     }

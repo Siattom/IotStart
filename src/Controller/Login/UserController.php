@@ -2,8 +2,9 @@
 
 namespace App\Controller\Login;
 
-
+use App\Entity\Client;
 use App\Entity\User;
+use App\Form\PosteType;
 use App\Form\UserEditType;
 use App\Form\UserType;
 use App\Repository\InterventionRepository;
@@ -29,9 +30,6 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class UserController extends AbstractController
 {
-    /**
-     * @Route("/", name="back_user_index", methods={"GET"})
-     */
      public function index(UserRepository $userRepository): Response
     {
         return $this->render('index.html.twig', [
@@ -60,7 +58,7 @@ class UserController extends AbstractController
 
         // set the createdAt
         $user->setCreatedAt(new DateTimeImmutable());
-        $user->setRole("ROLE_ADMIN");
+        $user->setRoles("ROLE_ADMIN");
         $entityManager->persist($user);
         $entityManager->flush();
 
@@ -76,6 +74,7 @@ class UserController extends AbstractController
         'form' => $form,
     ]);
 }
+
 
     /**
 	 * return the id of the user
