@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouvelle intervention{% endblock %}
+
+{% block body %}
+    <h2 class="register">Voici les rapports de l'intervention</h2>
+    <div class="interventionForm">
+
+    {% for rapport in rapport %}
+        <div class="inter">
+            <p class="inter-name"> {{rapport.content}}
+        </div>
+    {% endfor %}
+    </div>
+{% endblock %}

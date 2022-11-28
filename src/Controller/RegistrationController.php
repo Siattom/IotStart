@@ -95,7 +95,7 @@ class RegistrationController extends AbstractController
 
         IF ($form->isSubmitted() && $form->isValid()) {
             $operateur->setCreatedAt(new DateTimeImmutable());
-            // on associe l'operateur à l'user
+            // on associe l'operateur à l'user 
             $operateur->setUser($this->getUser());
 
             $entityManager->persist($operateur);

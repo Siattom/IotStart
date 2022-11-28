@@ -8,6 +8,7 @@ use App\Form\AffectFinalType;
 use App\Form\RapportType;
 use App\Repository\InterventionRepository;
 use App\Repository\OperateurRepository;
+use App\Repository\RapportRepository;
 use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
@@ -46,7 +47,7 @@ class OperateurController extends AbstractController
 
       if ($form->isSubmitted() && $form->isValid()) {
          $rapport->setCreatedAt(new DateTimeImmutable());
-         $rapport->setUser($this->getUser());
+         //$rapport->setUser($this->getUser());
 
          //dd($rapport->setUser());
          $rapport->setIntervention($entityManager->getRepository(Intervention::class)->find($id));
@@ -60,5 +61,37 @@ class OperateurController extends AbstractController
           'rapportForm' => $form->createView(),
           'id' => $intervention
       ]);
+    }
+
+    /**
+     * @Route("/rapport/list/{id}", name="rapport_list",requirements={"id"="\d+"})
+     * @return Response
+     */
+    public function rapportList(Int $id, InterventionRepository $interventionRepository, EntityManagerInterface $entityManager, RapportRepository $rapportRepository){
+
+        $interventionId = $entityManager->getRepository(Intervention::class)->find($id);
+        $rapportInfo = $rapportRepository->findById($id);
+
+        return $this->render('rapport/list.html.twig', [
+            'id' => $interventionId,
+            'rapport' => $rapportInfo
+        ]
+        );
+    }
+
+
+    /**
+     * @Route("/cloture/{id}", name="cloture")
+     */
+    public function clotureRapport(Int $id, EntityManagerInterface $entityManager, Intervention $intervention){
+        
+        $interventionInfo = $entityManager->getRepository(Intervention::class)->find($id);
+
+        $cloture = $interventionInfo;
+        $cloture->setCloture('1');
+        $entityManager->persist($intervention);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('first');
     }
 }

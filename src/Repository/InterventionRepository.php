@@ -63,7 +63,8 @@ class InterventionRepository extends ServiceEntityRepository
         $query = $entityManager->createQuery(
             'SELECT i
 			FROM App\Entity\Intervention i
-			WHERE i.operateur = :id'
+			WHERE i.operateur = :id
+            AND i.Cloture = 0'
         );
 
         $query->setParameter('id', $operateur_id)

@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Entity\Intervention;
 use App\Entity\Operateur;
 use App\Entity\Rapport;
-use App\Form\AffectFinalFinalType;
 use App\Form\AffectFinalType;
 use App\Form\InterventionAffectType;
 use App\Form\InterventionType;
@@ -16,6 +15,7 @@ use DateTime;
 use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,25 +26,6 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class InterventionController extends AbstractController
 {
-//    /**
-//     * page qui va afficher les rapports non remplies
-//     * @Route("/rapport/empty", name="rapport_empty", methods="GET")
-//     * @return Response
-//     */
-//    public function showEmptyRapport(Int $id, ManagerRegistry $doctrine, RapportRepository $rapportRepository)
-//    {
-//        // prepare data
-//        $entityManager = $doctrine->getManager();
-//        $rapport = $entityManager->getRepository(Rapport::class)->find($id);
-//        $emptyRapport = $rapportRepository->findInt($id);
-//        
-//        return $this->render('rapport/rapports.html.twig', [
-//        //'id' => $operateur,
-//        /* 'adresse' => $valeur, */
-//        //'interventions' => $allIntOpe,
-//        ]);
-//    }
-
     /**
      * @Route("/intervention/add", name="intervention_add")
      */
@@ -67,9 +48,7 @@ class InterventionController extends AbstractController
 
             $entityManager->persist($intervention);
             $entityManager->flush();
-            // on pousse en base de données
-
-            return $this->redirectToRoute('intervention_add');
+            // on pousseintervention->redirectToRoute('intervention_add');
             // on redirige vers cette route une fois le formulaire remplie
         }
 
@@ -86,7 +65,7 @@ class InterventionController extends AbstractController
     {
         $interventionId = $InterventionRepository->findAll();
         
-        return $this->render ('/intervention/inter.html.twig', [
+        return $this->render('/intervention/inter.html.twig', [
             'interventions' => $interventionId,
         ]);
     }
@@ -100,7 +79,6 @@ class InterventionController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $entityManager->persist($intervention);
             $entityManager->flush();
 
@@ -112,34 +90,18 @@ class InterventionController extends AbstractController
         ]);
     }
 
-    /**
-    * @Route("/intervention/affect/{id}", name="intervention_affect_ope", requirements={"id"="\d+"})
-    */
-    public function interventionAffect(Request $request, Intervention $intervention, InterventionRepository $interventionRepository, EntityManagerInterface $entityManager, OperateurRepository $operateurRepository): Response
+  /**
+  * @Route("/intervention/affect/{id}", name="intervention_affect_ope", requirements={"id"="\d+"})
+  */
+    public function interventionAffect(EntityManagerInterface $entityManager, RapportRepository $rapportRepository)
     {
-
-        $interventions = $interventionRepository->findAll();
-//        $operateur = $operateurRepository->findForInter();
-        /* dd($operateur); */
-
-        $form = $this->createForm(AffectFinalType::class, $intervention);
-        $form->handleRequest($request);
-
-
-        if ($form->isSubmitted() && $form->isValid()) {
-
-            $entityManager->flush();
-
-
-            $this->addFlash('operateur affecté', 'yes.');
-            return $this->redirectToRoute('intervention_affect_ope', [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->renderForm('intervention/inter-ope.html.twig', [
-            'intervention' => $intervention,
-            'interventions' => $interventions,
-//            'operateur' => $operateur,
-            'form' => $form,
-        ]);
+        /* $form = $this->createFormBuilder()
+            ->add('Operateur', EntityType::class, [
+                'class' => Operateur::class,
+                'choices' => $operateur,
+            ]
+            ) */
+        $essai = $rapportRepository->findAll();
+        dd($essai);
     }
-    }
+}

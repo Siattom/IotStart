@@ -9,6 +9,7 @@
                 <p class="inter-ot"> {{ intervention.N°OT }} </p>
                 <a href="http://www.google.fr/maps?um=1&tab=pl&ie=UTF-8&hl=fr&q={{ intervention.adresse }}">adresse </a>
                 <a href="{{path ('add_rapport', {id: intervention.id}) }}">Rapport</a>
+                <a href="{{path ('cloture', {id: intervention.id}) }}">Cloturer l'intervention</a>
             </div>
         {% endfor %}
     </div>

@@ -39,6 +39,21 @@ class RapportRepository extends ServiceEntityRepository
         }
     }
 
+    public function findById(int $intervention_id)
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT r
+            FROM App\Entity\Rapport r
+            WHERE r.intervention = :id'
+        );
+
+        $query->setParameter('id', $intervention_id);
+
+        return $query->getResult();
+    }
+
 //    /**
 //     * @return Rapport[] Returns an array of Rapport objects
 //     */
