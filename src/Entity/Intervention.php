@@ -43,7 +43,7 @@ class Intervention
     /**
      * @ORM\Column(type="boolean")
      */
-    private $Cloture;
+    private $Cloture; 
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
