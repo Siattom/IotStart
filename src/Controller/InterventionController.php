@@ -7,10 +7,12 @@ use App\Entity\Operateur;
 use App\Entity\Rapport;
 use App\Form\AffectFinalType;
 use App\Form\InterventionAffectType;
+use App\Form\InterventionSecuriteType;
 use App\Form\InterventionType;
 use App\Repository\InterventionRepository;
 use App\Repository\OperateurRepository;
 use App\Repository\RapportRepository;
+use App\Repository\SecuriteRepository;
 use DateTime;
 use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
@@ -38,7 +40,7 @@ class InterventionController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $intervention->setCreatedAt(new DateTimeImmutable());
-            // on fournit la date de création de l'intervention
+            // on fournit la date de création de l'intervention 
             $intervention->setN°ot('0000000000');
             // le n°Ot est mit à 000000000 pour etre modifié à l'avenir
             $intervention->setCloture('0');
@@ -50,6 +52,8 @@ class InterventionController extends AbstractController
             $entityManager->flush();
             // on pousseintervention->redirectToRoute('intervention_add');
             // on redirige vers cette route une fois le formulaire remplie
+
+            return $this->redirectToRoute('intervention_list');
         }
 
         return $this->render('rapport/interventionAdd.html.twig', [
@@ -59,14 +63,44 @@ class InterventionController extends AbstractController
     }
 
     /**
+    * @Route("/intervention/add/{id}", name="intervention_add_securite")
+    */
+    public function interventionAddBySecurite(Int $id, Request $request, EntityManagerInterface $entityManager, SecuriteRepository $securiteRepository)
+    {
+        $securite = $securiteRepository->findSecuriteById($id);
+        $intervention = new Intervention();
+        $form = $this->createForm(InterventionSecuriteType::class, $intervention);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $intervention->setCreatedAt(new DateTimeImmutable());
+            $intervention->setN°ot('0000000000');
+            $intervention->setCloture('0');
+            $intervention->setStartWork(new DateTime());
+
+            $entityManager->persist($intervention);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('intervention_list');
+        }
+
+        return $this->render('rapport/interventionAddBySecurite.html.twig', [
+            'intervention' => $form->createView(),
+            'securite' => $securite,
+        ]);
+    }
+
+    /**
      * @Route("/intervention/list", name="intervention_list")
      */
-    public function interventionList(InterventionRepository $InterventionRepository)
+    public function interventionList(InterventionRepository $InterventionRepository, RapportRepository $rapportRepository)
     {
         $interventionId = $InterventionRepository->findAll();
-        
+        $rapport = $rapportRepository->findAll();
+        //dd($interventionId);
         return $this->render('/intervention/inter.html.twig', [
             'interventions' => $interventionId,
+            'rapport' => $rapport,
         ]);
     }
 
@@ -91,17 +125,36 @@ class InterventionController extends AbstractController
     }
 
   /**
-  * @Route("/intervention/affect/{id}", name="intervention_affect_ope", requirements={"id"="\d+"})
+  * @Route("/intervention/affect/{id}", name="intervention_affect_ope", requirements={"id"="\d+"}, methods={"GET", "POST"})
   */
-    public function interventionAffect(EntityManagerInterface $entityManager, RapportRepository $rapportRepository)
+    public function interventionAffect(EntityManagerInterface $entityManager, Request $request, Intervention $intervention, RapportRepository $rapportRepository)
     {
-        /* $form = $this->createFormBuilder()
-            ->add('Operateur', EntityType::class, [
-                'class' => Operateur::class,
-                'choices' => $operateur,
-            ]
-            ) */
-        $essai = $rapportRepository->findAll();
-        dd($essai);
+        $form = $this->createForm(InterventionAffectType::class, $intervention);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $entityManager->persist($intervention);
+            $entityManager->flush();
+            
+            return $this->redirectToRoute('intervention_list');
+        }
+
+        return $this->render('intervention/inter-ope.html.twig', [
+            'form' => $form->createView(),
+            'intervention' => $intervention,
+        ]);
+    }
+
+    /**
+     * @Route("/securite/list", name="securite_list")
+     */
+    public function securiteList(SecuriteRepository $securiteRepository)
+    {
+        $securite = $securiteRepository->findAll();
+
+        return $this->render('intervention/securite-list.html.twig', [
+            'securite' => $securite,
+        ]);
     }
 }

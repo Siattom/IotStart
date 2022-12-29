@@ -47,14 +47,6 @@ class UserController extends AbstractController
     $form->handleRequest($request);
 
     if ($form->isSubmitted() && $form->isValid()) {
-        // Pour hacher le mot de passe :
-        // - on a récupéré le service adéquat (injection dans la méthode du contrôleur)
-        // - on lui donne sur la méthode hashPassword, notre $user
-        // - et le mot de passe en clair (qui est déjà dnas le user !)
-        //$hashedPassword = $userPasswordHasher->hashPassword($user, $user->getPassword());
-        //dd($hashedPassword);
-        // On écrase le mot de passe en clair par le mot de passe haché
-        //$user->setPassword($hashedPassword);
 
         // set the createdAt
         $user->setCreatedAt(new DateTimeImmutable());
@@ -107,72 +99,6 @@ class UserController extends AbstractController
 		return $this->render('/accueil/home_html.twig');
         return $this->json($data, Response::HTTP_OK);
 	}
-    
-
-//    	/**
-//	 * Create an user
-//	 * @Route("/new", name="create", methods={"POST", "GET"})
-//	 * @return Response
-//	 */
-//	public function create(ManagerRegistry $doctrine, User $user, UserPasswordHasherInterface $hasher, Request $request, UserRepository $userRepository, SerializerInterface $serializer): Response
-//	{
-//        $form = $this->createForm(UserType::class, $user);
-//        $form->handleRequest($request);
-//		$userAsJson = $request->getContent();
-//        
-//		/** @var User $user */
-//		// deserialize user
-//		$userAsJson = new User;
-//		
-//		// email 
-//	   	$email = $userAsJson->getEmail();
-//		$filteredEmail = filter_var($email, FILTER_VALIDATE_EMAIL);
-//		$userAsJson->setEmail($filteredEmail);
-//		
-//		// password verification 
-//		$password = $userAsJson->getPassword();
-//		$filteredPassword = filter_var($password, FILTER_SANITIZE_SPECIAL_CHARS);
-//
-//		// set the createdAt
-//		$userAsJson->setCreatedAt(new DateTimeImmutable());
-//		
-//		// Hash password
-//		$hashedPassword = $hasher->hashPassword($userAsJson, $filteredPassword);
-//		$userAsJson->setPassword($hashedPassword);
-//		
-//		// set role userAs$userAsJson 
-//		$userAsJson->setRole("ROLE_USER");
-//		// save user in database
-//		$entityManager = $doctrine->getManager();
-//
-//		$entityManager->persist($user);
-//
-//		$entityManager->flush();
-//
-//		$data = [
-//			 'id' => $userAsJson->getId(),
-//		];
-//
-//		// return id and code 201
-//		return $this->json($data, Response::HTTP_CREATED);
-//	}
-
-//
-//    /**
-//     * @Route("/{id}", name="back_user_show", methods={"GET"})
-//     * 
-//     * $user = null permet de récupérer la main sur la 404
-//     */
-//    public function show(User $user = null): Response
-//    {
-//        if ($user === null) {
-//            throw $this->createNotFoundException('Utilisateur non trouvé(e).');
-//        }
-//
-//        return $this->render('/accueil/news.html.twig', [
-//            'user' => $user,
-//        ]);
-//    }
 
     /**
      * @Route("/{id}/edit", name="back_user_edit", methods={"GET", "POST"})

@@ -5,7 +5,6 @@ namespace App\Entity;
 use App\Repository\OperateurRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Symfony\Component\Form\FormTypeInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -19,6 +18,16 @@ class Operateur
      * @ORM\Column(type="integer")
      */
     private $id;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $Name;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $Surname;
 
     /**
      * @ORM\Column(type="datetime_immutable")
@@ -36,41 +45,48 @@ class Operateur
     private $interventions;
 
     /**
-     * @ORM\OneToOne(targetEntity=User::class, inversedBy="operateur")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $user;
-
-    /**
-     * @ORM\OneToMany(targetEntity=Rapport::class, mappedBy="user")
+     * @ORM\OneToMany(targetEntity=Rapport::class, mappedBy="operateur")
      */
     private $rapports;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\OneToOne(targetEntity=User::class, cascade={"persist", "remove"})
      */
-    private $name;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $surname;
-
-    /**
-     * @ORM\ManyToMany(targetEntity=User::class, mappedBy="Operateur")
-     */
-    private $users;
+    private $user;
 
     public function __construct()
     {
         $this->interventions = new ArrayCollection();
         $this->rapports = new ArrayCollection();
-        $this->users = new ArrayCollection();
     }
 
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->Name;
+    }
+
+    public function setName(string $Name): self
+    {
+        $this->Name = $Name;
+
+        return $this;
+    }
+
+    public function getSurname(): ?string
+    {
+        return $this->Surname;
+    }
+
+    public function setSurname(string $Surname): self
+    {
+        $this->Surname = $Surname;
+
+        return $this;
     }
 
     public function getCreatedAt(): ?\DateTimeImmutable
@@ -127,18 +143,6 @@ class Operateur
         return $this;
     }
 
-    public function getUser(): ?User
-    {
-        return $this->user;
-    }
-
-    public function setUser(?User $user): self
-    {
-        $this->user = $user;
-
-        return $this;
-    }
-
     /**
      * @return Collection<int, Rapport>
      */
@@ -151,7 +155,7 @@ class Operateur
     {
         if (!$this->rapports->contains($rapport)) {
             $this->rapports[] = $rapport;
-            $rapport->setUser($this);
+            $rapport->setOperateur($this);
         }
 
         return $this;
@@ -161,70 +165,23 @@ class Operateur
     {
         if ($this->rapports->removeElement($rapport)) {
             // set the owning side to null (unless already changed)
-            if ($rapport->getUser() === $this) {
-                $rapport->setUser(null);
+            if ($rapport->getOperateur() === $this) {
+                $rapport->setOperateur(null);
             }
         }
 
         return $this;
     }
 
-    public function getName(): ?string
+    public function getUser(): ?User
     {
-        return $this->name;
+        return $this->user;
     }
 
-    public function setName(?string $name): self
+    public function setUser(?User $user): self
     {
-        $this->name = $name;
+        $this->user = $user;
 
         return $this;
     }
-
-    public function getSurname(): ?string
-    {
-        return $this->surname;
-    }
-
-    public function setSurname(?string $surname): self
-    {
-        $this->surname = $surname;
-
-        return $this;
-    }
-
-        /**
-     * Méthode qui renvoie le nom complet
-     */
-    public function getFullname()
-    {
-        return $this->name . ' ' . $this->surname . ' ' .$this->id;
-    }
-
-    /**
-     * @return Collection<int, User>
-     */
-    public function getUsers(): Collection
-    {
-        return $this->users;
-    }
-
-    public function addUser(User $user): self
-    {
-        if (!$this->users->contains($user)) {
-            $this->users[] = $user;
-            $user->addOperateur($this);
-        }
-
-        return $this;
-    }
-
-    public function removeUser(User $user): self
-    {
-        if ($this->users->removeElement($user)) {
-            $user->removeOperateur($this);
-        }
-
-        return $this;
-    } 
 }

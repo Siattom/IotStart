@@ -3,13 +3,13 @@
       <a href="/">
         <button name="button" type="button" class="accueil">Accueil</button>
       </a>
-      <a href="/redirection">
+      <a href="{{ path('show_inter_ope') }}">
         <button name="button" type="button">Agenda</button> 
       </a>
-      <a href="/ope/add/rapport">
+{#       <a href="/ope/add/rapport">
         <button name="button" type="button">Rapports</button>
-      </a>
-      <a href="">
+      </a> #}
+      <a href="{{ path('completed_tasks') }}">
         <button name="button" type="button">Tâches effectuées</button>
       </a>
       {# <a href="{{ path('show_inter_ope', {id: operateur.id}) }}">
@@ -22,4 +22,4 @@
           </span>
        </button>
       </a>
-    </div>
+    </div> 

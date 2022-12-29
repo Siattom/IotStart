@@ -29,26 +29,6 @@
 {% else %}
     {% include 'nav/accueil.html.twig' %} 
 {% endif %}
-  
-{# {% if is_granted('PUBLIC_ACCESS') == true %}
-{% else %}
-    {% include 'nav/accueil.html.twig' %} 
-{% endif %}
-
-{% if is_granted('ROLE_OPERATEUR') == true %}
-{% else %}
-    {% include 'nav/ope.html.twig' %} 
-{% endif %}
-
-{% if is_granted('ROLE_CLIENT') == true %}
-{% else %}
-    {% include 'nav/client.html.twig' %} 
-{% endif %}
-
-{% if is_granted('ROLE_ADMIN') == true %}
-{% else %}
-    {% include 'nav/admin.html.twig' %} 
-{% endif %} #}
     
   {% block body %}{% endblock %}
 

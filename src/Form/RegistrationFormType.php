@@ -44,7 +44,7 @@ class RegistrationFormType extends AbstractType
                 ],
                 // Bontons radios
                 'expanded' => true,
-                'multiple' => true,                
+                'multiple' => false,                
             ])
             
             ->add('plainPassword', PasswordType::class, [

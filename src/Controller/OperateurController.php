@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Intervention;
+use App\Entity\Operateur;
 use App\Entity\Rapport;
 use App\Form\AffectFinalType;
 use App\Form\RapportType;
@@ -37,7 +38,7 @@ class OperateurController extends AbstractController
     /**
      * @Route("/add/rapport/{id}", name="add_rapport", methods={"GET", "POST"}, requirements={"id"="\d+"})
      */
-    public function addRapport(Int $id, Request $request, EntityManagerInterface $entityManager, ManagerRegistry $doctrine , InterventionRepository $interventionRepository): Response
+    public function addRapport(Int $id, Request $request, EntityManagerInterface $entityManager, ManagerRegistry $doctrine , OperateurRepository $operateurRepository, InterventionRepository $interventionRepository): Response
     {
       $rapport = new Rapport();
       $entityManager = $doctrine->getManager();
@@ -48,6 +49,16 @@ class OperateurController extends AbstractController
       if ($form->isSubmitted() && $form->isValid()) {
          $rapport->setCreatedAt(new DateTimeImmutable());
          //$rapport->setUser($this->getUser());
+         // je recupere l'utilisateur
+         $userConnect = $this->getUser();
+        // ensuite son id
+         $userId = $userConnect->getId();
+         // je m'en sers pour récupérer l'operateur lié
+         $operateur = $operateurRepository->findUser($userId);
+         // j'essaie de récupérer l'id à l'index 0
+         //$operateurId = $operateur[0]->getId();
+         $rapport->setOperateur($operateur[0]);
+         //dd($operateurId); 
 
          //dd($rapport->setUser());
          $rapport->setIntervention($entityManager->getRepository(Intervention::class)->find($id));
@@ -64,34 +75,46 @@ class OperateurController extends AbstractController
     }
 
     /**
-     * @Route("/rapport/list/{id}", name="rapport_list",requirements={"id"="\d+"})
-     * @return Response
-     */
-    public function rapportList(Int $id, InterventionRepository $interventionRepository, EntityManagerInterface $entityManager, RapportRepository $rapportRepository){
-
-        $interventionId = $entityManager->getRepository(Intervention::class)->find($id);
-        $rapportInfo = $rapportRepository->findById($id);
-
-        return $this->render('rapport/list.html.twig', [
-            'id' => $interventionId,
-            'rapport' => $rapportInfo
-        ]
-        );
-    }
-
-
-    /**
      * @Route("/cloture/{id}", name="cloture")
      */
-    public function clotureRapport(Int $id, EntityManagerInterface $entityManager, Intervention $intervention){
+    public function clotureRapport(Int $id, EntityManagerInterface $entityManager, Intervention $intervention, InterventionRepository $interventionRepository){
         
         $interventionInfo = $entityManager->getRepository(Intervention::class)->find($id);
+        $interRapport = $interventionRepository->findRapByInt($id);
 
-        $cloture = $interventionInfo;
-        $cloture->setCloture('1');
-        $entityManager->persist($intervention);
-        $entityManager->flush();
-
-        return $this->redirectToRoute('first');
+        if($interRapport == null){
+            echo 'désolé il faut écrire un rapport pour cloturer';
+            return $this->redirectToRoute('show_inter_ope');
+        } else {
+            $cloture = $interventionInfo;
+            /* if () */
+            $cloture->setCloture('1');
+            $entityManager->persist($intervention);
+            $entityManager->flush();
+    
+            return $this->redirectToRoute('show_inter_ope');
+        }
     }
+
+    /**
+     * @Route("/completed/tasks", name="completed_tasks")
+     */
+    public function completedTasks(EntityManagerInterface $entityManager, InterventionRepository $interventionRepository, RapportRepository $rapportRepository)
+    {
+        $userSearch = $this->getUser();
+        // je récupère l'id
+        $userId = $userSearch->getId(); 
+        // je récupère l'operateur avec le userId correspondant
+        $userOp = $interventionRepository->findOp($userId);
+        // $user = $this->getUser();
+        $operateurId = $userOp[0]->getId();
+
+        $intervention = $rapportRepository->findRapportbyId($operateurId);
+        //dd($operateur);
+
+        return $this->render('operateur/tasks.html.twig', [
+            'intervention' => $intervention,
+        ]);        
+    }
+
 }

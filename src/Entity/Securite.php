@@ -38,14 +38,14 @@ class Securite
     private $Updated_at;
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="securites")
-     */
-    private $user;
-
-    /**
      * @ORM\ManyToOne(targetEntity=Client::class, inversedBy="securites")
      */
     private $client;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="securites")
+     */
+    private $user;
 
     public function getId(): ?int
     {
@@ -100,18 +100,6 @@ class Securite
         return $this;
     }
 
-    public function getUser(): ?User
-    {
-        return $this->user;
-    }
-
-    public function setUser(?User $user): self
-    {
-        $this->user = $user;
-
-        return $this;
-    }
-
     public function getClient(): ?Client
     {
         return $this->client;
@@ -120,6 +108,18 @@ class Securite
     public function setClient(?Client $client): self
     {
         $this->client = $client;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

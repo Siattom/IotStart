@@ -2,10 +2,9 @@
 
 namespace App\Entity;
 
+use App\Repository\InterventionRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\ORM\EntityManagerInterface;
-use App\Repository\InterventionRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -24,7 +23,7 @@ class Intervention
      * @ORM\Column(type="integer")
      */
     private $n°ot;
-    
+
     /**
      * @ORM\Column(type="string", length=255)
      */
@@ -36,14 +35,14 @@ class Intervention
     private $Description;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
+     * @ORM\Column(type="datetime")
      */
     private $Start_work;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $Cloture; 
+    private $Cloture;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
@@ -61,25 +60,24 @@ class Intervention
     private $Updated_at;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Operateur::class, inversedBy="interventions")
+     * @ORM\Column(type="string", length=255)
      */
-    private $operateur;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $adresse;
+    private $Adresse;
 
     /**
      * @ORM\OneToMany(targetEntity=Rapport::class, mappedBy="intervention")
      */
     private $rapports;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Operateur::class, inversedBy="interventions")
+     */
+    private $operateur;
+
     public function __construct()
     {
         $this->rapports = new ArrayCollection();
     }
-
 
     public function getId(): ?int
     {
@@ -94,6 +92,18 @@ class Intervention
     public function setN°ot(int $n°ot): self
     {
         $this->n°ot = $n°ot;
+
+        return $this;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->Name;
+    }
+
+    public function setName(string $Name): self
+    {
+        $this->Name = $Name;
 
         return $this;
     }
@@ -115,7 +125,7 @@ class Intervention
         return $this->Start_work;
     }
 
-    public function setStartWork(?\DateTimeInterface $Start_work): self
+    public function setStartWork(\DateTimeInterface $Start_work): self
     {
         $this->Start_work = $Start_work;
 
@@ -170,43 +180,14 @@ class Intervention
         return $this;
     }
 
-    public function getName(): ?string
-    {
-        return $this->Name;
-    }
-
-        // Register Magic Method to Print the name of the State e.g California
-        public function __toString() {
-            return $this->name;
-        }
-
-    public function setName(string $Name): self
-    {
-        $this->Name = $Name;
-
-        return $this;
-    }
-
-    public function getOperateur(): ?Operateur
-    {
-        return $this->operateur;
-    }
-
-    public function setOperateur(?Operateur $operateur): self
-    {
-        $this->operateur = $operateur;
-
-        return $this;
-    }
-
     public function getAdresse(): ?string
     {
-        return $this->adresse;
+        return $this->Adresse;
     }
 
-    public function setAdresse(?string $adresse): self
+    public function setAdresse(string $Adresse): self
     {
-        $this->adresse = $adresse;
+        $this->Adresse = $Adresse;
 
         return $this;
     }
@@ -237,6 +218,18 @@ class Intervention
                 $rapport->setIntervention(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getOperateur(): ?Operateur
+    {
+        return $this->operateur;
+    }
+
+    public function setOperateur(?Operateur $operateur): self
+    {
+        $this->operateur = $operateur;
 
         return $this;
     }

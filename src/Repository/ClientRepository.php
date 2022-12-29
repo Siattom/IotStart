@@ -30,6 +30,36 @@ class ClientRepository extends ServiceEntityRepository
         }
     }
 
+    public function findUser(int $userId)
+    {
+        $entityManager = $this->getEntityManager();
+    
+        $query = $entityManager->createQuery(
+            'SELECT c
+            FROM App\Entity\Client c
+            Where c.user = :id
+            '
+        );
+    
+        $query->setParameter('id', $userId);
+    
+        return $query->getResult();
+    }
+
+    public function findSecuriteById(int $userId)
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT s
+            FROM App\Entity\Securite s
+            WHERE s.user = :id'
+        );
+
+        $query->setParameter('id', $userId);
+        return $query->getResult();
+    }
+
     public function remove(Client $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
@@ -53,18 +83,6 @@ class ClientRepository extends ServiceEntityRepository
 //            ->getResult()
 //        ;
 //    }
-
-public function findId()
-{
-    $entityManager = $this->getEntityManager();
-
-    $query = $entityManager->createQuery(
-        'SELECT i.id
-        FROM App\Entity\Client i'
-    );
-
-    return $query->getResult();
-}
 
 //    public function findOneBySomeField($value): ?Client
 //    {

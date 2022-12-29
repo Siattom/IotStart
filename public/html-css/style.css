@@ -272,9 +272,8 @@ button {
 .rapportForm {
     margin-bottom: 10em;
     margin-top: 10em;
-    margin-left: 4em;
-    margin-right: 4em;
-}
+        }
+
 
 /*
 ----------------------------------------------------------------------------------------------------------
@@ -312,4 +311,36 @@ button {
 .showHome {
     margin-top: 4em;
     margin-bottom: 5em;
+}
+
+
+.rapportForm {
+    padding-right: 10em;
+    padding-left: 10em;
+}
+
+/*
+----------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------
+    Ici ça concerne la liste d'intervention coté admin
+----------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------
+*/
+
+.inter-ot-cloture {
+    color: #0DFC1A;
+    text-align: center;
+}
+
+.inter-ot-non-cloture {
+    color: #FF0000;
+    text-align: center;
+}
+
+.inter-rapport-non {
+    color: #FF0000;
+}
+
+.inter-rapport-oui {
+    color: #0DFC1A;
 }

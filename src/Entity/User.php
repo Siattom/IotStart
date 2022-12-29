@@ -6,13 +6,11 @@ use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
- * @UniqueEntity(fields={"Email"}, message="There is already an account with this Email")
  */
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
@@ -43,7 +41,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $Password;
 
-     /**
+    /**
      * @ORM\Column(type="json")
      */
     private $roles = [];
@@ -54,7 +52,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $Created_at;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
+     * @ORM\Column(type="datetime")
      */
     private $Updated_at;
 
@@ -63,15 +61,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $securites;
 
-    /**
-     * @ORM\ManyToMany(targetEntity=Operateur::class, inversedBy="users")
-     */
-    private $Operateur;
-
     public function __construct()
     {
         $this->securites = new ArrayCollection();
-        $this->Operateur = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -127,17 +119,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getRoles(): array
+    public function getRoles(): ?array
     {
-        $roles = $this->roles;
-    
-        return array_unique($roles);
+        return $this->roles;
     }
-    
+
     public function setRoles(array $roles): self
     {
         $this->roles = $roles;
-    
+
         return $this;
     }
 
@@ -158,29 +148,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->Updated_at;
     }
 
-    public function setUpdatedAt(?\DateTimeInterface $Updated_at): self
+    public function setUpdatedAt(\DateTimeInterface $Updated_at): self
     {
         $this->Updated_at = $Updated_at;
 
         return $this;
-    }
-
-    public function eraseCredentials()
-    {
-    }
-
-    public function getSalt()
-    {
-    }
-    
-    public function getUserIdentifier(): ?string
-    {
-        return $this->Email;
-    }
-
-    public function getUsername()
-    {
-        return $this->Email;
     }
 
     /**
@@ -213,27 +185,21 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * @return Collection<int, Operateur>
-     */
-    public function getOperateur(): Collection
+    public function eraseCredentials()
     {
-        return $this->Operateur;
     }
 
-    public function addOperateur(Operateur $operateur): self
+    public function getSalt()
     {
-        if (!$this->Operateur->contains($operateur)) {
-            $this->Operateur[] = $operateur;
-        }
-
-        return $this;
+    }
+    
+    public function getUserIdentifier(): ?string
+    {
+        return $this->Email;
     }
 
-    public function removeOperateur(Operateur $operateur): self
+    public function getUsername()
     {
-        $this->Operateur->removeElement($operateur);
-
-        return $this;
+        return $this->Email;
     }
 }

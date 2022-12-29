@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des rapports{% endblock %}
+
+{% block body %}
+    <h2 class="register">Voici les rapports de l'intervention</h2>
+    <div class="interventionForm">
+
+    {% for rapport in rapports %}
+        <div class="inter">
+            <p class="inter-name"> {{rapport.intervention.Name}}
+            <p class="inter-name"> {{rapport.operateur.Name}}
+            <p class="inter-name"> {{rapport.Content}}
+            <a href="{{ path('rapport_edit', {id: rapport.id}) }}">
+               modifier
+            </a>
+        </div>
+    {% endfor %}
+    </div>
+{% endblock %}

@@ -9,6 +9,11 @@
           <p href="" class="inter-name"> {{ intervention.name }} </p>
           <p class="inter-desc"> {{ intervention.description }} </p>
           <p class="inter-ot"> N°OT : {{ intervention.N°OT }} </p>
+          <p class="inter-ot"> opérateur affecté : {% if intervention.operateur %} {{ intervention.operateur.name }} {% endif %}</p>
+    
+          <p class="inter-ot-non-cloture"> {% if intervention.cloture == 0 %} non-cloturé {% endif %} </p>
+          <p class="inter-ot-cloture"> {% if intervention.cloture == 1 %} cloturé {% endif %} </p>
+          
           <a href="{{ path('intervention_edit', {id: intervention.id}) }}" class="editInter"> Modifier </a>
           <a href="{{ path('intervention_affect_ope', {id: intervention.id}) }}" class="editInter">Affecter un operateur</a>
         </div>        

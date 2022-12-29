@@ -1,0 +1,18 @@
+
+{% extends 'base.html.twig' %}
+{% block body %}
+    <div class="showHome">
+        {% for securite in securite %}    
+            <div class="inter">
+                <p class="inter-name"> {{ securite.user.Name}} </p>
+                <p class="inter-name"> {{ securite.user.Surname}} </p>
+                <p class="inter-name"> {{ securite.Client.adresse}} </p>
+                <p class="inter-name"> {{ securite.titre }} </p>
+                <p class="inter-desc"> {{ securite.description }} </p>
+                <a href="{{ path('intervention_add_securite', {id: securite.id }) }}">
+                   Créer intervention
+                </a>                
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

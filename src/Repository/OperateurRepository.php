@@ -39,7 +39,6 @@ class OperateurRepository extends ServiceEntityRepository
         }
     }
 
-
     public function findForInter()
     {
         $entityManager = $this->getEntityManager();
@@ -51,6 +50,23 @@ class OperateurRepository extends ServiceEntityRepository
 
         return $query->getResult();
     }
+
+    public function findUser(int $userId)
+    {
+        $entityManager = $this->getEntityManager();
+    
+        $query = $entityManager->createQuery(
+            'SELECT o
+            FROM App\Entity\Operateur o
+            Where o.user = :id
+            '
+        );
+    
+        $query->setParameter('id', $userId);
+    
+        return $query->getResult();
+    }
+
 //    /**
 //     * @return Operateur[] Returns an array of Operateur objects
 //     */

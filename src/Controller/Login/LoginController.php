@@ -2,6 +2,7 @@
 
 namespace App\Controller\Login;
 
+use App\Entity\User;
 use App\Form\LoginType;
 use App\Repository\InterventionRepository;
 use Symfony\Component\HttpFoundation\Response;
@@ -36,6 +37,37 @@ class LoginController extends AbstractController
         'error'         => $error
        ));
     }
+
+    //----------------------------------------------------------------------------------------------------------------------
+    // attention fonction pour essayer de rediriger vers le choice apres la première connexion
+    //----------------------------------------------------------------------------------------------------------------------
+
+    /**
+     * 
+     * @Route("/firstlogin", name="app_firstlogin")
+     */
+    public function firstindex(AuthenticationUtils $authenticationUtils): Response
+    {
+         // get the login error if there is one
+         $error = $authenticationUtils->getLastAuthenticationError();
+
+         // last username entered by the user
+         $lastUsername = $authenticationUtils->getLastUsername();
+         
+         $form = $this->createForm(LoginType::class, [
+            'login[_username]' => $lastUsername,
+        ]);
+
+        
+        return $this->render('login/indexfirst.html.twig', array(
+            'form' => $form->createView(),
+            'error'         => $error
+        ));
+        return $this->redirectToRoute('choice');
+    }
+    //----------------------------------------------------------------------------------------------------------------------
+    //----------------------------------------------------------------------------------------------------------------------
+
 
     /**
      * Logout

@@ -30,7 +30,7 @@ class Client
     private $ND;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255)
      */
     private $Activity;
 
@@ -62,17 +62,12 @@ class Client
     /**
      * @ORM\OneToOne(targetEntity=User::class, cascade={"persist", "remove"})
      */
-    private $user_id;
+    private $user;
 
     /**
      * @ORM\OneToMany(targetEntity=Securite::class, mappedBy="client")
      */
     private $securites;
-
-    /**
-     * @ORM\OneToOne(targetEntity=User::class, cascade={"persist", "remove"})
-     */
-    private $user;
 
     public function __construct()
     {
@@ -113,7 +108,7 @@ class Client
         return $this->Activity;
     }
 
-    public function setActivity(?string $Activity): self
+    public function setActivity(string $Activity): self
     {
         $this->Activity = $Activity;
 
@@ -180,14 +175,14 @@ class Client
         return $this;
     }
 
-    public function getUserId(): ?User
+    public function getUser(): ?User
     {
-        return $this->user_id;
+        return $this->user;
     }
 
-    public function setUserId(?User $user_id): self
+    public function setUser(?User $user): self
     {
-        $this->user_id = $user_id;
+        $this->user = $user;
 
         return $this;
     }
@@ -218,18 +213,6 @@ class Client
                 $securite->setClient(null);
             }
         }
-
-        return $this;
-    }
-
-    public function getUser(): ?User
-    {
-        return $this->user;
-    }
-
-    public function setUser(?User $user): self
-    {
-        $this->user = $user;
 
         return $this;
     }

@@ -54,6 +54,47 @@ class RapportRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
+    // take informations in rapport table
+    public function findRapport()
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT r
+            FROM App\Entity\Rapport r'
+        );
+
+        return $query->getResult();
+    }
+
+    // take specific informations in rapport table
+    public function findRapportbyId(int $id)
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT r
+            FROM App\Entity\Rapport r
+            WHERE r.operateur = :id'
+        );
+        $query->setParameter('id', $id);
+
+        return $query->getResult();
+    }
+    
+    // take id in rapport table
+    public function findRapportId()
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT r.id
+            FROM App\Entity\Rapport r'
+        );
+
+        return $query->getResult();
+    }
+    
 //    /**
 //     * @return Rapport[] Returns an array of Rapport objects
 //     */

@@ -39,6 +39,33 @@ class SecuriteRepository extends ServiceEntityRepository
         }
     }
 
+    public function findSecuriteById(Int $id)
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT s
+            FROM App\Entity\Securite s
+            WHERE s.id = :id'
+        );
+
+        $query->setParameter('id', $id);
+        return $query->getResult();
+    }
+ 
+    public function findClient()
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT s, c
+			FROM App\Entity\Securite s
+            JOIN App\Entity\Client c 
+            ' 
+        );
+
+        return $query->getResult();
+    }
 //    /**
 //     * @return Securite[] Returns an array of Securite objects
 //     */

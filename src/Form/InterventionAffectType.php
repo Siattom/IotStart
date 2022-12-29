@@ -15,17 +15,20 @@ class InterventionAffectType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('name', EntityType::class, array(
-                'class' => Operateur::class,
-                'choice_label' => 'name',
-                'multiple'  => true,
-            ));
+        ->add('Operateur', EntityType::class, [
+            // @link https://symfony.com/doc/current/reference/forms/types/entity.html#basic-usage
+            'class' => Operateur::class,
+            
+            'choice_label' => 'Name',
+            //'multiple' => true,
+            'expanded' => true,
+        ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => null,
+            'data_class' => Intervention::class,
         ]);
     }
 }

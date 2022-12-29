@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tâches effectuées{% endblock %}
+
+{% block body %}
+    <h2 class="register">Vous verrez ici les tâches effectuées et pourrez modifiez les rapports</h2>
+    <div class="interventionForm">
+
+    {% for rapport in intervention %}
+        <div class="inter">
+            <p class="inter-name"> {{rapport.intervention.Name}}
+            <p class="inter-name"> {{rapport.operateur.Name}}
+            <p class="inter-name"> {{rapport.Content}}
+            <a href="{{ path('rapport_edit', {id: rapport.id}) }}">
+               modifier
+            </a>
+        </div>
+    {% endfor %}
+    </div>
+{% endblock %}
