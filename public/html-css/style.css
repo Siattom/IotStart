@@ -38,13 +38,19 @@ h1 {
     display: flex;
     justify-content: space-around;
     margin-top: 0%;
-    padding-top: 2em;
     padding-bottom: 1em;
     margin-right: 2em;
 }
 
+.button {
+    background-color: #5CB8FB;
+    font-size: large;
+    color: white;
+    border-radius: 10px;
+    border: none;
+}
+
 button {
-    
     background-color: #5CB8FB;
     font-size: large;
     color: white;
@@ -70,6 +76,49 @@ button {
     margin-left: 2em;
 }
 
+#wrap {
+    width: 100%;
+    height: 4em;
+    margin: 0;
+    z-index: 99;
+    position: relative;
+    background-color: #5CB8FB;
+  }
+  .navbar {
+    height: 4em;
+    text-align: center;
+    
+  }
+  .navbar li {
+    height: 3.5em;
+    width: 15em;
+    float: left;
+    text-align: center;
+    list-style: none;
+    margin-right: 0.5em;
+    margin-left: 0.5em;
+    background-color: #5CB8FB;
+  }
+  .navbar a {
+    padding: 18px 0;
+    text-decoration: none;
+    color: white;
+    display: block;
+  }
+  .navbar li ul {
+    display: none;
+    height: auto;
+    margin: 0;
+    padding: 0;
+  }
+  .navbar li:hover ul {
+    display: block;
+  }
+  .navbar li ul li {
+    background-color: #5CB8FB;
+    border: 1px solid #2D3657;
+  }
+
 /*
 ----------------------------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------------------------
@@ -80,11 +129,12 @@ button {
 .firstGlobal {
     display: flex;
     margin-bottom: 5em;
+    margin-top: 3em;
 }
 
 .firstDiv {
     padding: 1em;
-    padding-top: 1em;
+    padding-top: 3em;
     padding-left: 9em;
     max-width: 50%;
     font-size: 1.7em;
@@ -227,6 +277,12 @@ button {
     padding-right: 2em;
 }
 
+.inter-name-link {
+    text-decoration: none;
+    color: white;
+    font-size: large;
+}
+
 /*
 ----------------------------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------------------------
@@ -343,4 +399,73 @@ button {
 
 .inter-rapport-oui {
     color: #0DFC1A;
+}
+
+.search {
+    margin-left: 3em;
+}
+
+.search-input {
+    border-radius: 10px;
+    background-color: #5CB8FB;
+    border-color: #5CB8FB;
+    box-shadow: none;
+}
+
+/*
+----------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------
+    Ici ça concerne la liste des demandes clients
+----------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------
+*/
+
+.hrefInterAddBySec {
+    padding-right: 2em;
+}
+
+/*
+----------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------
+    Ici ça concerne la page détaillé d'une intervention
+----------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------
+*/
+
+.inter-info {
+    padding: 2em;
+    text-align: center;
+    font-size: large;
+}
+
+.inter-name-info {
+    font-size: larger;
+    color: white;
+}
+
+/*
+----------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------
+    Ici ça concerne la page de résultat de recherche par nom de client 
+----------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------
+*/
+.formSearch {
+    display: flex;
+    margin: 3em;
+}
+
+.form-input {
+    border-radius: 5px;
+    padding-right: 4em;
+}
+
+
+
+.listener {
+    background-color: #5CB8FB;
+}
+
+.new {
+    background-color: #FF0000;
 }

@@ -9,9 +9,12 @@
                 <p class="inter-name"> {{ securite.Client.adresse}} </p>
                 <p class="inter-name"> {{ securite.titre }} </p>
                 <p class="inter-desc"> {{ securite.description }} </p>
-                <a href="{{ path('intervention_add_securite', {id: securite.id }) }}">
+                <a class="hrefInterAddBySec" href="{{ path('intervention_add_securite', {id: securite.id }) }}">
                    Créer intervention
-                </a>                
+                </a>      
+                <a href="/vt/add">
+                   Créer VT
+                </a>          
             </div>
         {% endfor %}
     </div>

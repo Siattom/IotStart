@@ -47,6 +47,11 @@ class Securite
      */
     private $user;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $statut;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -123,4 +128,17 @@ class Securite
 
         return $this;
     }
+
+    public function isStatut(): ?bool
+    {
+        return $this->statut;
+    }
+
+    public function setStatut(bool $statut): self
+    {
+        $this->statut = $statut;
+
+        return $this;
+    }
+
 }

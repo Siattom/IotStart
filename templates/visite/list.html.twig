@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des rapports de visite technique{% endblock %}
+
+{% block body %}
+    <h2 class="register">Voici les rapports</h2>
+        <div class="interventionForm">
+
+            {% for visiteTechnique in visites %}
+                <div class="inter">
+                    <p class="inter-name"> rédigé par : {{visiteTechnique.operateur.Name}} à {{ visiteTechnique.adresse }} </p>
+                    <p class="inter-name"> réalisation des travaux : {{visiteTechnique.travauxaeffectuer}} </p>
+                    <p class="inter-name"> {{ visiteTechnique.materielnecessaire }} </p>
+                    <p class="inter-name"> activité : {{visiteTechnique.Activite}} </p>
+                    <p class="inter-name"> durée : {{ visiteTechnique.tempsnecessaire }} minutes </p>
+                    <p class="inter-name"> difficulte : {% if visiteTechnique.difficulte == 1 %} très facile {% elseif visiteTechnique.difficulte == 2 %} facile {% elseif visiteTechnique.difficulte == 3 %} normale {% elseif visiteTechnique.difficulte == 4 %} compliqué {% elseif visiteTechnique.difficulte == 5 %} très compliqué {% endif %}</p>
+                    <p class="inter-name"> commentaire : {{ visiteTechnique.commentaire }} </p>
+                    <p class="inter-name"> la personne à contacter : {{ visiteTechnique.personneacontacter }} </p>
+                    <p class="inter-name"> {% if visiteTechnique.solution1 == true %} solution apporté n°1 : {{ visiteTechnique.solution1 }} {% endif %} </p>
+                    <p class="inter-name"> {% if visiteTechnique.solution2 == true %} solution apporté n°2 : {{ visiteTechnique.solution2 }} {% endif %} </p>
+                    <p class="inter-name"> {% if visiteTechnique.solution3 == true %} solution apporté n°3 : {{ visiteTechnique.solution3 }} {% endif %} </p>
+                    <p class="inter-name"> sera disponible le : {{ visiteTechnique.datededisponibilite.format('d/m/Y') }} </p>
+                    <p class="inter-name"> ce qui a été fait pour la sécurité : {{ visiteTechnique.moyendesecurite }} </p>
+                    <p class="inter-name"> accueilli par : {{ visiteTechnique.nom }} </p>
+                    <p class="inter-name"> son numéro est : {{ visiteTechnique.telephone }} </p>
+                    <p class="inter-name"> son mail est : {{ visiteTechnique.adressemail }} </p>
+                    
+                    <p class="inter-name"> rédigé le : {{visiteTechnique.CreatedAt.format('d/m/Y') }} </p>
+                    
+                    {% if visiteTechnique.UpdatedAt == true %}
+                    <p class="inter-name"> modifié le : {{visiteTechnique.UpdatedAt.format('d/m/Y') }} </p>
+                    {% endif %}
+
+                    <a href="{{ path('vt_edit', {id: visiteTechnique.id}) }}">
+                       modifier
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+{% endblock %}

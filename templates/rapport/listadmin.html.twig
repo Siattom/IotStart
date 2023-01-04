@@ -3,18 +3,31 @@
 {% block title %}Liste des rapports{% endblock %}
 
 {% block body %}
-    <h2 class="register">Voici les rapports de l'intervention</h2>
-    <div class="interventionForm">
+    <h2 class="register">Voici les rapports</h2>
+        <div class="interventionForm">
 
-    {% for rapport in rapports %}
-        <div class="inter">
-            <p class="inter-name"> {{rapport.intervention.Name}}
-            <p class="inter-name"> {{rapport.operateur.Name}}
-            <p class="inter-name"> {{rapport.Content}}
-            <a href="{{ path('rapport_edit', {id: rapport.id}) }}">
-               modifier
-            </a>
+            {% for rapport in rapports %}
+                <div class="inter">
+                    <a class="inter-name-link" href="{{path ('inter_info', {id: rapport.intervention.id}) }}"> {{ rapport.intervention.name }} </a>
+                    <p class="inter-name"> rédigé par : {{rapport.operateur.Name}} </p>
+                    <p class="inter-name"> activité : {{rapport.Activite}} </p>
+                    <p class="inter-name"> réalisation des travaux : {{rapport.realisationdestravaux}} </p>
+                    <p class="inter-ot-non-cloture"> {% if rapport.fonctionnementapresintervention == 0 %} cela fonctionne : non {% endif %} </p>
+                    <p class="inter-ot-cloture"> {% if rapport.fonctionnementapresintervention == 1 %} cela fonctionne : oui {% endif %} </p>
+                    <p class="inter-name"> equipement installé : {{rapport.equipementinstalle}} </p>
+                    <p class="inter-name"> commentaire : {{rapport.Content}} </p>
+                    <p class="inter-name"> telephone du client : {{rapport.numerotelephoneclient}} </p>
+                    <p class="inter-name"> adresse mail du client : {{rapport.adressemailclient}} </p>
+                    <p class="inter-name"> rédigé le : {{rapport.CreatedAt.format('d/m/Y') }} </p>
+
+                    {% if rapport.UpdatedAt == true %}
+                    <p class="inter-name"> modifié le : {{rapport.UpdatedAt.format('d/m/Y') }} </p>
+                    {% endif %}
+                    
+                    <a href="{{ path('rapport_edit', {id: rapport.id}) }}">
+                       modifier
+                    </a>
+                </div>
+            {% endfor %}
         </div>
-    {% endfor %}
-    </div>
 {% endblock %}

@@ -6,13 +6,13 @@
     <div class="securiteForm">
         <h2 class="register">Demande d'intervention</h2>
 
-        <div class="registrationForm">
-        {{ form_start(postFormSecurite) }}
-            {{ form_row(postFormSecurite.Titre) }}
-            {{ form_row(postFormSecurite.Description) }}
-        </div>
+            <div class="registrationForm">
+            {{ form_start(postFormSecurite) }}
+                {{ form_row(postFormSecurite.Titre) }}
+                {{ form_row(postFormSecurite.Description) }}
+            </div>
 
             <button type="submit" class="btn">Register</button>
-        {{ form_end(postFormSecurite) }}
+            {{ form_end(postFormSecurite) }}
     </div>
 {% endblock %}

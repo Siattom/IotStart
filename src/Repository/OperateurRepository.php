@@ -21,6 +21,7 @@ class OperateurRepository extends ServiceEntityRepository
         parent::__construct($registry, Operateur::class);
     }
 
+
     public function add(Operateur $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
@@ -29,6 +30,7 @@ class OperateurRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+
 
     public function remove(Operateur $entity, bool $flush = false): void
     {
@@ -39,6 +41,8 @@ class OperateurRepository extends ServiceEntityRepository
         }
     }
 
+
+    // permet de recupérer les info operateur (a vérifier)
     public function findForInter()
     {
         $entityManager = $this->getEntityManager();
@@ -51,6 +55,8 @@ class OperateurRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
+
+    // permet de retrouver un user par son id
     public function findUser(int $userId)
     {
         $entityManager = $this->getEntityManager();
@@ -66,6 +72,7 @@ class OperateurRepository extends ServiceEntityRepository
     
         return $query->getResult();
     }
+
 
 //    /**
 //     * @return Operateur[] Returns an array of Operateur objects

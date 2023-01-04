@@ -54,10 +54,16 @@ class Operateur
      */
     private $user;
 
+    /**
+     * @ORM\OneToMany(targetEntity=VisiteTechnique::class, mappedBy="operateur")
+     */
+    private $visite;
+
     public function __construct()
     {
         $this->interventions = new ArrayCollection();
         $this->rapports = new ArrayCollection();
+        $this->visite = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -181,6 +187,36 @@ class Operateur
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, VisiteTechnique>
+     */
+    public function getVisite(): Collection
+    {
+        return $this->visite;
+    }
+
+    public function addVisite(VisiteTechnique $visite): self
+    {
+        if (!$this->visite->contains($visite)) {
+            $this->visite[] = $visite;
+            $visite->setOperateur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeVisite(VisiteTechnique $visite): self
+    {
+        if ($this->visite->removeElement($visite)) {
+            // set the owning side to null (unless already changed)
+            if ($visite->getOperateur() === $this) {
+                $visite->setOperateur(null);
+            }
+        }
 
         return $this;
     }

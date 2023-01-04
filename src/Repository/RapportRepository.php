@@ -21,6 +21,7 @@ class RapportRepository extends ServiceEntityRepository
         parent::__construct($registry, Rapport::class);
     }
 
+
     public function add(Rapport $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
@@ -29,6 +30,7 @@ class RapportRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+
 
     public function remove(Rapport $entity, bool $flush = false): void
     {
@@ -39,6 +41,8 @@ class RapportRepository extends ServiceEntityRepository
         }
     }
 
+
+    // renvoie les info de la table rapport en fonction de rapport.intervention ( a vérifier )
     public function findById(int $intervention_id)
     {
         $entityManager = $this->getEntityManager();
@@ -54,6 +58,7 @@ class RapportRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
+
     // take informations in rapport table
     public function findRapport()
     {
@@ -61,11 +66,13 @@ class RapportRepository extends ServiceEntityRepository
 
         $query = $entityManager->createQuery(
             'SELECT r
-            FROM App\Entity\Rapport r'
+            FROM App\Entity\Rapport r 
+            ORDER BY r.Created_at DESC'
         );
 
         return $query->getResult();
     }
+
 
     // take specific informations in rapport table
     public function findRapportbyId(int $id)
@@ -82,6 +89,7 @@ class RapportRepository extends ServiceEntityRepository
         return $query->getResult();
     }
     
+
     // take id in rapport table
     public function findRapportId()
     {
@@ -94,6 +102,7 @@ class RapportRepository extends ServiceEntityRepository
 
         return $query->getResult();
     }
+    
     
 //    /**
 //     * @return Rapport[] Returns an array of Rapport objects

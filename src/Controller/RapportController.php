@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Rapport;
+use DateTimeImmutable;
 use App\Form\RapportType;
 use App\Repository\InterventionRepository;
 use App\Repository\RapportRepository;
@@ -26,10 +27,11 @@ class RapportController extends CoreController
         $rapports = $rapportRepository->findRapport();
 
         return $this->render('/rapport/listadmin.html.twig', [
-            'rapports' => $rapports,
-        ]);
+                'rapports' => $rapports,
+            ]);
 
     }
+
 
     /**
     * @Route("/rapport/edit/{id}", name="rapport_edit", methods={"GET", "POST"})
@@ -40,6 +42,9 @@ class RapportController extends CoreController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $rapport->setUpdatedat(new DateTimeImmutable());
+
             $entityManager->persist($rapport);
             $entityManager->flush();
 
@@ -51,8 +56,8 @@ class RapportController extends CoreController
             
         }
 
-        return $this->render('rapport/rapportAdd.html.twig', [
-            'rapportForm' =>$form->createView(),
-        ]);
+            return $this->render('rapport/rapportAdd.html.twig', [
+                'rapportForm' =>$form->createView(),
+            ]);
     }
 }

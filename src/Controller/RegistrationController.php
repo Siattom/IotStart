@@ -48,9 +48,9 @@ class RegistrationController extends AbstractController
             return $this->redirectToRoute('app_firstlogin');// ici je redirige vers firstlogin, si ça ne fonctionne pas remettre login
         }
 
-        return $this->render('registration/register.html.twig', [
-            'registrationForm' => $form->createView(),
-        ]);
+            return $this->render('registration/register.html.twig', [
+                'registrationForm' => $form->createView(),
+            ]);
     }
 
 
@@ -63,25 +63,26 @@ class RegistrationController extends AbstractController
         $form = $this->createForm(PosteType::class, $client);
         $form->handleRequest($request);
 
+        $user = $this->getUser();
+        $name = $user->getName();
         if ($form->isSubmitted() && $form->isValid()) {
             // encode the plain password
             $client->setCreatedAt(new DateTimeImmutable());
             $client->setND('00000000000');
             $client->setUser($this->getUser());
-            //$client->setUserId($this->user_id);
-            //$client->setUser($this->user);
+            $client->setName($name);
 
             $entityManager->persist($client);
             $entityManager->flush();
-            // do anything else you need here, like send an email
 
             return $this->redirectToRoute('first');
         }
 
-        return $this->render('registration/post.html.twig', [
-            'postForm' => $form->createView(),
-        ]);
+            return $this->render('registration/post.html.twig', [
+                'postForm' => $form->createView(),
+            ]);
     }
+
 
     /**
      * @Route("/addoperateur", name="add_operateur")
@@ -92,7 +93,7 @@ class RegistrationController extends AbstractController
         $form = $this->createForm(PosteOperateurType::class, $operateur);
         $form->handleRequest($request);
 
-        IF ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $operateur->setCreatedAt(new DateTimeImmutable());
             // on associe l'operateur à l'user 
             $operateur->setUser($this->getUser());
@@ -104,9 +105,8 @@ class RegistrationController extends AbstractController
             //return $this->render('registration/choice.html.twig');
         }
 
-        return $this->render('registration/addOpe.html.twig', [
-            'postForm' => $form->createView(),
-        ]);
-
+            return $this->render('registration/addOpe.html.twig', [
+                'postForm' => $form->createView(),
+            ]);
     }
 }

@@ -7,8 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Our custom CSS -->
-    <script src="scripts/main.js"></script>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="/html-css/style.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
     
@@ -16,28 +15,30 @@
     <title>IOT Start</title>
 </head>
 
-<body>
-
-  <h1> <img src="{{ asset('images/logo_iot.jpg') }}" height="125" alt="Logo Iot Start"> </h1>
-
-{% if is_granted('ROLE_OPERATEUR') %}
-    {% include 'nav/ope.html.twig' %} 
-{% elseif is_granted('ROLE_CLIENT') %}
-    {% include 'nav/client.html.twig' %} 
-{% elseif is_granted('ROLE_ADMIN') %}
-    {% include 'nav/admin.html.twig' %}
-{% else %}
-    {% include 'nav/accueil.html.twig' %} 
-{% endif %}
+    <body>
     
-  {% block body %}{% endblock %}
-
-
-<div class="footer">
-      <button name="button" type="button">Contacts</button>
-      <button name="button" type="button">Mentions légales</button>
-      <button name="button" type="button">Infos</button>
-</div> 
-</body>
+      <h1> <img src="{{ asset('images/logo_iot.jpg') }}" height="125" alt="Logo Iot Start"> </h1>
+    
+            {% if is_granted('ROLE_OPERATEUR') %}
+                {% include 'nav/ope.html.twig' %} 
+            {% elseif is_granted('ROLE_CLIENT') %}
+                {% include 'nav/client.html.twig' %} 
+            {% elseif is_granted('ROLE_ADMIN') %}
+                {% include 'nav/admin.html.twig' %}
+            {% else %}
+                {% include 'nav/accueil.html.twig' %} 
+            {% endif %}
+    
+              {% block body %}{% endblock %}
+    
+    
+        <div class="footer">
+            <button name="button" type="button">Contacts</button>
+            <button name="button" type="button">Mentions légales</button>
+            <button name="button" type="button">Infos</button>
+        </div> 
+        <script type="text/javascript" src="../../scripts/app.js"></script>
+        <script type="text/javascript" src="../../scripts/main.js"></script>
+    </body>
 
 </html>

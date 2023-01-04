@@ -74,9 +74,20 @@ class Intervention
      */
     private $operateur;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Client::class, inversedBy="interventions")
+     */
+    private $client;
+
+    /**
+     * @ORM\OneToMany(targetEntity=VisiteTechnique::class, mappedBy="intervention")
+     */
+    private $visite;
+
     public function __construct()
     {
         $this->rapports = new ArrayCollection();
+        $this->visite = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -230,6 +241,48 @@ class Intervention
     public function setOperateur(?Operateur $operateur): self
     {
         $this->operateur = $operateur;
+
+        return $this;
+    }
+
+    public function getClient(): ?Client
+    {
+        return $this->client;
+    }
+
+    public function setClient(?Client $client): self
+    {
+        $this->client = $client;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, VisiteTechnique>
+     */
+    public function getVisite(): Collection
+    {
+        return $this->visite;
+    }
+
+    public function addVisite(VisiteTechnique $visite): self
+    {
+        if (!$this->visite->contains($visite)) {
+            $this->visite[] = $visite;
+            $visite->setIntervention($this);
+        }
+
+        return $this;
+    }
+
+    public function removeVisite(VisiteTechnique $visite): self
+    {
+        if ($this->visite->removeElement($visite)) {
+            // set the owning side to null (unless already changed)
+            if ($visite->getIntervention() === $this) {
+                $visite->setIntervention(null);
+            }
+        }
 
         return $this;
     }

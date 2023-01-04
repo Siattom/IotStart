@@ -35,6 +35,7 @@ class OperateurController extends AbstractController
         ]);
     }
 
+
     /**
      * @Route("/add/rapport/{id}", name="add_rapport", methods={"GET", "POST"}, requirements={"id"="\d+"})
      */
@@ -46,33 +47,31 @@ class OperateurController extends AbstractController
       $form = $this->createForm(RapportType::class, $rapport);
       $form->handleRequest($request);
 
-      if ($form->isSubmitted() && $form->isValid()) {
-         $rapport->setCreatedAt(new DateTimeImmutable());
-         //$rapport->setUser($this->getUser());
-         // je recupere l'utilisateur
-         $userConnect = $this->getUser();
-        // ensuite son id
-         $userId = $userConnect->getId();
-         // je m'en sers pour récupérer l'operateur lié
-         $operateur = $operateurRepository->findUser($userId);
-         // j'essaie de récupérer l'id à l'index 0
-         //$operateurId = $operateur[0]->getId();
-         $rapport->setOperateur($operateur[0]);
-         //dd($operateurId); 
+        if ($form->isSubmitted() && $form->isValid()) {
+            $rapport->setCreatedAt(new DateTimeImmutable());
+            //$rapport->setUser($this->getUser());
+            // je recupere l'utilisateur
+            $userConnect = $this->getUser();
+            // ensuite son id
+            $userId = $userConnect->getId();
+            // je m'en sers pour récupérer l'operateur lié
+            $operateur = $operateurRepository->findUser($userId);
+            // j'essaie de récupérer l'id à l'index 0
+            $rapport->setOperateur($operateur[0]);
 
-         //dd($rapport->setUser());
          $rapport->setIntervention($entityManager->getRepository(Intervention::class)->find($id));
          $entityManager->persist($rapport);
          $entityManager->flush();
 
-         return $this->redirectToRoute('first');
+            return $this->redirectToRoute('first');
       }
 
-      return $this->render('rapport/rapportAdd.html.twig', [
-          'rapportForm' => $form->createView(),
-          'id' => $intervention
-      ]);
+            return $this->render('rapport/rapportAdd.html.twig', [
+            'rapportForm' => $form->createView(),
+            'id' => $intervention
+        ]);
     }
+
 
     /**
      * @Route("/cloture/{id}", name="cloture")
@@ -96,6 +95,7 @@ class OperateurController extends AbstractController
         }
     }
 
+
     /**
      * @Route("/completed/tasks", name="completed_tasks")
      */
@@ -110,11 +110,10 @@ class OperateurController extends AbstractController
         $operateurId = $userOp[0]->getId();
 
         $intervention = $rapportRepository->findRapportbyId($operateurId);
-        //dd($operateur);
 
-        return $this->render('operateur/tasks.html.twig', [
-            'intervention' => $intervention,
-        ]);        
-    }
-
+            return $this->render('operateur/tasks.html.twig', [
+                'intervention' => $intervention,
+            ]);        
+        }
+ 
 }

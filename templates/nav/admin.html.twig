@@ -1,38 +1,46 @@
 <div class = "nav">
-    
-      <a href="/">
-        <button name="button" type="button" class="accueil">Accueil</button>
-      </a>
-      <a href="">
-        <button name="button" type="button">Agenda</button> 
-      </a>
-      <a href="/inter/intervention/list">
-        <button name="button" type="button">Interventions</button>
-      </a>
-      <a href="/inter/intervention/add">
-        <button name="button" type="button">Nouvelle intervention</button>
-      </a>
+      <ul class="navbar">
 
-      <a href="/inter/rapport/list">
-        <button name="button" type="button">Rapports</button>
-      </a>
-      <a href="/start/logout">
-        <button name="button" type="button" class="material-symbols-outlined"> 
-          <span class="material-symbols-outlined">
-          power_settings_new
-          </span>
-       </button>
-      </a>
-      <a href="/inter/securite/list">
-        <button name="button" type="button">Demande</button>
-      </a>
-      <a href="/list/clients">
-        <button name="button" type="button">Clients</button>
-      </a>
-      <a href="/start/choice">
-        <button name="button" type="button">N'oublie pas de choisir ta situation</button>
-      </a>
-      <a href="/client/securite/add">
-        <button name="button" type="button">Demande d'intervention</button>
-      </a>
+        <li class="button">
+          <a href="/">Accueil</a>
+        </li>
+
+        <li class="button">
+          <a href="" type="button">Agenda</a>
+        </li>
+
+        <li class="button">
+          <a href="#">Interventions</a>
+          <ul>          
+            <li><a href="/inter/intervention/list">Interventions</a></li>
+            <li><a href="/inter/intervention/add">Nouvelle intervention</a></li>
+            <li><a href="/inter/rapport/list">Rapports</a></li>
+          </ul>
+        </li>
+        
+        <li class="button">
+          <a href="#">Visites techniques</a>
+          <ul>
+            <li><a href="/vt/list">Vt</a></li>
+            <li><a href="/vt/add">Nouvelle Vt</a></li>
+          </ul>
+        </li>
+
+        <li class="button">
+          <a href="#" class="listener">Clients</a>
+          <ul>
+            <li><a href="/inter/securite/list">Demandes</a></li>
+            <li><a href="/list/clients">Les clients</a></li>
+          </ul>
+        </li>
+
+        <a class="button" href="/start/logout">
+          <button name="button" type="button" class="material-symbols-outlined"> 
+            <span class="material-symbols-outlined">
+            power_settings_new
+            </span>
+         </button>
+        </a>
+        
+      </ul>
 </div>

@@ -1,0 +1,35 @@
+
+{% extends 'base.html.twig' %}
+{% block body %}
+
+      <form class="formSearch" action="/inter/client/search">
+          <input class="form-input" name="search" type="search"
+              placeholder="Rechercher...">
+          <button class="button" type="submit"><i class="bi bi-search"></i></button>
+      </form>
+
+    <div class="globalInter">
+      {% for intervention in clientList %}    
+        <div class="inter">
+            <p class="inter-name"> {{ intervention.client.Name }} </p>
+            <a class="inter-name-link" href="{{path ('inter_info', {id: intervention.id}) }}"> {{ intervention.name }} </a>
+            <p class="inter-desc"> {{ intervention.description }} </p>
+            <p class="inter-ot"> N°OT : {{ intervention.N°OT }} </p>
+            <p class="inter-ot"> opérateur affecté : {% if intervention.operateur %} {{ intervention.operateur.name }} {% endif %}</p>
+
+            <p class="inter-ot-non-cloture"> {% if intervention.cloture == 0 %} non-cloturé {% endif %} </p>
+            <p class="inter-ot-cloture"> {% if intervention.cloture == 1 %} cloturé {% endif %} </p>
+
+            <a href="{{ path('intervention_edit', {id: intervention.id}) }}" class="editInter"> Modifier </a>
+            <a href="{{ path('intervention_affect_ope', {id: intervention.id}) }}" class="editInter">Affecter un operateur</a>
+        </div>        
+      {% endfor %}
+    </div>
+
+    {% if app.request.query.get('search') is not null %}
+      Résultats de recherche pour <i>"{{ app.request.query.get('search') }}"</i>
+    {% else %}
+      Les interventions
+    {% endif %}
+
+{% endblock %}

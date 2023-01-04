@@ -24,7 +24,6 @@ class clientController extends AbstractController
         $securite = new Securite;
         $form = $this->createForm(SecuriteType::class, $securite);
         $form->handleRequest($request);
-        //$clientId = $clientRepository->findClient($clientid);
     
         if ($form->isSubmitted() && $form->isValid()) {
             $securite->setCreatedAt(new DateTimeImmutable());
@@ -42,6 +41,7 @@ class clientController extends AbstractController
             $entityManager->persist($securite);
             $entityManager->flush();
 
+            
             return $this->redirectToRoute('first');
         }
 
@@ -49,6 +49,7 @@ class clientController extends AbstractController
             'postFormSecurite' => $form->createView(),
         ]);
     }
+
 
     /**
      * @Route("/my/securite/list", name="my_securite_list")
@@ -64,6 +65,7 @@ class clientController extends AbstractController
             'securite' => $securite,
         ]);
     }
+
 
     /**
      * @Route("/client/edit/securite/{id}", name="edit_securite")
@@ -85,6 +87,7 @@ class clientController extends AbstractController
         ]);
     }
 
+    
     /**
      * @Route("/list/clients", name="list_clients")
      */

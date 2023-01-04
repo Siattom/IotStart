@@ -21,6 +21,7 @@ class ClientRepository extends ServiceEntityRepository
         parent::__construct($registry, Client::class);
     }
 
+
     public function add(Client $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
@@ -30,6 +31,8 @@ class ClientRepository extends ServiceEntityRepository
         }
     }
 
+
+    // permet de retrouver un user via son id dans la table client
     public function findUser(int $userId)
     {
         $entityManager = $this->getEntityManager();
@@ -46,6 +49,8 @@ class ClientRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
+
+    // permet de retrouver les demandes sécurité par l'id de l'utilisateur ( ici le client pourra voir ses demandes)
     public function findSecuriteById(int $userId)
     {
         $entityManager = $this->getEntityManager();
@@ -60,6 +65,8 @@ class ClientRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
+
+    
     public function remove(Client $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
@@ -68,6 +75,7 @@ class ClientRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+
 
 //    /**
 //     * @return Client[] Returns an array of Client objects

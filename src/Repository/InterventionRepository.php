@@ -16,10 +16,17 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class InterventionRepository extends ServiceEntityRepository
 {
+    public function findAll()
+    {
+        return $this->findBy(array(), array('Created_at' => 'DESC'));
+    }
+
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Intervention::class);
     }
+
 
     public function add(Intervention $entity, bool $flush = false): void
     {
@@ -30,6 +37,7 @@ class InterventionRepository extends ServiceEntityRepository
         }
     }
 
+
     public function remove(Intervention $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
@@ -38,6 +46,149 @@ class InterventionRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+
+
+    public function findByName(Intervention $name)
+    {
+        return $this->createQueryBuilder('i')
+            ->innerJoin('i.name', 'n')
+            ->andWhere('n = :name')
+            ->setParameter('name', $name)
+            ->getQuery()
+            ->getResult();
+    }
+
+
+    public function findInt(int $operateur_id)
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT i
+            FROM App\Entity\Intervention i
+            WHERE i.operateur = :id
+            AND i.Cloture = 0'
+        );
+
+        $query->setParameter('id', $operateur_id)
+        ;
+
+        return $query->getResult();
+    }
+
+
+    // récupère l'operateur
+    public function findOp(int $userId)
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT o
+            FROM App\Entity\Operateur o
+            Where o.user = :id
+            '
+        );
+
+        $query->setParameter('id', $userId);
+
+        return $query->getResult();
+    }
+
+
+    // récupère les interventions avec le rapport id
+    public function findInterRapport(int $rapportId)
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT i
+            FROM App\Entity\Intervention i
+            WHERE i.id = :id'
+        );
+
+        $query->setParameter('id', $rapportId);
+
+        return $query->getResult();
+    }
+
+
+    // recupere les intervention avec l'id fournit (a vérifier)
+    public function findIntByOpe(int $intervention)
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT i
+            FROM App\Entity\Intervention i
+            WHERE i.id = :id
+            ORDER BY i.id ASC'
+        );
+
+        $query->setParameter('id', $intervention);
+
+        return $query->getResult();
+    }
+
+
+    // permet de recuperer les infos d'un rapport via l'id intervention
+    public function findRapByInt(int $intervention)
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT r
+            FROM App\Entity\Rapport r
+            WHERE r.intervention = :id'
+        );
+
+        $query->setParameter('id', $intervention);
+
+        return $query->getResult();
+    }
+
+
+    /**
+     * Liste les interventions par recherche de nom clients
+     */
+     public function findAllOrderedByClientAscQb(string $search = null)
+     {
+
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT i
+            FROM App\Entity\Intervention i
+            JOIN App\Entity\Client c
+            WHERE i.client = c.id
+            AND c.Name LIKE :search
+            OR i.client = c.id 
+            AND c.Tel LIKE :search
+            OR i.client = c.id
+            AND i.Adresse LIKE :search'
+        );
+       
+        $query->setParameter('search', '%'.$search.'%');
+
+        return $query->getResult();
+     }
+
+
+     //recupere toutes les infos d'une intervention via son id
+    public function findInterInfoById(int $id)
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT i
+            FROM App\Entity\Intervention i 
+            WHERE i.id = :id'
+        );
+
+        $query->setParameter('id', $id);
+
+        return $query->getResult();
+    }
+
 
 //    /**
 //     * @return Intervention[] Returns an array of Intervention objects
@@ -53,7 +204,6 @@ class InterventionRepository extends ServiceEntityRepository
 //            ->getResult()
 //        ;
 //    }
-
 //    public function findOneBySomeField($value): ?Intervention
 //    {
 //        return $this->createQueryBuilder('i')
@@ -63,102 +213,4 @@ class InterventionRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
-
-public function findByName(Intervention $name)
-{
-    return $this->createQueryBuilder('i')
-        ->innerJoin('i.name', 'n')
-        ->andWhere('n = :name')
-        ->setParameter('name', $name)
-        ->getQuery()
-        ->getResult();
-}
-
-public function findInt(int $operateur_id)
-{
-    $entityManager = $this->getEntityManager();
-
-    $query = $entityManager->createQuery(
-        'SELECT i
-        FROM App\Entity\Intervention i
-        WHERE i.operateur = :id
-        AND i.Cloture = 0'
-    );
-
-    $query->setParameter('id', $operateur_id)
-    ;
-
-    return $query->getResult();
-}
-
-
-//--------------------------------------------------------------
-// test de fonction pour récupérer l'operateur
-//--------------------------------------------------------------
-public function findOp(int $userId)
-{
-    $entityManager = $this->getEntityManager();
-
-    $query = $entityManager->createQuery(
-        'SELECT o
-        FROM App\Entity\Operateur o
-        Where o.user = :id
-        '
-    );
-
-    $query->setParameter('id', $userId);
-
-    return $query->getResult();
-}
-//--------------------------------------------------------------
-// fin de test
-//--------------------------------------------------------------
-
-// récupère les interventions avec le rapport id
-public function findInterRapport(int $rapportId)
-{
-    $entityManager = $this->getEntityManager();
-
-    $query = $entityManager->createQuery(
-        'SELECT i
-        FROM App\Entity\Intervention i
-        WHERE i.id = :id'
-    );
-
-    $query->setParameter('id', $rapportId);
-
-    return $query->getResult();
-}
-
-public function findIntByOpe(int $intervention)
-{
-    $entityManager = $this->getEntityManager();
-
-    $query = $entityManager->createQuery(
-        'SELECT i
-        FROM App\Entity\Intervention i
-        WHERE i.id = :id
-        ORDER BY i.id ASC'
-    );
-
-    $query->setParameter('id', $intervention);
-
-    return $query->getResult();
-}
-
-public function findRapByInt(int $intervention)
-{
-    $entityManager = $this->getEntityManager();
-
-    $query = $entityManager->createQuery(
-        'SELECT r
-        FROM App\Entity\Rapport r
-        WHERE r.intervention = :id'
-    );
-
-    $query->setParameter('id', $intervention);
-
-    return $query->getResult();
-}
-
 }

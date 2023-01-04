@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Demander une intervention{% endblock %}
+
+{% block body %}
+    <h2 class="register">Rédigez ici votre visite technique</h2>
+        <div class="rapportForm">
+            {{ form_start(visiteForm) }}
+                {{ form_row(visiteForm.travaux_a_effectuer) }}
+                {{ form_row(visiteForm.materiel_necessaire) }}
+                {{ form_row(visiteForm.Activite) }}
+                {{ form_row(visiteForm.temps_necessaire) }}
+                {{ form_row(visiteForm.difficulte) }}
+                {{ form_row(visiteForm.commentaire) }}
+                {{ form_row(visiteForm.personne_a_contacter) }}
+                {{ form_row(visiteForm.solution_1) }}
+                {{ form_row(visiteForm.solution_2) }}
+                {{ form_row(visiteForm.solution_3) }}
+                {{ form_row(visiteForm.date_de_disponibilite) }}
+                {{ form_row(visiteForm.moyen_de_securite) }}
+                {{ form_row(visiteForm.adresse) }}
+                {{ form_row(visiteForm.nom) }}
+                {{ form_row(visiteForm.telephone) }}
+                {{ form_row(visiteForm.adresse_mail) }}
+    
+                <button type="submit" class="btn">Enregistrer</button>
+            {{ form_end(visiteForm) }}
+    </div>
+{% endblock %}

@@ -37,35 +37,36 @@ class UserController extends AbstractController
         ]);
     }
 
+
     /**
      * @Route("/new", name="back_user_new", methods={"GET", "POST"})
      */
     public function new(Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $userPasswordHasher, InterventionRepository $InterventionRepository): Response
     {
-    $user = new User();
-    $form = $this->createForm(UserType::class, $user);
-    $form->handleRequest($request);
+        $user = new User();
+        $form = $this->createForm(UserType::class, $user);
+        $form->handleRequest($request);
 
-    if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
 
-        // set the createdAt
-        $user->setCreatedAt(new DateTimeImmutable());
-        $user->setRoles("ROLE_ADMIN");
-        $entityManager->persist($user);
-        $entityManager->flush();
+            // set the createdAt
+            $user->setCreatedAt(new DateTimeImmutable());
+            $user->setRoles("ROLE_ADMIN");
+            $entityManager->persist($user);
+            $entityManager->flush();
 
-        $this->addFlash('success', 'Utilisateur ajouté(e).');
+            $this->addFlash('success', 'Utilisateur ajouté(e).');
 
-        return $this->render('/accueil/first.html.twig', [
-            'interventions' => $InterventionRepository->findAll(),
+            return $this->render('/accueil/first.html.twig', [
+                'interventions' => $InterventionRepository->findAll(),
+            ]);
+        }
+
+        return $this->renderForm('accueil/new.html.twig', [
+            'user' => $user,
+            'form' => $form,
         ]);
     }
-
-    return $this->renderForm('accueil/new.html.twig', [
-        'user' => $user,
-        'form' => $form,
-    ]);
-}
 
 
     /**
@@ -95,11 +96,12 @@ class UserController extends AbstractController
 			'id' => $userId,
 	   ];
 
-		// return id and code 200
-		return $this->render('/accueil/home_html.twig');
-        return $this->json($data, Response::HTTP_OK);
+		    // return id and code 200
+		    return $this->render('/accueil/home_html.twig');
+            return $this->json($data, Response::HTTP_OK);
 	}
 
+    
     /**
      * @Route("/{id}/edit", name="back_user_edit", methods={"GET", "POST"})
      */
@@ -131,6 +133,7 @@ class UserController extends AbstractController
             'form' => $form,
         ]);
     }
+
 
     /**
      * @Route("/{id}", name="back_user_delete", methods={"POST"})

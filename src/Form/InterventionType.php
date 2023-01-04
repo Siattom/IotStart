@@ -2,7 +2,9 @@
 
 namespace App\Form;
 
+use App\Entity\Client;
 use App\Entity\Intervention;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -16,6 +18,12 @@ class InterventionType extends AbstractType
             ->add('Name')
             ->add('Description')
             ->add('adresse')
+            ->add('Client', EntityType::class, [
+                'class' => Client::class,
+
+                'choice_label' => 'Name',
+                'expanded' => false,
+            ])
         ;
     }
 

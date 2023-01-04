@@ -69,9 +69,20 @@ class Client
      */
     private $securites;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Intervention::class, mappedBy="client")
+     */
+    private $interventions;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $Name;
+
     public function __construct()
     {
         $this->securites = new ArrayCollection();
+        $this->interventions = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -213,6 +224,48 @@ class Client
                 $securite->setClient(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Intervention>
+     */
+    public function getInterventions(): Collection
+    {
+        return $this->interventions;
+    }
+
+    public function addIntervention(Intervention $intervention): self
+    {
+        if (!$this->interventions->contains($intervention)) {
+            $this->interventions[] = $intervention;
+            $intervention->setClient($this);
+        }
+
+        return $this;
+    }
+
+    public function removeIntervention(Intervention $intervention): self
+    {
+        if ($this->interventions->removeElement($intervention)) {
+            // set the owning side to null (unless already changed)
+            if ($intervention->getClient() === $this) {
+                $intervention->setClient(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->Name;
+    }
+
+    public function setName(string $Name): self
+    {
+        $this->Name = $Name;
 
         return $this;
     }

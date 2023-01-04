@@ -32,18 +32,14 @@ class CoreController extends AbstractController
         ]);
     }
 
+
     /**
      * affiche la page d'accueil
      * @Route("/start/home", name="show_inter_ope")
      * @return Response
      */
     public function showHome(InterventionRepository $InterventionRepository, ManagerRegistry $doctrine): Response
-    {
-        
-        //--------------------------------------------------------------
-        // phase de test pour supprimer l'id en url
-        //--------------------------------------------------------------
-                
+    {  
         //je recupere les informations de l'utilisateurs en suivant le modèle du dessus
         $userSearch = $this->getUser();
         // je récupère l'id
@@ -52,25 +48,20 @@ class CoreController extends AbstractController
         $userOp = $InterventionRepository->findOp($userId);
         // $user = $this->getUser();
         $operateurId = $userOp[0]->getId();
-        //--------------------------------------------------------------
-        // fin de test
-        //--------------------------------------------------------------
 
         // prepare data
         $entityManager = $doctrine->getManager();
         $operateur = $entityManager->getRepository(Intervention::class)->find($operateurId);
         
         $allIntOpe = $InterventionRepository->findInt($operateurId);
-/*         $valeur =  $intervention->getAdresse(); */
 
-        // on rend le template associé en lui donnant l'operateur id
-
-        return $this->render('accueil/home_html.twig', [
-            'id' => $operateur,
-            /* 'adresse' => $valeur, */
-            'interventions' => $allIntOpe,
-        ]);
+            return $this->render('accueil/home_html.twig', [
+                'id' => $operateur,
+                /* 'adresse' => $valeur, */
+                'interventions' => $allIntOpe,
+            ]);
     }
+
 
     /**
      * @Route("/start/choice", name="choice")
@@ -80,4 +71,16 @@ class CoreController extends AbstractController
         return $this->render('registration/choice.html.twig');
     }
     
+
+    /**
+     * @Route("/infos/{id}", name="inter_info")
+     */
+    public function interInfo(Int $id, InterventionRepository $interventionRepository) {
+
+        $intervention = $interventionRepository->findInterInfoById($id);
+
+            return $this->render('intervention/interInfo.html.twig', [
+                'interventions' => $intervention,
+            ]);
+    }
 } 

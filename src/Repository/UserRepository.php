@@ -21,6 +21,7 @@ class UserRepository extends ServiceEntityRepository
         parent::__construct($registry, User::class);
     }
 
+
     public function add(User $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
@@ -29,6 +30,7 @@ class UserRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+
 
     public function remove(User $entity, bool $flush = false): void
     {
@@ -39,6 +41,7 @@ class UserRepository extends ServiceEntityRepository
         }
     }
 
+    
 //    /**
 //     * @return User[] Returns an array of User objects
 //     */

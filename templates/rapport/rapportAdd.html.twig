@@ -4,12 +4,17 @@
 
 {% block body %}
     <h2 class="register">Rédigez ici votre rapport</h2>
-    <div class="rapportForm">
-        {{ form_start(rapportForm) }}
-            {{ form_row(rapportForm.Content) }}
-           {#  renommer le champ en français #}
-
-            <button type="submit" class="btn">Enregistrer</button>
-        {{ form_end(rapportForm) }}
+        <div class="rapportForm">
+            {{ form_start(rapportForm) }}
+                {{ form_row(rapportForm.Activite) }}
+                {{ form_row(rapportForm.Realisation_des_travaux) }}
+                {{ form_row(rapportForm.fonctionnement_apres_intervention) }}
+                {{ form_row(rapportForm.equipement_installe) }}
+                {{ form_row(rapportForm.Content) }}
+                {{ form_row(rapportForm.numero_telephone_client) }}
+                {{ form_row(rapportForm.adresse_mail_client) }}
+    
+                <button type="submit" class="btn">Enregistrer</button>
+            {{ form_end(rapportForm) }}
     </div>
 {% endblock %}

@@ -4,17 +4,19 @@
 
 {% block body %}
     <h2 class="register">Vous verrez ici les tâches effectuées et pourrez modifiez les rapports</h2>
-    <div class="interventionForm">
+        <div class="interventionForm">
 
-    {% for rapport in intervention %}
-        <div class="inter">
-            <p class="inter-name"> {{rapport.intervention.Name}}
-            <p class="inter-name"> {{rapport.operateur.Name}}
-            <p class="inter-name"> {{rapport.Content}}
-            <a href="{{ path('rapport_edit', {id: rapport.id}) }}">
-               modifier
-            </a>
+            {% for rapport in intervention %}
+                <div class="inter">
+                    <a class="inter-name-link" href="{{path ('inter_info', {id: rapport.intervention.id}) }}"> {{ rapport.intervention.name }} </a>
+                    <p class="inter-name"> {{rapport.operateur.Name}} </p>
+                    <p class="inter-name"> {{rapport.Content}} </p>
+                    <p class="inter-ot-non-cloture"> {% if rapport.intervention.cloture == 0 %} non-cloturé {% endif %} </p>
+                    <p class="inter-ot-cloture"> {% if rapport.intervention.cloture == 1 %} cloturé {% endif %} </p>
+                    <a href="{{ path('rapport_edit', {id: rapport.id}) }}">
+                       modifier
+                    </a>
+                </div>
+            {% endfor %}
         </div>
-    {% endfor %}
-    </div>
 {% endblock %}
