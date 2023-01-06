@@ -74,6 +74,68 @@ class OperateurRepository extends ServiceEntityRepository
     }
 
 
+    // take the intervention with op.id cloture = 1
+    public function findInterClotureOui(int $id)
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT r
+            FROM App\Entity\Rapport r
+            JOIN App\Entity\Intervention i
+            WHERE i.operateur = :id
+            AND  i.Cloture = 1
+            AND r.intervention = i.id'
+        );
+
+        $query->setParameter('id', $id);
+        return $query->getResult();
+    }
+
+
+    // take the intervention with op.id cloture = 0
+    public function findInterClotureNon(int $id)
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT r
+            FROM App\Entity\Rapport r
+            JOIN App\Entity\Intervention i
+            WHERE i.operateur = :id
+            AND  i.Cloture = 0
+            AND r.intervention = i.id'
+        );
+
+        $query->setParameter('id', $id);
+        return $query->getResult();
+    }
+
+
+    // search by the ot name in a table rapport
+    public function findRapportByOt(int $id, string $search = null)
+    {
+
+       $entityManager = $this->getEntityManager();
+
+       $query = $entityManager->createQuery(
+           'SELECT r
+           FROM App\Entity\Rapport r
+           JOIN App\Entity\Intervention i
+           JOIN App\Entity\Client c
+           WHERE (i.operateur = :id 
+           AND r.intervention = i.id 
+           AND i.not LIKE :search)'
+
+       );
+      
+       $query->setParameter('id', $id);
+       $query->setParameter('search', '%'.$search.'%');
+
+       return $query->getResult();
+    }
+
+
 //    /**
 //     * @return Operateur[] Returns an array of Operateur objects
 //     */

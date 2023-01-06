@@ -3,15 +3,18 @@
 namespace App\Controller;
 
 use App\Entity\Client;
+use DateTimeImmutable;
 use App\Entity\Securite;
 use App\Form\SecuriteType;
 use App\Repository\ClientRepository;
-use DateTimeImmutable;
+use App\Repository\SecuriteRepository;
+use App\Repository\OperateurRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 
 class clientController extends AbstractController
@@ -21,6 +24,23 @@ class clientController extends AbstractController
      */
     public function addSecurite(Request $request, EntityManagerInterface $entityManager, ClientRepository $clientRepository): Response
     {
+        $userConnect = $this->getUser();
+        // ensuite son id
+        $userId = $userConnect->getId();
+        // je m'en sers pour récupérer l'operateur lié
+        $client = $clientRepository->findUser($userId);
+        //dd($client);
+
+
+        //dd($operateur);
+        if ($client == null) {
+            $admin = $clientRepository->findUser(2);
+            $operateur = $admin[0];
+        } else {
+            $operateur = $client[0];
+            /* $ope = $operateur->getId(); */
+        };
+
         $securite = new Securite;
         $form = $this->createForm(SecuriteType::class, $securite);
         $form->handleRequest($request);
@@ -29,13 +49,8 @@ class clientController extends AbstractController
             $securite->setCreatedAt(new DateTimeImmutable());
             $securite->setUser($this->getUser());
 
-            $userConnect = $this->getUser();
-            // ensuite son id
-            $userId = $userConnect->getId();
-            // je m'en sers pour récupérer l'operateur lié
-            $client = $clientRepository->findUser($userId);
-            //dd($client);
-            $securite->setClient($client[0]);
+            $securite->setClient($operateur);
+            $securite->setStatut(0);
             //dd($operateurId); 
            
             $entityManager->persist($securite);
@@ -99,4 +114,16 @@ class clientController extends AbstractController
             'client' => $client,
         ]);
     }
-}
+
+    /**
+     * @Route("/notification", name="notification", methods="GET")
+     */
+    public function notification(SecuriteRepository $securiteRepository)
+    {
+        $statut = $securiteRepository->findStatut();
+        
+        $response = array('statut' => $statut);
+        return new JsonResponse($response);
+                
+    }
+} 

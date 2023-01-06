@@ -4,6 +4,25 @@
 
 {% block body %}
     <h2 class="register">Voici les rapports</h2>
+
+            <div class="filtre">
+                <form class="formSearch" action="/listeRapport/filtre/tel">
+                    <input class="form-input" name="search" type="search"
+                        placeholder="Ne pas mettre de '0'">
+                    <button class="button" type="submit"><i class="bi bi-search"></i></button>
+                </form>
+                <ul class="navbar navbarList">
+                    <li class="button">
+                      <a href="#">Filtre</a>
+                      <ul>          
+                        <li><a id="filtreCloture"href="/inter/list/rapport/cloture">Cloturé</a></li>
+                        <li><a id="filtreNonCloture"href="/inter/list/rapport/cloture/non">Non cloturé</a></li>
+                      </ul>
+                    </li>
+                </ul>
+
+            </div>
+
         <div class="interventionForm">
 
             {% for rapport in rapports %}
@@ -25,6 +44,36 @@
                     {% endif %}
                     
                     <a href="{{ path('rapport_edit', {id: rapport.id}) }}">
+                       modifier
+                    </a>
+                </div>
+            {% endfor %}
+            {% for visite in visite %}
+                <div class="inter">
+                    <p class="inter-name"> rédigé par : {{visite.operateur.Name}} à {{ visite.adresse }} </p>
+                    <p class="inter-name"> réalisation des travaux : {{visite.travauxaeffectuer}} </p>
+                    <p class="inter-name"> {{ visite.materielnecessaire }} </p>
+                    <p class="inter-name"> activité : {{visite.Activite}} </p>
+                    <p class="inter-name"> durée : {{ visite.tempsnecessaire }} minutes </p>
+                    <p class="inter-name"> difficulte : {% if visite.difficulte == 1 %} très facile {% elseif visite.difficulte == 2 %} facile {% elseif visite.difficulte == 3 %} normale {% elseif visite.difficulte == 4 %} compliqué {% elseif visite.difficulte == 5 %} très compliqué {% endif %}</p>
+                    <p class="inter-name"> commentaire : {{ visite.commentaire }} </p>
+                    <p class="inter-name"> la personne à contacter : {{ visite.personneacontacter }} </p>
+                    <p class="inter-name"> {% if visite.solution1 == true %} solution apporté n°1 : {{ visite.solution1 }} {% endif %} </p>
+                    <p class="inter-name"> {% if visite.solution2 == true %} solution apporté n°2 : {{ visite.solution2 }} {% endif %} </p>
+                    <p class="inter-name"> {% if visite.solution3 == true %} solution apporté n°3 : {{ visite.solution3 }} {% endif %} </p>
+                    <p class="inter-name"> sera disponible le : {{ visite.datededisponibilite.format('d/m/Y') }} </p>
+                    <p class="inter-name"> ce qui a été fait pour la sécurité : {{ visite.moyendesecurite }} </p>
+                    <p class="inter-name"> accueilli par : {{ visite.nom }} </p>
+                    <p class="inter-name"> son numéro est : {{ visite.telephone }} </p>
+                    <p class="inter-name"> son mail est : {{ visite.adressemail }} </p>
+                    
+                    <p class="inter-name"> rédigé le : {{visite.CreatedAt.format('d/m/Y') }} </p>
+                    
+                    {% if visite.UpdatedAt == true %}
+                    <p class="inter-name"> modifié le : {{visite.UpdatedAt.format('d/m/Y') }} </p>
+                    {% endif %}
+
+                    <a href="{{ path('vt_edit', {id: visite.id}) }}">
                        modifier
                     </a>
                 </div>

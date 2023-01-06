@@ -2,21 +2,22 @@
 
 namespace App\Controller;
 
-use App\Entity\Intervention;
-use App\Entity\Operateur;
-use App\Entity\Rapport;
-use App\Form\AffectFinalType;
-use App\Form\RapportType;
-use App\Repository\InterventionRepository;
-use App\Repository\OperateurRepository;
-use App\Repository\RapportRepository;
 use DateTimeImmutable;
+use App\Entity\Rapport;
+use App\Form\RapportType;
+use App\Entity\Operateur;
+use App\Entity\Intervention;
+use App\Form\AffectFinalType;
+use App\Repository\RapportRepository;
+use App\Repository\OperateurRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Repository\InterventionRepository;
 use Symfony\Component\HttpFoundation\Request;
+use App\Repository\VisiteTechniqueRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * @Route("/ope")
@@ -39,11 +40,12 @@ class OperateurController extends AbstractController
     /**
      * @Route("/add/rapport/{id}", name="add_rapport", methods={"GET", "POST"}, requirements={"id"="\d+"})
      */
-    public function addRapport(Int $id, Request $request, EntityManagerInterface $entityManager, ManagerRegistry $doctrine , OperateurRepository $operateurRepository, InterventionRepository $interventionRepository): Response
+    public function addRapport(Int $id, Request $request, EntityManagerInterface $entityManager, ManagerRegistry $doctrine , OperateurRepository $operateurRepository, InterventionRepository $interventionRepository, VisiteTechniqueRepository $visiteTechniqueRepository): Response
     {
       $rapport = new Rapport();
       $entityManager = $doctrine->getManager();
       $intervention = $entityManager->getRepository(Intervention::class)->find($id);
+      $vt = $visiteTechniqueRepository->
       $form = $this->createForm(RapportType::class, $rapport);
       $form->handleRequest($request);
 
@@ -114,6 +116,67 @@ class OperateurController extends AbstractController
             return $this->render('operateur/tasks.html.twig', [
                 'intervention' => $intervention,
             ]);        
-        }
- 
+    }
+
+
+    /**
+     * @Route("/list/task/cloture/oui", name="list_task_cloture_oui", methods="GET")
+     */
+    public function listTaskClotureOui(EntityManagerInterface $entityManager, InterventionRepository $interventionRepository, OperateurRepository $OperateurRepository)
+    {
+        $userSearch = $this->getUser();
+        // je récupère l'id
+        $userId = $userSearch->getId(); 
+        // je récupère l'operateur avec le userId correspondant
+        $userOp = $interventionRepository->findOp($userId);
+        // $user = $this->getUser();
+        $operateurId = $userOp[0]->getId();
+
+        $intervention = $OperateurRepository->findInterClotureOui($operateurId);
+
+        return $this->render('operateur/tasks.html.twig', [
+            'intervention' => $intervention,
+        ]);
+    }
+
+
+    /**
+     * @Route("/list/task/cloture/non", name="list_task_cloture_non", methods="GET")
+     */
+    public function listTaskClotureNon(EntityManagerInterface $entityManager, InterventionRepository $interventionRepository, OperateurRepository $OperateurRepository)
+    {
+        $userSearch = $this->getUser();
+        // je récupère l'id
+        $userId = $userSearch->getId(); 
+        // je récupère l'operateur avec le userId correspondant
+        $userOp = $interventionRepository->findOp($userId);
+        // $user = $this->getUser();
+        $operateurId = $userOp[0]->getId();
+
+        $intervention = $OperateurRepository->findInterClotureNon($operateurId);
+
+        return $this->render('operateur/tasks.html.twig', [
+            'intervention' => $intervention,
+        ]);
+    }
+
+    /**
+     * @Route("/task/list/ot", name="task_list_ot", methods="GET")
+     */
+    public function taskListOt(Request $request, InterventionRepository $interventionRepository, OperateurRepository $OperateurRepository)
+    {
+        $userSearch = $this->getUser();
+        // je récupère l'id
+        $userId = $userSearch->getId(); 
+        // je récupère l'operateur avec le userId correspondant
+        $userOp = $interventionRepository->findOp($userId);
+        // $user = $this->getUser();
+        $operateurId = $userOp[0]->getId();
+
+        $intervention = $OperateurRepository->findRapportByOt($operateurId, $request->query->get('search'));
+
+        return $this->render('operateur/tasks.html.twig', [
+            'intervention' => $intervention,
+        ]);
+    }
 }

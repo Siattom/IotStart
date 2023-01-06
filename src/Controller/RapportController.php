@@ -5,14 +5,15 @@ namespace App\Controller;
 use App\Entity\Rapport;
 use DateTimeImmutable;
 use App\Form\RapportType;
-use App\Repository\InterventionRepository;
 use App\Repository\RapportRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\InterventionRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-class RapportController extends CoreController
+class RapportController extends AbstractController
 {
 
     /**
@@ -25,11 +26,12 @@ class RapportController extends CoreController
     {
         // il faut appeler la fonction qui récupère les rapports
         $rapports = $rapportRepository->findRapport();
+        $visite = $rapportRepository->findVisite(); 
 
         return $this->render('/rapport/listadmin.html.twig', [
                 'rapports' => $rapports,
-            ]);
-
+                'visite' => $visite,
+            ]); 
     }
 
 

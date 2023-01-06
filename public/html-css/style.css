@@ -469,3 +469,31 @@ button {
 .new {
     background-color: #FF0000;
 }
+
+.material-symbols-outlined {
+    padding-top: 7%;
+    padding-bottom: 7%;
+}
+
+
+#notification {
+  display: none;
+  background-color: #ffa07a;
+  color: white;
+  padding: 10px;
+}
+
+.filtre {
+    margin: 3em;
+    display: flex;
+}
+
+.filtreList {
+    background-color: #5CB8FB;
+    max-width: 10%;
+}
+
+.navbarList {
+    max-height: 2.7em;
+    text-align: center;
+}

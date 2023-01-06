@@ -159,17 +159,47 @@ class InterventionRepository extends ServiceEntityRepository
             'SELECT i
             FROM App\Entity\Intervention i
             JOIN App\Entity\Client c
-            WHERE i.client = c.id
-            AND c.Name LIKE :search
-            OR i.client = c.id 
-            AND c.Tel LIKE :search
-            OR i.client = c.id
-            AND i.Adresse LIKE :search'
+            WHERE (i.client = c.id AND c.Name LIKE :search)
+            OR (i.client = c.id AND c.Tel LIKE :search)
+            OR (i.client = c.id AND i.Adresse LIKE :search)
+            OR (i.client = c.id AND i.not LIKE :search)
+            OR (i.client = c.id AND i.Name LIKE :search)'
+
         );
        
         $query->setParameter('search', '%'.$search.'%');
 
         return $query->getResult();
+     }
+
+
+     // take intervention with cloture = 0
+     public function findInterventionClotureNon()
+     {
+         $entityManager = $this->getEntityManager();
+
+         $query = $entityManager->createQuery(
+             'SELECT i
+             from App\Entity\Intervention i
+             where i.Cloture = 0'
+         );
+
+         return $query->getResult();
+     }
+
+
+     // take intervention with cloture = 1
+     public function findInterventionCloture()
+     {
+         $entityManager = $this->getEntityManager();
+ 
+         $query = $entityManager->createQuery(
+             'SELECT i
+             from App\Entity\Intervention i
+             where i.Cloture = 1'
+         );
+ 
+         return $query->getResult();
      }
 
 

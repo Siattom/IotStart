@@ -90,6 +90,22 @@ class RapportRepository extends ServiceEntityRepository
     }
     
 
+
+    // take specific informations in visite table
+    public function findVisite()
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT v
+            FROM App\Entity\VisiteTechnique v
+            ORDER BY v.created_at DESC'
+        );
+
+        return $query->getResult();
+    }
+
+
     // take id in rapport table
     public function findRapportId()
     {
@@ -104,6 +120,112 @@ class RapportRepository extends ServiceEntityRepository
     }
     
     
+    // take the rapport by tel
+    public function findRapportByTel(string $search = null)
+    {
+       $entityManager = $this->getEntityManager();
+
+       $query = $entityManager->createQuery(
+            'SELECT r
+            FROM App\Entity\Rapport r
+            JOIN App\Entity\Intervention i
+            JOIN App\Entity\Client c
+            WHERE r.numero_telephone_client LIKE :search
+            OR (i.id = r.intervention AND i.client = c.id AND c.Name LIKE :search)
+            or (i.id = r.intervention and i.Name like :search)
+            '
+        );
+
+       $query->setParameter('search', '%'.$search.'%');
+
+       return $query->getResult();
+    }
+
+    // take the rapport by tel
+    public function findVsiteTechniqueByTel(string $search = null)
+    {
+       $entityManager = $this->getEntityManager();
+
+       $query = $entityManager->createQuery(
+            'SELECT v
+            FROM App\Entity\VisiteTechnique v
+            JOIN App\Entity\Intervention i
+            JOIN App\Entity\Client c
+            WHERE v.telephone LIKE :search
+            OR (i.id = v.intervention AND i.client = c.id AND c.Name LIKE :search) 
+            or (i.id = v.intervention AND i.Name like :search)'
+        );
+
+       $query->setParameter('search', '%'.$search.'%');
+
+       return $query->getResult();
+    }
+
+    //take the rapport with cloture = 1
+    public function findRapportByCloture() 
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT r
+            FROM App\Entity\Rapport r
+            JOIN App\Entity\Intervention i
+            WHERE i.id = r.intervention AND i.Cloture = 1
+            order by r.Created_at DESC
+            '
+        );
+
+        return $query->getResult();
+    }
+
+    //take the rapport with cloture = 0
+    public function findRapportByClotureNon() 
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT r
+            FROM App\Entity\Rapport r
+            JOIN App\Entity\Intervention i
+            WHERE i.id = r.intervention AND i.Cloture = 0
+            order by r.Created_at DESC
+            '
+        );
+
+        return $query->getResult();
+    }
+
+    //take visite with cloture = 0
+    public function findVisiteByClotureNon()
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT v
+            FROM App\Entity\VisiteTechnique v
+            JOIN App\Entity\Intervention i
+            WHERE i.id = v.intervention AND i.Cloture = 0
+            order by v.created_at DESC'
+        );
+        return $query->getResult();
+    }
+
+    //take the visite whith cloture = 1
+    public function findVisiteByCloture()
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT v
+            FROM App\Entity\VisiteTechnique v
+            JOIN App\Entity\Intervention i
+            WHERE i.id = v.intervention AND i.Cloture = 1
+            order by v.created_at DESC
+            '
+        );
+        return $query->getResult();
+    }
+
 //    /**
 //     * @return Rapport[] Returns an array of Rapport objects
 //     */

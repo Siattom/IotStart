@@ -15,9 +15,8 @@
     <title>IOT Start</title>
 </head>
 
-    <body>
     
-      <h1> <img src="{{ asset('images/logo_iot.jpg') }}" height="125" alt="Logo Iot Start"> </h1>
+      <h1> <img src="{{ asset('images/logo_iot.jpg') }}" height="125" alt="Logo Iot Start"  id="test" onClick="notification()"> </h1>
     
             {% if is_granted('ROLE_OPERATEUR') %}
                 {% include 'nav/ope.html.twig' %} 
@@ -31,13 +30,30 @@
     
               {% block body %}{% endblock %}
     
-    
         <div class="footer">
             <button name="button" type="button">Contacts</button>
             <button name="button" type="button">Mentions légales</button>
             <button name="button" type="button">Infos</button>
         </div> 
-        <script type="text/javascript" src="../../scripts/app.js"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+        <script type="text/javascript">
+
+           setInterval(function() {
+              // code à exécuter tous les 3 secondes
+              $.ajax({
+                  url: '/notification',
+                  type: 'GET',
+                  success: function(data) {
+                    if (data && data.statut == 0) {
+                      $('#notification').hide();
+                    } else {
+                      $('#notification').show();
+                    }
+                  }
+                });
+            }, 3000);
+
+        </script>
         <script type="text/javascript" src="../../scripts/main.js"></script>
     </body>
 

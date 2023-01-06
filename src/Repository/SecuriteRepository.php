@@ -56,7 +56,80 @@ class SecuriteRepository extends ServiceEntityRepository
         $query->setParameter('id', $id);
         return $query->getResult();
     }
+
+
+    // take the securite order ASC
+    public function findSecuriteAsc()
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT s
+            FROM App\Entity\Securite s
+            ORDER BY s.Created_at ASC'
+        );
+        return $query->getResult();
+    }
+
+
+    // take the securite order Desc
+    public function findSecuriteDesc()
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT s
+            FROM App\Entity\Securite s
+            ORDER BY s.Created_at DESC'
+        );
+        return $query->getResult();
+    }
+
+
+    // take the securite with statut = 1
+    public function findSecuriteOui()
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT s
+            FROM App\Entity\Securite s
+            WHERE s.statut = 1
+            ORDER BY s.Created_at DESC'
+        );
+        return $query->getResult();
+    }
+
+
+    // take the securite with statut = 0
+    public function findSecuriteNon()
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT s
+            FROM App\Entity\Securite s
+            WHERE s.statut = 0
+            ORDER BY s.Created_at DESC'
+        );
+        return $query->getResult();
+    }
  
+
+    // donner les securites avec status 0
+    public function findStatut()
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT s
+            FROM App\Entity\Securite s
+            WHERE s.statut = 0'
+        );
+
+        return $query->getResult();
+    }
+
 
     // renvoie les infos client/securite lié, sert dans la meme fonction que la fonction du dessus
     public function findClient(int $id)

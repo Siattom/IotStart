@@ -14,7 +14,7 @@ class InterventionType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            /* ->add('n°ot') */
+            ->add('not') 
             ->add('Name')
             ->add('Description')
             ->add('adresse')

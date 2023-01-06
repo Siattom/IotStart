@@ -22,7 +22,7 @@ class Intervention
     /**
      * @ORM\Column(type="integer")
      */
-    private $n°ot;
+    private $not;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -95,14 +95,14 @@ class Intervention
         return $this->id;
     }
 
-    public function getN°ot(): ?int
+    public function getNot(): ?int
     {
-        return $this->n°ot;
+        return $this->not;
     }
 
-    public function setN°ot(int $n°ot): self
+    public function setNot(int $not): self
     {
-        $this->n°ot = $n°ot;
+        $this->not = $not;
 
         return $this;
     }
