@@ -52,14 +52,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $Created_at;
 
     /**
-     * @ORM\Column(type="datetime")
-     */
-    private $Updated_at;
-
-    /**
      * @ORM\OneToMany(targetEntity=Securite::class, mappedBy="user")
      */
     private $securites;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $updated_at;
 
     public function __construct()
     {
@@ -143,18 +143,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getUpdatedAt(): ?\DateTimeInterface
-    {
-        return $this->Updated_at;
-    }
-
-    public function setUpdatedAt(\DateTimeInterface $Updated_at): self
-    {
-        $this->Updated_at = $Updated_at;
-
-        return $this;
-    }
-
     /**
      * @return Collection<int, Securite>
      */
@@ -201,5 +189,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getUsername()
     {
         return $this->Email;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updated_at;
+    }
+
+    public function setUpdatedAt(?\DateTimeInterface $updated_at): self
+    {
+        $this->updated_at = $updated_at;
+
+        return $this;
     }
 }

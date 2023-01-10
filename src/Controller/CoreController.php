@@ -3,14 +3,15 @@
 namespace App\Controller;
 
 use App\Entity\Intervention;
-use App\Repository\InterventionRepository;
-use Doctrine\DBAL\Schema\Index;
 use Doctrine\ORM\Mapping\Id;
+use Doctrine\DBAL\Schema\Index;
+use App\Repository\OperateurRepository;
 use Doctrine\Persistence\ManagerRegistry;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Repository\InterventionRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 
 class CoreController extends AbstractController
@@ -25,11 +26,27 @@ class CoreController extends AbstractController
     {
         $interventionId = $InterventionRepository->findAll();
         $user = $this->getUser();
+
+        if ($user && $user->getRoles() !== ('ROLE_OPERATEUR')) {
+            
+            $operateurInfo = $user->getId();
+            $operateurId = $InterventionRepository->findInterByIdForTheFirst($operateurInfo);
+
+            return $this->render ('/accueil/first.html.twig', [
+                'interventions' => $interventionId,
+                'operateur' => $operateurId,
+                'user' => $user,
+            ]);
         
-        return $this->render ('/accueil/first.html.twig', [
-            'interventions' => $interventionId,
-            'user' => $user,
-        ]);
+        } else {
+            
+            return $this->render ('/accueil/first.html.twig', [
+                'interventions' => $interventionId,
+                'user' => $user,
+            ]);
+        
+        }
+        
     }
 
 
@@ -46,9 +63,16 @@ class CoreController extends AbstractController
         $userId = $userSearch->getId(); 
         // je récupère l'operateur avec le userId correspondant
         $userOp = $InterventionRepository->findOp($userId);
-        // $user = $this->getUser();
-        $operateurId = $userOp[0]->getId();
-
+                
+        //dd($operateur);
+        if ($userOp == null) {
+            $admin = $InterventionRepository->findOp(4);
+            $operateurId = $admin[0]->getId();
+        } else {
+            // $user = $this->getUser();
+            $operateurId = $userOp[0]->getId();
+        };
+        
         // prepare data
         $entityManager = $doctrine->getManager();
         $operateur = $entityManager->getRepository(Intervention::class)->find($operateurId);

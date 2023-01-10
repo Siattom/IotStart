@@ -4,7 +4,14 @@
 
 {% block body %}
     <h2 class="register">Voici les rapports</h2>
-        <div class="interventionForm">
+
+                <form class="formSearch" action="/vt/list/search">
+                    <input class="form-input" name="search" type="search"
+                        placeholder="Ne pas mettre de '0'">
+                    <button class="button ombre" type="submit"><i class="bi bi-search"></i></button>
+                </form>
+
+        <div class="flex">
 
             {% for visiteTechnique in visites %}
                 <div class="inter">

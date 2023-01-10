@@ -41,13 +41,13 @@ class InterventionController extends AbstractController
         // on associe l'entité intervention pour avoir accès aux informations
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $intervention->setCreatedAt(new DateTimeImmutable());
-            // on fournit la date de création de l'intervention 
             // le n°Ot est mit à 000000000 pour etre modifié à l'avenir
             $intervention->setCloture('0');
             // On précise que l'intervention n'est pas cloturée
             $intervention->setStartWork(new DateTime());
             // L'intervention démarre à sa création pour le moment (point à revoir)
+            $intervention->setCreatedAt(new DateTimeImmutable());
+            // on fournit la date de création de l'intervention 
 
             $entityManager->persist($intervention);
             $entityManager->flush();
@@ -77,10 +77,10 @@ class InterventionController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $intervention->setCreatedAt(new DateTimeImmutable());
-            $intervention->setN°ot('0000000000');
             $intervention->setCloture('0');
             $intervention->setStartWork(new DateTime());
             $intervention->setClient($client[0]);
+            
             $securiteEntity->setStatut('1');
 
             $entityManager->persist($intervention);
@@ -101,7 +101,7 @@ class InterventionController extends AbstractController
      */
     public function interventionList(InterventionRepository $InterventionRepository, RapportRepository $rapportRepository)
     {
-        $interventionId = $InterventionRepository->findAll();
+        $interventionId = $InterventionRepository->findAllWhithoutArchive();
         $rapport = $rapportRepository->findAll();
         
             return $this->render('/intervention/inter.html.twig', [
@@ -169,11 +169,33 @@ class InterventionController extends AbstractController
 
 
     /**
-     * @Route("/list/securite/asc", name="list_securite_asc", methods="GET")
+     * @Route("/list/securite/filter/{value}", name="list_securite_asc", methods="GET")
      */
-    public function listSecuriteAsc(SecuriteRepository $securiteRepository)
+    public function listSecuriteAsc(Int $value, SecuriteRepository $securiteRepository)
     {
-        $securite = $securiteRepository->findSecuriteAsc();
+        if($value == 0) {
+            $securite = $securiteRepository->findSecuriteAsc();
+
+            return $this->render('intervention/securite-list.html.twig', [
+                'securite' => $securite,
+            ]);
+        } else {
+            $securite = $securiteRepository->findSecuriteDesc();
+
+            return $this->render('intervention/securite-list.html.twig', [
+                'securite' => $securite,
+            ]);
+        }
+        
+    }
+
+
+    /**
+     * @Route("/list/securite/lues/{statvalue}", name="list_securite_oui", methods="GET")
+     */
+    public function listSecuriteOui(Int $statvalue, SecuriteRepository $securiteRepository)
+    {
+        $securite = $securiteRepository->findSecuriteOui($statvalue);
 
         return $this->render('intervention/securite-list.html.twig', [
             'securite' => $securite,
@@ -182,43 +204,25 @@ class InterventionController extends AbstractController
 
 
     /**
-     * @Route("/list/securite/desc", name="list_securite_desc", methods="GET")
+     * @Route("/list/intervention/cloture/asc/{value}", name="list_inter_archive_asc", methods="GET")
      */
-    public function listSecuriteDesc(SecuriteRepository $securiteRepository)
+    public function listArchivesAsc(Int $value, InterventionRepository $InterventionRepository)
     {
-        $securite = $securiteRepository->findSecuriteDesc();
+        if ($value == 0){
+            $intervention = $InterventionRepository->findInterArchiveAsc();
 
-        return $this->render('intervention/securite-list.html.twig', [
-            'securite' => $securite,
+            return $this->render('/intervention/archives.html.twig', [
+                'interventions' => $intervention,
+            ]);
+        } else {
+            $intervention = $InterventionRepository->findInterArchiveDesc();
+
+        return $this->render('/intervention/archives.html.twig', [
+            'interventions' => $intervention,
         ]);
+        }
+       
     }
-
-
-    /**
-     * @Route("/list/securite/oui", name="list_securite_oui", methods="GET")
-     */
-    public function listSecuriteOui(SecuriteRepository $securiteRepository)
-    {
-        $securite = $securiteRepository->findSecuriteOui();
-
-        return $this->render('intervention/securite-list.html.twig', [
-            'securite' => $securite,
-        ]);
-    }
-
-
-    /**
-     * @Route("/list/securite/non", name="list_securite_non", methods="GET")
-     */
-    public function listSecuriteNon(SecuriteRepository $securiteRepository)
-    {
-        $securite = $securiteRepository->findSecuriteNon();
-
-        return $this->render('intervention/securite-list.html.twig', [
-            'securite' => $securite,
-        ]);
-    }
-
 
 
      /**
@@ -237,12 +241,13 @@ class InterventionController extends AbstractController
             ]);
     }
 
+
     /**
-     * @Route("/list/intervention/cloture/non", name="list_intervention_cloture_non", methods="GET")
+     * @Route("/list/intervention/cloture/{cloture}", name="list_intervention_cloture", methods="GET")
      */
-    public function listInterventionClotureNon(InterventionRepository $InterventionRepository)
+    public function listInterventionCloture(Int $cloture, InterventionRepository $InterventionRepository)
     {
-        $clientList = $InterventionRepository->findInterventionClotureNon();
+        $clientList = $InterventionRepository->findInterventionsByCloture($cloture);
 
         return $this->render('intervention/inter-found.html.twig', [
             'clientList' => $clientList,
@@ -251,14 +256,37 @@ class InterventionController extends AbstractController
 
 
     /**
-     * @Route("/list/intervention/cloture", name="list_intervention_cloture", methods="GET")
+     * @Route("/cloture/finale/{id}", name="cloture_finale")
      */
-    public function listInterventionCloture(InterventionRepository $InterventionRepository)
+    public function clotureFinale(Int $id, EntityManagerInterface $entityManager, Intervention $intervention, InterventionRepository $InterventionRepository)
     {
-        $clientList = $InterventionRepository->findInterventionCloture();
+        $interventionInfo = $entityManager->getRepository(Intervention::class)->find($id);
 
-        return $this->render('intervention/inter-found.html.twig', [
-            'clientList' => $clientList,
+        $cloture = $interventionInfo;
+
+        if ($interventionInfo->getClotureFinale() == null ){
+            $cloture->setClotureFinale(new DateTime);
+        } 
+        else { 
+            $cloture->setClotureFinale(null);
+        }
+
+        $entityManager->persist($intervention);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('archives');
+    }
+
+    
+    /**
+     * @Route("/archives", name="archives", methods="GET")
+     */
+    public function archivesList(InterventionRepository $InterventionRepository)
+    {
+        $intervention = $InterventionRepository->findClotureFinale();
+
+        return $this->render('/intervention/archives.html.twig', [
+            'interventions' => $intervention,
         ]);
     }
 }

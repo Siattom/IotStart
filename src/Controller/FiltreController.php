@@ -30,12 +30,12 @@ class FiltreController extends AbstractController
 
 
     /**
-     * @Route("/list/rapport/cloture", name="list_rapport_cloture", methods="GET")
+     * @Route("/list/rapport/cloture/{cloturevalue}", name="list_rapport_cloture", methods="GET")
      */
-    public function listeRapportFiltreCloture(RapportRepository $RapportRepository)
+    public function listeRapportFiltreCloture(Int $cloturevalue, RapportRepository $RapportRepository)
     {
-        $rapports = $RapportRepository->findRapportByCloture();
-        $visite = $RapportRepository->findVisiteByCloture();
+        $rapports = $RapportRepository->findRapportByCloture($cloturevalue);
+        $visite = $RapportRepository->findVisiteByCloture($cloturevalue);
         //dd($rapports, $visite)
 
         return $this->render('/rapport/listadmin.html.twig', [
@@ -44,18 +44,5 @@ class FiltreController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/list/rapport/cloture/non", name="list_rapport_cloture_non", methods="GET")
-     */
-    public function listeRapportFiltreClotureNon(RapportRepository $RapportRepository)
-    {
-        $rapports = $RapportRepository->findRapportByClotureNon();
-        $visite = $RapportRepository->findVisiteByClotureNon();
-
-        return $this->render('rapport/listadmin.html.twig', [
-            'rapports' => $rapports, 
-            'visite' => $visite,
-        ]);
-    }
 
 }

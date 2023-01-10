@@ -87,16 +87,17 @@ class SecuriteRepository extends ServiceEntityRepository
 
 
     // take the securite with statut = 1
-    public function findSecuriteOui()
+    public function findSecuriteOui(Int $statvalue)
     {
         $entityManager = $this->getEntityManager();
 
         $query = $entityManager->createQuery(
             'SELECT s
             FROM App\Entity\Securite s
-            WHERE s.statut = 1
+            WHERE s.statut = :statvalue
             ORDER BY s.Created_at DESC'
         );
+        $query->setParameter('statvalue', $statvalue);
         return $query->getResult();
     }
 

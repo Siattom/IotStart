@@ -1,26 +1,29 @@
-<div class = "nav">
-    
-      <a href="/">
-        <button name="button" type="button" class="accueil">Accueil</button>
-      </a>
+    <div class = "nav">
+      <ul class="navbar"> 
+        <li class="button-client ombre">
+          <a href="/"> Accueil </a>
+        </li>
       
-      <a href="{{ path('show_inter_ope') }}">
-        <button name="button" type="button">Agenda</button> 
-      </a>
-
-      <a href="{{ path('completed_tasks') }}">
-        <button name="button" type="button">Tâches effectuées</button>
-      </a>
-
-      <a href="/vt/add">
-        <button name="button" type="button">Visite technique</button>
-      </a>
-
-      <a href="/start/logout">
-        <button name="button" type="button" class="material-symbols-outlined"> 
-          <span class="material-symbols-outlined">
-          power_settings_new
-          </span>
-        </button>
-      </a>
-    </div> 
+        <li class="button-client ombre">
+          <a href="{{ path('show_inter_ope') }}"> Agenda </a>
+        </li>
+      
+        <li class="button-client ombre">
+          <a href="{{ path('completed_tasks') }}"> Historique </a>
+        </li>
+        
+        <li class="button-client ombre">
+          <a href="/vt/add"> VT </a>
+        </li>
+        
+        <li class="button-client lgt ombre">
+          <a href="/start/logout">
+            <button name="button" type="button" class="btn-logout material-symbols-outlined ombre"> 
+              <span class="material-symbols-outlined">
+                power_settings_new
+              </span>
+            </button>
+          </a>
+        </li>
+      </ul>
+    </div>

@@ -56,6 +56,32 @@ class VisiteTechniqueRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
+
+    /**
+     * Liste les interventions par recherche de nom clients
+     */
+    public function findAllOrderedByClientAscQb(string $search = null)
+    {
+
+       $entityManager = $this->getEntityManager();
+
+       $query = $entityManager->createQuery(
+           'SELECT v
+           FROM App\Entity\VisiteTechnique v
+           WHERE (v.nom LIKE :search)
+           OR (v.adresse LIKE :search)
+           OR (v.travaux_a_effectuer LIKE :search)
+           '
+
+       );
+      
+       $query->setParameter('search', '%'.$search.'%');
+
+       return $query->getResult();
+    }
+
+
+
 //    /**
 //     * @return VisiteTechnique[] Returns an array of VisiteTechnique objects
 //     */

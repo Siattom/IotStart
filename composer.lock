@@ -492,16 +492,16 @@
         },
         {
             "name": "doctrine/doctrine-bundle",
-            "version": "2.8.0",
+            "version": "2.8.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/DoctrineBundle.git",
-                "reference": "0421ebc069519a0f19b9c39e5dc18c359be0feab"
+                "reference": "251cd5aaea32bb92cdad4204840786b317dcdd4c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/DoctrineBundle/zipball/0421ebc069519a0f19b9c39e5dc18c359be0feab",
-                "reference": "0421ebc069519a0f19b9c39e5dc18c359be0feab",
+                "url": "https://api.github.com/repos/doctrine/DoctrineBundle/zipball/251cd5aaea32bb92cdad4204840786b317dcdd4c",
+                "reference": "251cd5aaea32bb92cdad4204840786b317dcdd4c",
                 "shasum": ""
             },
             "require": {
@@ -587,7 +587,7 @@
             ],
             "support": {
                 "issues": "https://github.com/doctrine/DoctrineBundle/issues",
-                "source": "https://github.com/doctrine/DoctrineBundle/tree/2.8.0"
+                "source": "https://github.com/doctrine/DoctrineBundle/tree/2.8.2"
             },
             "funding": [
                 {
@@ -603,7 +603,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-12-28T16:35:32+00:00"
+            "time": "2023-01-06T11:42:10+00:00"
         },
         {
             "name": "doctrine/doctrine-migrations-bundle",
@@ -1592,16 +1592,16 @@
         },
         {
             "name": "lcobucci/jwt",
-            "version": "4.2.1",
+            "version": "4.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/lcobucci/jwt.git",
-                "reference": "72ac6d807ee51a70ad376ee03a2387e8646e10f3"
+                "reference": "4d7de2fe0d51a96418c0d04004986e410e87f6b4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/lcobucci/jwt/zipball/72ac6d807ee51a70ad376ee03a2387e8646e10f3",
-                "reference": "72ac6d807ee51a70ad376ee03a2387e8646e10f3",
+                "url": "https://api.github.com/repos/lcobucci/jwt/zipball/4d7de2fe0d51a96418c0d04004986e410e87f6b4",
+                "reference": "4d7de2fe0d51a96418c0d04004986e410e87f6b4",
                 "shasum": ""
             },
             "require": {
@@ -1610,7 +1610,7 @@
                 "ext-mbstring": "*",
                 "ext-openssl": "*",
                 "ext-sodium": "*",
-                "lcobucci/clock": "^2.0",
+                "lcobucci/clock": "^2.0 || ^3.0",
                 "php": "^7.4 || ^8.0"
             },
             "require-dev": {
@@ -1650,7 +1650,7 @@
             ],
             "support": {
                 "issues": "https://github.com/lcobucci/jwt/issues",
-                "source": "https://github.com/lcobucci/jwt/tree/4.2.1"
+                "source": "https://github.com/lcobucci/jwt/tree/4.3.0"
             },
             "funding": [
                 {
@@ -1662,7 +1662,7 @@
                     "type": "patreon"
                 }
             ],
-            "time": "2022-08-19T23:14:07+00:00"
+            "time": "2023-01-02T13:28:00+00:00"
         },
         {
             "name": "lexik/jwt-authentication-bundle",

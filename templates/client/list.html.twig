@@ -1,17 +1,24 @@
 
 {% extends 'base.html.twig' %}
 {% block body %}
-    <div class="showHome">
-        {% for client in client %}    
-            <div class="inter">
-                <p class="inter-name"> {{ client.user.Name }} </p>
-                <p class="inter-name"> {{ client.user.Surname }} </p>
-                <p class="inter-name"> {{ client.Activity }} </p>
-                <p class="inter-name"> {{ client.Adresse }} </p>
-                <p class="inter-name"> {{ client.CodePostal }} </p>
-                <p class="inter-name"> {{ client.Ville }} </p>
-                <p class="inter-desc"> 0{{ client.Tel }} </p>
-            </div>
-        {% endfor %}
-    </div>
+
+        <form class="formSearch" action="/listclient/filtre">
+            <input class="form-input" name="search" type="search"
+                placeholder="Recherche...">
+            <button class="button ombre" type="submit"><i class="bi bi-search"></i></button>
+        </form>
+        <div class="flex">
+
+            {% for client in client %}    
+                <div class="inter">
+                    <p class="inter-name"> {{ client.user.Name }} </p>
+                    <p class="inter-name"> {{ client.user.Surname }} </p>
+                    <p class="inter-name"> {{ client.Activity }} </p>
+                    <p class="inter-name"> {{ client.Adresse }} </p>
+                    <p class="inter-name"> {{ client.CodePostal }} </p>
+                    <p class="inter-name"> {{ client.Ville }} </p>
+                    <p class="inter-desc"> 0{{ client.Tel }} </p>
+                </div>
+            {% endfor %}
+        </div>
 {% endblock %}

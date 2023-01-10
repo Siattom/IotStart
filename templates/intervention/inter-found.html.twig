@@ -7,23 +7,23 @@
               placeholder="Rechercher...">
           <button class="button" type="submit"><i class="bi bi-search"></i></button>
       </form>
-      <ul class="navbar navbarList">
+      <ul class="navbarList">
           <li class="button">
             <a href="#">Filtre</a>
             <ul>          
-              <li><a id="filtreCloture"href="/inter/list/intervention/cloture">Cloturé</a></li>
-              <li><a id="filtreNonCloture"href="/inter/list/intervention/cloture/non">Non cloturé</a></li>
+              <li><a id="filtreCloture"href="/inter/list/intervention/cloture/1">Cloturé</a></li>
+              <li><a id="filtreNonCloture"href="/inter/list/intervention/cloture/0">Non cloturé</a></li>
             </ul>
           </li>
       </ul>
 
-    <div class="globalInter">
+    <div class="flex">
       {% for intervention in clientList %}    
         <div class="inter">
             <p class="inter-name"> {{ intervention.client.Name }} </p>
             <a class="inter-name-link" href="{{path ('inter_info', {id: intervention.id}) }}"> {{ intervention.name }} </a>
             <p class="inter-desc"> {{ intervention.description }} </p>
-            <p class="inter-ot"> N°OT : {{ intervention.NOT }} </p>
+            <p class="inter-ot"> N°OT : {{ intervention.numeroot }} </p>
             <p class="inter-ot"> opérateur affecté : {% if intervention.operateur %} {{ intervention.operateur.name }} {% endif %}</p>
 
             <p class="inter-ot-non-cloture"> {% if intervention.cloture == 0 %} non-cloturé {% endif %} </p>

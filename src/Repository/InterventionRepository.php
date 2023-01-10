@@ -48,6 +48,22 @@ class InterventionRepository extends ServiceEntityRepository
     }
 
 
+    //trouver les intervention non archivé
+    public function findAllWhithoutArchive()
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT i
+            FROM App\Entity\Intervention i
+            WHERE i.Cloture_finale IS NULL
+            ORDER BY i.Created_at DESC'
+        );
+
+        return $query->getResult();
+    }
+
+
     public function findByName(Intervention $name)
     {
         return $this->createQueryBuilder('i')
@@ -67,7 +83,8 @@ class InterventionRepository extends ServiceEntityRepository
             'SELECT i
             FROM App\Entity\Intervention i
             WHERE i.operateur = :id
-            AND i.Cloture = 0'
+            AND i.Cloture = 0
+            AND i.Cloture_finale IS NULL'
         );
 
         $query->setParameter('id', $operateur_id)
@@ -95,6 +112,41 @@ class InterventionRepository extends ServiceEntityRepository
     }
 
 
+    // recupere les interventions avec une cloture final
+    public function findClotureFinale()
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT i
+            FROM App\Entity\Intervention i
+            WHERE i.Cloture_finale IS NOT NULL'
+        );
+
+        return $query->getResult();
+    }
+
+
+    // recupere les trois dernières interventions via l'id
+    public function findInterByIdForTheFirst(int $operateurId)
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT i
+            FROM App\Entity\Intervention i
+            WHERE i.operateur = :id
+            AND i.Cloture = 0
+            AND i.Cloture_finale IS NULL
+            ORDER BY i.Created_at DESC'
+        );
+
+        $query->setParameter('id', $operateurId);
+        $query->setMaxResults(3);
+        return $query->getResult();
+    }
+
+
     // récupère les interventions avec le rapport id
     public function findInterRapport(int $rapportId)
     {
@@ -103,7 +155,8 @@ class InterventionRepository extends ServiceEntityRepository
         $query = $entityManager->createQuery(
             'SELECT i
             FROM App\Entity\Intervention i
-            WHERE i.id = :id'
+            WHERE i.id = :id
+            AND i.Cloture_finale IS NULL'
         );
 
         $query->setParameter('id', $rapportId);
@@ -121,6 +174,7 @@ class InterventionRepository extends ServiceEntityRepository
             'SELECT i
             FROM App\Entity\Intervention i
             WHERE i.id = :id
+            AND i.Cloture_finale IS NULL
             ORDER BY i.id ASC'
         );
 
@@ -159,11 +213,11 @@ class InterventionRepository extends ServiceEntityRepository
             'SELECT i
             FROM App\Entity\Intervention i
             JOIN App\Entity\Client c
-            WHERE (i.client = c.id AND c.Name LIKE :search)
-            OR (i.client = c.id AND c.Tel LIKE :search)
-            OR (i.client = c.id AND i.Adresse LIKE :search)
-            OR (i.client = c.id AND i.not LIKE :search)
-            OR (i.client = c.id AND i.Name LIKE :search)'
+            WHERE (i.client = c.id AND i.Cloture_finale IS NULL AND c.Name LIKE :search)
+            OR (i.client = c.id AND i.Cloture_finale IS NULL AND c.Tel LIKE :search)
+            OR (i.client = c.id AND i.Cloture_finale IS NULL AND i.Adresse LIKE :search)
+            OR (i.client = c.id AND i.Cloture_finale IS NULL AND i.numero_ot LIKE :search)
+            OR (i.client = c.id AND i.Cloture_finale IS NULL AND i.Name LIKE :search)'
 
         );
        
@@ -173,34 +227,20 @@ class InterventionRepository extends ServiceEntityRepository
      }
 
 
-     // take intervention with cloture = 0
-     public function findInterventionClotureNon()
-     {
+     public function findInterventionsByCloture(int $clotureValue)
+    {
          $entityManager = $this->getEntityManager();
 
          $query = $entityManager->createQuery(
              'SELECT i
-             from App\Entity\Intervention i
-             where i.Cloture = 0'
+             FROM App\Entity\Intervention i
+             WHERE i.Cloture = :clotureValue
+             AND i.Cloture_finale IS NULL'
          );
+         $query->setParameter('clotureValue', $clotureValue);
 
          return $query->getResult();
-     }
-
-
-     // take intervention with cloture = 1
-     public function findInterventionCloture()
-     {
-         $entityManager = $this->getEntityManager();
- 
-         $query = $entityManager->createQuery(
-             'SELECT i
-             from App\Entity\Intervention i
-             where i.Cloture = 1'
-         );
- 
-         return $query->getResult();
-     }
+    } 
 
 
      //recupere toutes les infos d'une intervention via son id
@@ -211,11 +251,42 @@ class InterventionRepository extends ServiceEntityRepository
         $query = $entityManager->createQuery(
             'SELECT i
             FROM App\Entity\Intervention i 
-            WHERE i.id = :id'
+            WHERE i.id = :id
+            AND i.Cloture_finale IS NULL'
         );
 
         $query->setParameter('id', $id);
 
+        return $query->getResult();
+    }
+
+
+    // recupere les intervention archivé asc
+    public function findInterArchiveAsc()
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT i
+            FROM App\Entity\Intervention i
+            WHERE i.Cloture_finale IS NOT NULL
+            ORDER BY i.Created_at ASC'
+        );
+        return $query->getResult();
+    }
+
+
+    // recupere les intervention archivé Desc
+    public function findInterArchiveDesc()
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT i
+            FROM App\Entity\Intervention i
+            WHERE i.Cloture_finale IS NOT NULL
+            ORDER BY i.Created_at DESC'
+        );
         return $query->getResult();
     }
 

@@ -115,6 +115,21 @@ class clientController extends AbstractController
         ]);
     }
 
+    
+    /**
+     * @Route("/listclient/filtre", name="list_client_filtre", methods="GET")
+     */
+    public function listClientSearch(ClientRepository $ClientRepository, Request $request)
+    {
+        $client = $ClientRepository->findClientBySearch($request->query->get('search'));
+        //dd($rapport, $visite);
+
+        return $this->render('client/list.html.twig', [
+            'client' => $client,
+        ]);
+    }
+
+
     /**
      * @Route("/notification", name="notification", methods="GET")
      */

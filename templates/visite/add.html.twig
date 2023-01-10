@@ -4,13 +4,15 @@
 
 {% block body %}
     <h2 class="register">Rédigez ici votre visite technique</h2>
-        <div class="rapportForm">
+        <div class="inter">
             {{ form_start(visiteForm) }}
                 {{ form_row(visiteForm.travaux_a_effectuer) }}
                 {{ form_row(visiteForm.materiel_necessaire) }}
                 {{ form_row(visiteForm.Activite) }}
                 {{ form_row(visiteForm.temps_necessaire) }}
-                {{ form_row(visiteForm.difficulte) }}
+                {{ form_row(visiteForm.difficulte, {
+                        label: 'Quelle difficultée avez-vous rencontré :'
+                }) }}
                 {{ form_row(visiteForm.commentaire) }}
                 {{ form_row(visiteForm.personne_a_contacter) }}
                 {{ form_row(visiteForm.solution_1) }}

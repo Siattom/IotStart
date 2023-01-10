@@ -5,25 +5,25 @@
 {% block body %}
     <h2 class="register">Voici les rapports</h2>
 
-            <div class="filtre">
                 <form class="formSearch" action="/listeRapport/filtre/tel">
                     <input class="form-input" name="search" type="search"
                         placeholder="Ne pas mettre de '0'">
-                    <button class="button" type="submit"><i class="bi bi-search"></i></button>
+                    <button class="button ombre" type="submit"><i class="bi bi-search"></i></button>
                 </form>
-                <ul class="navbar navbarList">
-                    <li class="button">
+                <ul class="navbarList">
+                    <li class="button ombre">
                       <a href="#">Filtre</a>
                       <ul>          
-                        <li><a id="filtreCloture"href="/inter/list/rapport/cloture">Cloturé</a></li>
-                        <li><a id="filtreNonCloture"href="/inter/list/rapport/cloture/non">Non cloturé</a></li>
+                        <li><a id="filtreCloture"href="/list/rapport/cloture/1">Cloturé</a></li>
+                        <li><a id="filtreNonCloture"href="/list/rapport/cloture/0">Non cloturé</a></li>
+                        <li><a id="filtreNonCloture"href="/inter/rapport/list">Le plus récent</a></li>
+                        <li><a id="filtreNonCloture"href="/inter/rapport/list/asc">Le plus ancien</a></li>
                       </ul>
                     </li>
                 </ul>
 
-            </div>
 
-        <div class="interventionForm">
+        <div class="flex">
 
             {% for rapport in rapports %}
                 <div class="inter">

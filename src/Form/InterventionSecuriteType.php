@@ -12,11 +12,11 @@ class InterventionSecuriteType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            /* ->add('n°ot') */
-            ->add('Name')
-            ->add('Description')
-            ->add('adresse')
-        ;
+        ->add('numero_ot')  
+        ->add('Name')
+        ->add('Description')
+        ->add('adresse')
+    ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void

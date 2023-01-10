@@ -8,8 +8,14 @@
 
 body {
     margin: auto;
-    background-color: #2D3657;
-    color:white;
+        background-color: white;
+/* V1    background: linear-gradient(to right, #D0D3D4, #F0F3F4, #D0D3D4); */
+/* V2    background: linear-gradient(to right, #FBEEE6, #FEF9E7, #FBEEE6); */
+/* V3    background: linear-gradient(to right, #AED6F1, #D6EAF6, #AED6F1); */
+/* V4    background: url(../images/body-V4.jpg) no-repeat center; */
+    background-size: cover;
+
+    color:black;
 }
 
 .footer {
@@ -25,13 +31,20 @@ body {
     /* padding-top:50px; */
     /* height:50px; */
 }
+
 h1 {
-    background-color: white;
+    background: linear-gradient(to right, #27617E, #5CB8FB, #27617E); 
+/* V1    background: linear-gradient(to right, #717D7E, #D5DBDB ,#717D7E); */
+/* V2    background: linear-gradient(to right, #784212, #9C640C ,#784212); */
+/* V3    background: linear-gradient(to right, #3398DB, #27617E ,#3398DB); */
+/* V4    background: url(../images/header-V4.jpg) no-repeat center; */
+    background-size: cover;
     text-align: center;
     padding-bottom: 0rem;
     padding-top: 0rem;
     font-size: 2em;
     color: #27617E;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
 }
 
 .nav {
@@ -48,6 +61,14 @@ h1 {
     color: white;
     border-radius: 10px;
     border: none;
+    transition: all 1s;
+    transform: scale(1);
+}
+
+.button:hover {
+    background-color: #27617E;
+    transition: 2s;
+    transform: scale(1.08);
 }
 
 button {
@@ -91,7 +112,7 @@ button {
   }
   .navbar li {
     height: 3.5em;
-    width: 15em;
+    width: 10em;
     float: left;
     text-align: center;
     list-style: none;
@@ -118,6 +139,7 @@ button {
     background-color: #5CB8FB;
     border: 1px solid #2D3657;
   }
+
 
 /*
 ----------------------------------------------------------------------------------------------------------
@@ -146,6 +168,10 @@ button {
     padding: 3em;
     margin: auto;
     max-width: 35%;
+}
+
+.ombre {
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
 }
 
 .btnConnexion {
@@ -177,7 +203,7 @@ button {
 */
 .register {
     font-size: 3em;
-    color: white;
+    color: black;
     text-align: center;
 }
 
@@ -186,7 +212,11 @@ button {
 }
 
 .btn {
-    color: white;
+    color: black;
+}
+
+.btn-login {
+    background-color: #5CB8FB;
 }
 
 /* interventionadd */
@@ -259,12 +289,24 @@ button {
     font-size: large;
 }
 
+.flex {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
 .inter {
     padding: 1em;
     margin: 1em;
-    max-width: 45%;
+    width: 40%;
     border: 1px solid #5CB8FB;
 }
+
+.inter:hover {
+    transition: 0.5s;
+    transition-timing-function: ease-out;
+    transform: translateY(-5px);
+  }
 
 .globalInter {
     padding: 3em;
@@ -279,7 +321,7 @@ button {
 
 .inter-name-link {
     text-decoration: none;
-    color: white;
+    color: black;
     font-size: large;
 }
 
@@ -452,12 +494,14 @@ button {
 */
 .formSearch {
     display: flex;
-    margin: 3em;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    margin-left: 6em;
 }
 
 .form-input {
     border-radius: 5px;
-    padding-right: 4em;
+    padding-right: 2em;
 }
 
 
@@ -471,17 +515,36 @@ button {
 }
 
 .material-symbols-outlined {
-    padding-top: 7%;
+    padding-top: 2%;
     padding-bottom: 7%;
 }
 
 
 #notification {
-  display: none;
-  background-color: #ffa07a;
+  
+    display: none;
+  background-color: #008000;
   color: white;
-  padding: 10px;
+  height: 3rem;
+  width: 3rem;
+  line-height: 0.5rem;
+  padding: 5px;
+  margin-right: 0.5rem;
+  border-radius: 50%;
+  animation: breath 2s ease-in-out infinite;
 }
+
+@keyframes breath {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.2);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
 
 .filtre {
     margin: 3em;
@@ -497,3 +560,38 @@ button {
     max-height: 2.7em;
     text-align: center;
 }
+
+.navbarList {
+    height: 4em;
+    text-align: center;
+    
+  }
+  .navbarList li {
+    height: 3.5em;
+    width: 4em;
+    float: left;
+    text-align: center;
+    list-style: none;
+    margin-right: 0.5em;
+    margin-left: 0.5em;
+    background-color: #5CB8FB;
+  }
+  .navbarList a {
+    padding: 10px 0;
+    text-decoration: none;
+    color: white;
+    display: block;
+  }
+  .navbarList li ul {
+    display: none;
+    height: auto;
+    margin: 0;
+    padding: 0;
+  }
+  .navbarList li:hover ul {
+    display: block;
+  }
+  .navbarList li ul li {
+    background-color: #5CB8FB;
+    border: 1px solid #2D3657;
+  }

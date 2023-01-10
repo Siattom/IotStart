@@ -1,12 +1,12 @@
 
 {% extends 'base.html.twig' %}
 {% block body %}
-    <div class="showHome">
+    <div class="showHome flex">
         {% for intervention in interventions %}    
             <div class="inter">
                 <a class="inter-name-link" href="{{path ('inter_info', {id: intervention.id}) }}"> {{ intervention.name }} </a>
                 <p class="inter-desc"> {{ intervention.description }} </p>
-                <p class="inter-ot"> {{ intervention.NOT }} </p>
+                <p class="inter-ot"> {{ intervention.numeroot }} </p>
                 <a href="http://www.google.fr/maps?um=1&tab=pl&ie=UTF-8&hl=fr&q={{ intervention.adresse }}">adresse </a>
                 <a href="{{path ('add_rapport', {id: intervention.id}) }}">Rapport</a>
                 <a href="{{path ('add_vt_id', {id: intervention.id}) }}">Visite Technique</a>

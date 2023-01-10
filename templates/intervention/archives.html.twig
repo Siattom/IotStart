@@ -2,21 +2,18 @@
 {% extends 'base.html.twig' %}
 {% block body %}
 
-  <h2 class="register">Liste des interventions</h2>
-      <form class="formSearch" action="/inter/client/search">
-          <input class="form-input" name="search" type="search"
-              placeholder="Rechercher...">
-          <button class="button" type="submit"><i class="bi bi-search"></i></button>
-      </form>
+  <h2 class="register">Liste des archives</h2>
+
       <ul class="navbarList">
           <li class="button ombre">
             <a href="#">Filtre</a>
             <ul>          
-              <li><a id="filtreCloture"href="/inter/list/intervention/cloture/1">Cloturé</a></li>
-              <li><a id="filtreNonCloture"href="/inter/list/intervention/cloture/0">Non cloturé</a></li>
+              <li><a id="filtreCloture"href="/inter/list/intervention/cloture/asc/0">Ordre croissant</a></li>
+              <li><a id="filtreNonCloture"href="/inter/list/intervention/cloture/asc/1">Ordre décroissant</a></li>
             </ul>
           </li>
       </ul>
+
     <div class="flex">
       {% for intervention in interventions %}    
         <div class="inter">

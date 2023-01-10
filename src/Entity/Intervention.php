@@ -20,11 +20,6 @@ class Intervention
     private $id;
 
     /**
-     * @ORM\Column(type="integer")
-     */
-    private $not;
-
-    /**
      * @ORM\Column(type="string", length=255)
      */
     private $Name;
@@ -84,6 +79,11 @@ class Intervention
      */
     private $visite;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $numero_ot;
+
     public function __construct()
     {
         $this->rapports = new ArrayCollection();
@@ -93,18 +93,6 @@ class Intervention
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getNot(): ?int
-    {
-        return $this->not;
-    }
-
-    public function setNot(int $not): self
-    {
-        $this->not = $not;
-
-        return $this;
     }
 
     public function getName(): ?string
@@ -283,6 +271,18 @@ class Intervention
                 $visite->setIntervention(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getNumeroOt(): ?int
+    {
+        return $this->numero_ot;
+    }
+
+    public function setNumeroOt(int $numero_ot): self
+    {
+        $this->numero_ot = $numero_ot;
 
         return $this;
     }

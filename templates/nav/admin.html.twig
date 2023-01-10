@@ -1,50 +1,53 @@
 <div class = "nav">
       <ul class="navbar">
 
-        <li class="button">
-          <a href="/">Accueil</a>
+        <li class="button ombre">
+          <a href="/" class="li-name">Accueil</a>
         </li>
 
-        <li class="button">
-          <a href="" type="button">Agenda</a>
+        <li class="button ombre">
+          <a href="{{ path('show_inter_ope') }}" class="li-name">Agenda</a>
         </li>
 
-        <li class="button">
-          <a href="#">Interventions</a>
+        <li class="button ombre">
+          <a href="#" class="li-name">Inter</a>
           <ul>          
             <li><a href="/inter/intervention/list">Interventions</a></li>
             <li><a href="/inter/intervention/add">Nouvelle intervention</a></li>
             <li><a href="/inter/rapport/list">Rapports</a></li>
+            <li><a href="/inter/archives">Archives</a></li>
           </ul>
         </li>
         
-        <li class="button">
-          <a href="#">Visites techniques</a>
+        <li class="button ombre">
+          <a href="#" class="li-name">VT</a>
           <ul>
             <li><a href="/vt/list">Vt</a></li>
             <li><a href="/vt/add">Nouvelle Vt</a></li>
           </ul>
         </li>
 
-        <li class="button">
-          <a href="#" class="listener">Clients</a>
+        <li class="button ombre">
+          <a href="#" class="li-name">Clients</a>
           <ul>
             <li><a href="/inter/securite/list">Demandes</a></li>
             <li><a href="/list/clients">Les clients</a></li>
           </ul>
         </li>
 
-          <button id="notification">
-            <a href="/inter/list/securite/non" class="material-symbols-outlined">notifications</a>
+          <button id="notification" class="material-symbols-outlined ombre">
+            <a href="/inter/list/securite/non" class="cloche">notifications</a>
           </button>
 
-        <a class="button" href="/start/logout">
-          <button name="button" type="button" class="material-symbols-outlined"> 
+        <li class="button ombre">
+        <a href="/start/logout">
+          <button name="button" type="button" class="btn-logout material-symbols-outlined"> 
             <span class="material-symbols-outlined">
             power_settings_new
             </span>
          </button>
         </a>
+        </li>
         
       </ul>
 </div>

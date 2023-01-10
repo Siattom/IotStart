@@ -10,10 +10,10 @@
                 <form class="formSearch" action="/ope/task/list/ot">
                     <input class="form-input" name="search" type="search"
                         placeholder="Recherche par n°ot...">
-                    <button class="button" type="submit"><i class="bi bi-search"></i></button>
+                    <button class="button ombre" type="submit"><i class="bi bi-search"></i></button>
                 </form>
-                <ul class="navbar navbarList">
-                  <li class="button">
+                <ul class="navbarList">
+                  <li class="button ombre">
                     <a href="#">Filtre</a>
                     <ul>          
                       <li><a id="filtreCloture"href="/ope/list/task/cloture/oui">Cloturé</a></li>
@@ -24,7 +24,7 @@
             </div>
         
 
-        <div class="interventionForm">
+        <div class="flex">
 
             {% for rapport in intervention %}
                 <div class="inter">

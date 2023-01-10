@@ -105,6 +105,21 @@ class VisiteTechniqueController extends CoreController
 
 
     /**
+     * @Route("/vt/list/search", name="vt_list_search", methods="GET")
+     */
+    public function vtListSearch(VisiteTechniqueRepository $VisiteTechniqueRepository, Request $request)
+    {
+        // On va chercher les données
+        $rapportVt = $VisiteTechniqueRepository->findAllOrderedByClientAscQb($request->query->get('search'));
+
+        return $this->render('visite/list.html.twig', [
+                'visites' => $rapportVt,
+            ]);
+            
+    }
+
+
+    /**
      * @Route("/vt/edit/{id}", name="vt_edit", methods={"GET", "POST"})
      */
     public function vtEdit(Int $id, Request $request, VisiteTechnique $visiteTechnique, EntityManagerInterface $entityManager): Response

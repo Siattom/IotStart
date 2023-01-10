@@ -36,6 +36,22 @@ class RapportController extends AbstractController
 
 
     /**
+     * @Route("/inter/rapport/list/asc", name="rapport_list_asc", methods="GET")
+     */
+    public function rapportListAsc(RapportRepository $rapportRepository, InterventionRepository $interventionRepository)
+    {
+        // il faut appeler la fonction qui récupère les rapports
+        $rapports = $rapportRepository->findRapportAsc();
+        $visite = $rapportRepository->findVisiteAsc(); 
+
+        return $this->render('/rapport/listadmin.html.twig', [
+                'rapports' => $rapports,
+                'visite' => $visite,
+            ]); 
+    }
+
+
+    /**
     * @Route("/rapport/edit/{id}", name="rapport_edit", methods={"GET", "POST"})
     */
     public function edit(Int $id, Request $request, Rapport $rapport, EntityManagerInterface $entityManager): Response

@@ -45,7 +45,6 @@ class OperateurController extends AbstractController
       $rapport = new Rapport();
       $entityManager = $doctrine->getManager();
       $intervention = $entityManager->getRepository(Intervention::class)->find($id);
-      $vt = $visiteTechniqueRepository->
       $form = $this->createForm(RapportType::class, $rapport);
       $form->handleRequest($request);
 

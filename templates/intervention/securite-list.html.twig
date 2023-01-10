@@ -1,20 +1,20 @@
 
 {% extends 'base.html.twig' %}
 {% block body %}
-    <div class="showHome">
 
-        <ul class="navbar navbarList">
-          <li class="button">
+        <ul class="navbarList">
+          <li class="button ombre">
             <a href="#">Filtre</a>
             <ul>          
-              <li><a id="filtreCloture"href="/inter/list/securite/asc">Le plus ancien</a></li>
-              <li><a id="filtreNonCloture"href="/inter/list/securite/desc">Le plus récent</a></li>
-              <li><a id="filtreNonCloture"href="/inter/list/securite/non">A prendre en compte</a></li>
-              <li><a id="filtreNonCloture"href="/inter/list/securite/oui">Pris en compte</a></li>
+              <li><a id="filtreCloture"href="/inter/list/securite/filter/0">Le plus ancien</a></li>
+              <li><a id="filtreNonCloture"href="/inter/list/securite/filter/1">Le plus récent</a></li>
+              <li><a id="filtreNonCloture"href="/inter/list/securite/lues/0">A prendre en compte</a></li>
+              <li><a id="filtreNonCloture"href="/inter/list/securite/lues/1">Pris en compte</a></li>
             </ul>
           </li>
         </ul>
 
+    <div class="flex">
         {% for securite in securite %}    
             <div class="inter">
                 <p class="inter-name"> {{ securite.user.Name}} </p>

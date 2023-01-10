@@ -74,21 +74,19 @@ class RapportRepository extends ServiceEntityRepository
     }
 
 
-    // take specific informations in rapport table
-    public function findRapportbyId(int $id)
+    // take informations in rapport table
+    public function findRapportAsc()
     {
         $entityManager = $this->getEntityManager();
 
         $query = $entityManager->createQuery(
             'SELECT r
-            FROM App\Entity\Rapport r
-            WHERE r.operateur = :id'
+            FROM App\Entity\Rapport r 
+            ORDER BY r.Created_at ASC'
         );
-        $query->setParameter('id', $id);
 
         return $query->getResult();
     }
-    
 
 
     // take specific informations in visite table
@@ -101,6 +99,37 @@ class RapportRepository extends ServiceEntityRepository
             FROM App\Entity\VisiteTechnique v
             ORDER BY v.created_at DESC'
         );
+
+        return $query->getResult();
+    }
+
+
+    // take specific informations in visite table
+    public function findVisiteAsc()
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT v
+            FROM App\Entity\VisiteTechnique v
+            ORDER BY v.created_at ASC'
+        );
+
+        return $query->getResult();
+    }
+
+
+    // take specific informations in rapport table
+    public function findRapportbyId(int $id)
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT r
+            FROM App\Entity\Rapport r
+            WHERE r.operateur = :id'
+        );
+        $query->setParameter('id', $id);
 
         return $query->getResult();
     }
@@ -162,7 +191,7 @@ class RapportRepository extends ServiceEntityRepository
     }
 
     //take the rapport with cloture = 1
-    public function findRapportByCloture() 
+    public function findRapportByCloture(Int $cloturevalue) 
     {
         $entityManager = $this->getEntityManager();
 
@@ -170,48 +199,16 @@ class RapportRepository extends ServiceEntityRepository
             'SELECT r
             FROM App\Entity\Rapport r
             JOIN App\Entity\Intervention i
-            WHERE i.id = r.intervention AND i.Cloture = 1
+            WHERE i.id = r.intervention AND i.Cloture = :cloturevalue
             order by r.Created_at DESC
             '
         );
-
-        return $query->getResult();
-    }
-
-    //take the rapport with cloture = 0
-    public function findRapportByClotureNon() 
-    {
-        $entityManager = $this->getEntityManager();
-
-        $query = $entityManager->createQuery(
-            'SELECT r
-            FROM App\Entity\Rapport r
-            JOIN App\Entity\Intervention i
-            WHERE i.id = r.intervention AND i.Cloture = 0
-            order by r.Created_at DESC
-            '
-        );
-
-        return $query->getResult();
-    }
-
-    //take visite with cloture = 0
-    public function findVisiteByClotureNon()
-    {
-        $entityManager = $this->getEntityManager();
-
-        $query = $entityManager->createQuery(
-            'SELECT v
-            FROM App\Entity\VisiteTechnique v
-            JOIN App\Entity\Intervention i
-            WHERE i.id = v.intervention AND i.Cloture = 0
-            order by v.created_at DESC'
-        );
+        $query->setParameter('cloturevalue', $cloturevalue);
         return $query->getResult();
     }
 
     //take the visite whith cloture = 1
-    public function findVisiteByCloture()
+    public function findVisiteByCloture(int $cloturevalue)
     {
         $entityManager = $this->getEntityManager();
 
@@ -219,10 +216,11 @@ class RapportRepository extends ServiceEntityRepository
             'SELECT v
             FROM App\Entity\VisiteTechnique v
             JOIN App\Entity\Intervention i
-            WHERE i.id = v.intervention AND i.Cloture = 1
+            WHERE i.id = v.intervention AND i.Cloture = :cloturevalue
             order by v.created_at DESC
             '
         );
+        $query->setParameter('cloturevalue', $cloturevalue);
         return $query->getResult();
     }
 

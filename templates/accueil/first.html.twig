@@ -2,22 +2,78 @@
 {% extends 'base.html.twig' %}
 {% block body %}
 
+    <div class="flex">
+    {% if is_granted('ROLE_ADMIN') %}
+        <h2 class="register"> Bonjour {{ app.user.Name }} voici les 3 dernières interventions créées</h2>
 
-    <div class="firstGlobal">
-        <div class="firstDiv">
-            <h2> Bienvenue sur l'application qui va vous permettre de faciliter l'organisation de votre entreprise et la communnication avec les professionnels qui interviennent dans vos travaux du quotidien.</h2>
+        {% for intervention in interventions|slice(0, 3) %}
+            <div class="inter">
+                <p class="inter-name"> {{ intervention.name }} </p>
+                <p class="inter-desc"> {{ intervention.description }} </p>
+                <p class="inter-ot"> N°OT : {{ intervention.numeroot }} </p>
+                <p class="inter-ot"> opérateur affecté : {% if intervention.operateur %} {{ intervention.operateur.name }} {% endif %}</p>
+                <a href="http://www.google.fr/maps?um=1&tab=pl&ie=UTF-8&hl=fr&q={{ intervention.adresse }}">adresse </a>
 
-                <p>
-                    Si vous êtes un professionnel l'application vous permettra de gérer l'emploi du temps de vos employés, de gérer leur    interventions  mais     également de suivre en temps réel les rapports effectués. Vous pourrez également faire une validation  des rapports et les   classés avec  en prime un document pdf.
-                </p>
+                <p class="inter-ot-non-cloture"> {% if intervention.cloture == 0 %} non-cloturé {% endif %} </p>
+                <p class="inter-ot-cloture"> {% if intervention.cloture == 1 %} cloturé {% endif %} </p>
+
+                <a href="{{ path('intervention_edit', {id: intervention.id}) }}" class="editInter"> Modifier </a>
+                <a href="{{ path('intervention_affect_ope', {id: intervention.id}) }}" class="editInter">Affecter un operateur</a>
+            </div>   
+        {% endfor %}
+
+    {% elseif is_granted('ROLE_OPERATEUR') %}
+
+        <h2 class="register"> Bonjour {{ app.user.name }} voici les 3 dernières intervention pour lesquelles tu es affecté </h2>
+
+        {% for intervention in interventions|slice(0, 3) %}
+            <div class="inter">
+                <p class="inter-name"> {{ intervention.name }} </p>
+                <p class="inter-desc"> {{ intervention.description }} </p>
+                <p class="inter-ot"> N°OT : {{ intervention.numeroot }} </p>
+                <p class="inter-ot"> opérateur affecté : {% if intervention.operateur %} {{ intervention.operateur.name }} {% endif %}</p>
+                <a href="http://www.google.fr/maps?um=1&tab=pl&ie=UTF-8&hl=fr&q={{ intervention.adresse }}">adresse </a>
+
+                <p class="inter-ot-non-cloture"> {% if intervention.cloture == 0 %} non-cloturé {% endif %} </p>
+                <p class="inter-ot-cloture"> {% if intervention.cloture == 1 %} cloturé {% endif %} </p>
+
+                <a href="{{ path('intervention_edit', {id: intervention.id}) }}" class="editInter"> Modifier </a>
+                <a href="{{ path('intervention_affect_ope', {id: intervention.id}) }}" class="editInter">Affecter un operateur</a>
+            </div>  
+        {% endfor %} 
+
+        {% elseif is_granted('ROLE_CLIENT') %}
+
+        <div class="firstGlobal">
+            <div class="firstDiv">
+                <h2> Bienvenue sur l'application qui va vous permettre de faciliter l'organisation de votre entreprise et la communnication avec les professionnels qui interviennent dans vos travaux du quotidien.</h2>
+
+                    <p>
+                        Si vous êtes un professionnel l'application vous permettra de gérer l'emploi du temps de vos employés, de gérer leur    interventions  mais     également de suivre en temps réel les rapports effectués. Vous pourrez également faire une validation  des rapports et les   classés avec  en prime un document pdf.
+                    </p>
+            </div>
         </div>
-        <div class="btnFirst">
-            <a href="/start/login">
-                <button type="submit" class="btnConnexion">Connection</button> 
-            </a>
-            <a href="/start/register">
-                <button type="submit" class="btnConnexion">Inscription</button> 
-            </a>
+
+        {% else %}
+
+        <div class="firstGlobal">
+            <div class="firstDiv">
+                <h2> Bienvenue sur l'application qui va vous permettre de faciliter l'organisation de votre entreprise et la communnication avec les professionnels qui interviennent dans vos travaux du quotidien.</h2>
+
+                    <p>
+                        Si vous êtes un professionnel l'application vous permettra de gérer l'emploi du temps de vos employés, de gérer leur    interventions  mais     également de suivre en temps réel les rapports effectués. Vous pourrez également faire une validation  des rapports et les   classés avec  en prime un document pdf.
+                    </p>
+            </div>
+            <div class="btnFirst">
+                <a href="/start/login">
+                    <button type="submit" class="btnConnexion ombre">Connection</button> 
+                </a>
+                <a href="/start/register">
+                    <button type="submit" class="btnConnexion ombre">Inscription</button> 
+                </a>
+            </div>
         </div>
+
+        {% endif %}
     </div>
 {% endblock %}

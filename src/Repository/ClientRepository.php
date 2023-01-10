@@ -50,6 +50,30 @@ class ClientRepository extends ServiceEntityRepository
     }
 
 
+    // take the client by search
+    public function findClientBySearch(string $search = null)
+    {
+       $entityManager = $this->getEntityManager();
+
+       $query = $entityManager->createQuery(
+            'SELECT c
+            FROM App\Entity\Client c
+            JOIN App\Entity\User u
+            WHERE c.Tel LIKE :search
+            OR c.Adresse LIKE :search
+            OR c.user = u.id AND u.Name LIKE :search
+            OR c.CodePostal LIKE :search
+            OR c.Ville LIKE :search
+            OR c.Activity LIKE :search
+            '
+        );
+
+       $query->setParameter('search', '%'.$search.'%');
+
+       return $query->getResult();
+    }
+    
+
     // permet de retrouver les demandes sécurité par l'id de l'utilisateur ( ici le client pourra voir ses demandes)
     public function findSecuriteById(int $userId)
     {
