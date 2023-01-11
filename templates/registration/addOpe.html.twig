@@ -6,9 +6,14 @@
     <h2 class="register">Informations opérateur</h2>
         <div class="addOpe">
             {{ form_start(postForm) }}
-                {{ form_row(postForm.name) }}
-                {{ form_row(postForm.surname) }}
+                {{ form_row(postForm.name, {
+                        label: 'Prénom :'
+                }) }}
+                {{ form_row(postForm.surname, {
+                        label: 'Nom de famille :'
+                }) }}
                     <button type="submit" class="btn">Register</button>
             {{ form_end(postForm) }} 
         </div>
 {% endblock %}
+ 

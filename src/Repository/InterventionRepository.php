@@ -128,7 +128,7 @@ class InterventionRepository extends ServiceEntityRepository
 
 
     // recupere les trois dernières interventions via l'id
-    public function findInterByIdForTheFirst(int $operateurId)
+    public function findInterByIdForTheFirst(int $id)
     {
         $entityManager = $this->getEntityManager();
 
@@ -137,11 +137,10 @@ class InterventionRepository extends ServiceEntityRepository
             FROM App\Entity\Intervention i
             WHERE i.operateur = :id
             AND i.Cloture = 0
-            AND i.Cloture_finale IS NULL
             ORDER BY i.Created_at DESC'
         );
 
-        $query->setParameter('id', $operateurId);
+        $query->setParameter('id', $id);
         $query->setMaxResults(3);
         return $query->getResult();
     }
@@ -201,6 +200,23 @@ class InterventionRepository extends ServiceEntityRepository
     }
 
 
+    // permet de recuperer les infos d'une visite via l'id intervention
+    public function findVisByInt(int $intervention)
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT v
+            FROM App\Entity\VisiteTechnique v
+            WHERE v.intervention = :id'
+        );
+
+        $query->setParameter('id', $intervention);
+
+        return $query->getResult();
+    }
+
+
     /**
      * Liste les interventions par recherche de nom clients
      */
@@ -216,7 +232,7 @@ class InterventionRepository extends ServiceEntityRepository
             WHERE (i.client = c.id AND i.Cloture_finale IS NULL AND c.Name LIKE :search)
             OR (i.client = c.id AND i.Cloture_finale IS NULL AND c.Tel LIKE :search)
             OR (i.client = c.id AND i.Cloture_finale IS NULL AND i.Adresse LIKE :search)
-            OR (i.client = c.id AND i.Cloture_finale IS NULL AND i.numero_ot LIKE :search)
+            OR (i.client = c.id AND i.Cloture_finale IS NULL AND i.id LIKE :search)
             OR (i.client = c.id AND i.Cloture_finale IS NULL AND i.Name LIKE :search)'
 
         );

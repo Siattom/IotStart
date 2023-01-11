@@ -10,7 +10,7 @@
             <div class="inter">
                 <p class="inter-name"> {{ intervention.name }} </p>
                 <p class="inter-desc"> {{ intervention.description }} </p>
-                <p class="inter-ot"> N°OT : {{ intervention.numeroot }} </p>
+                <p class="inter-ot"> N°OT : {{ intervention.id }} </p>
                 <p class="inter-ot"> opérateur affecté : {% if intervention.operateur %} {{ intervention.operateur.name }} {% endif %}</p>
                 <a href="http://www.google.fr/maps?um=1&tab=pl&ie=UTF-8&hl=fr&q={{ intervention.adresse }}">adresse </a>
 
@@ -30,7 +30,7 @@
             <div class="inter">
                 <p class="inter-name"> {{ intervention.name }} </p>
                 <p class="inter-desc"> {{ intervention.description }} </p>
-                <p class="inter-ot"> N°OT : {{ intervention.numeroot }} </p>
+                <p class="inter-ot"> N°OT : {{ intervention.id }} </p>
                 <p class="inter-ot"> opérateur affecté : {% if intervention.operateur %} {{ intervention.operateur.name }} {% endif %}</p>
                 <a href="http://www.google.fr/maps?um=1&tab=pl&ie=UTF-8&hl=fr&q={{ intervention.adresse }}">adresse </a>
 
@@ -38,7 +38,6 @@
                 <p class="inter-ot-cloture"> {% if intervention.cloture == 1 %} cloturé {% endif %} </p>
 
                 <a href="{{ path('intervention_edit', {id: intervention.id}) }}" class="editInter"> Modifier </a>
-                <a href="{{ path('intervention_affect_ope', {id: intervention.id}) }}" class="editInter">Affecter un operateur</a>
             </div>  
         {% endfor %} 
 

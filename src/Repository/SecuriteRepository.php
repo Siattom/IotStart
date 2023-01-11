@@ -100,22 +100,7 @@ class SecuriteRepository extends ServiceEntityRepository
         $query->setParameter('statvalue', $statvalue);
         return $query->getResult();
     }
-
-
-    // take the securite with statut = 0
-    public function findSecuriteNon()
-    {
-        $entityManager = $this->getEntityManager();
-
-        $query = $entityManager->createQuery(
-            'SELECT s
-            FROM App\Entity\Securite s
-            WHERE s.statut = 0
-            ORDER BY s.Created_at DESC'
-        );
-        return $query->getResult();
-    }
- 
+    
 
     // donner les securites avec status 0
     public function findStatut()

@@ -80,7 +80,7 @@ class Intervention
     private $visite;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $numero_ot;
 
@@ -280,10 +280,11 @@ class Intervention
         return $this->numero_ot;
     }
 
-    public function setNumeroOt(int $numero_ot): self
+    public function setNumeroOt(?int $numero_ot): self
     {
         $this->numero_ot = $numero_ot;
 
         return $this;
     }
+
 }

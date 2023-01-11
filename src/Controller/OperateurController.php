@@ -77,12 +77,14 @@ class OperateurController extends AbstractController
     /**
      * @Route("/cloture/{id}", name="cloture")
      */
-    public function clotureRapport(Int $id, EntityManagerInterface $entityManager, Intervention $intervention, InterventionRepository $interventionRepository){
+    public function clotureRapport(Int $id, EntityManagerInterface $entityManager,VisiteTechniqueRepository $visiteTechniqueRepository, Intervention $intervention, InterventionRepository $interventionRepository){
         
         $interventionInfo = $entityManager->getRepository(Intervention::class)->find($id);
         $interRapport = $interventionRepository->findRapByInt($id);
 
-        if($interRapport == null){
+        $visite = $interventionRepository->findVisByInt($id);
+
+        if($interRapport == null && $visite == null){
             echo 'désolé il faut écrire un rapport pour cloturer';
             return $this->redirectToRoute('show_inter_ope');
         } else {

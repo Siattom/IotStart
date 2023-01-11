@@ -5,7 +5,7 @@
         {% for intervention in interventions %}    
             <div class="inter-info">
                 <p class="inter-name-info"> {{ intervention.name }} </p>
-                <p class="inter-ot"> N°Ot : {{ intervention.numeroot }} </p>
+                <p class="inter-ot"> N°Ot : {{ intervention.id }} </p>
                 <p class="inter-desc"> {{ intervention.description }} </p>
                 <p class="inter-ot"> Créée depuis : {{ intervention.CreatedAt.format('d/m/Y') }} </p>
                 <p class="inter-ot"> {{ intervention.adresse }} </p>

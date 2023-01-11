@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Récap de rapport</title>
+</head>
+<body>
+    <table>
+        <thead>
+            <tr>
+                <th>Numéro d'OT</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for rapport in rapports %}
+                <tr>
+                    <td>{{ rapport.id }}</td>
+                    <td>{{ rapport.Created_at }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

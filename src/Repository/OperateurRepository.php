@@ -125,7 +125,7 @@ class OperateurRepository extends ServiceEntityRepository
            JOIN App\Entity\Client c
            WHERE (i.operateur = :id 
            AND r.intervention = i.id 
-           AND i.not LIKE :search)'
+           AND i.id LIKE :search)'
 
        );
       

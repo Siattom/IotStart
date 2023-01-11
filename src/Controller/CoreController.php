@@ -27,14 +27,16 @@ class CoreController extends AbstractController
         $interventionId = $InterventionRepository->findAll();
         $user = $this->getUser();
 
-        if ($user && $user->getRoles() !== ('ROLE_OPERATEUR')) {
+        if ($user && $user->getRoles() == ('ROLE_OPERATEUR')) {
             
             $operateurInfo = $user->getId();
-            $operateurId = $InterventionRepository->findInterByIdForTheFirst($operateurInfo);
+            $id = $InterventionRepository->findOp($operateurInfo);
+            $idOp = $id[0]->getId();
+            $operateurId = $InterventionRepository->findInterByIdForTheFirst($idOp);
+           //dd($operateurId);
 
             return $this->render ('/accueil/first.html.twig', [
-                'interventions' => $interventionId,
-                'operateur' => $operateurId,
+                'interventions' => $operateurId,
                 'user' => $user,
             ]);
         
@@ -44,7 +46,6 @@ class CoreController extends AbstractController
                 'interventions' => $interventionId,
                 'user' => $user,
             ]);
-        
         }
         
     }

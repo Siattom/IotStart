@@ -80,6 +80,16 @@ button {
     border: none;
 }
 
+.button-client {
+    background-color: #5CB8FB;
+    font-size: large;
+    color: white;
+    border-radius: 10px;
+    border: none;
+    transition: all 1s;
+    transform: scale(1);
+}
+
 .formConn {
     margin: 2em;
     font-size: large;

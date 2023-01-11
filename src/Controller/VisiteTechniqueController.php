@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-class VisiteTechniqueController extends CoreController
+class VisiteTechniqueController extends AbstractController
 {
     /**
      * @Route("/vt/add", name="vt_add")
@@ -68,7 +68,7 @@ class VisiteTechniqueController extends CoreController
 
         $visite = new VisiteTechnique();
         $entityManager = $doctrine->getManager();
-        /* $intervention = $entityManager->getRepository(Intervention::class)->find($id); */
+        
         $form = $this->createForm(VisiteType::class, $visite);
         $form->handleRequest($request);
 

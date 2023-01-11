@@ -22,7 +22,7 @@
         <div class="inter">
           <a class="inter-name-link" href="{{path ('inter_info', {id: intervention.id}) }}"> {{ intervention.name }} </a>
           <p class="inter-desc"> {{ intervention.description }} </p>
-          <p class="inter-ot"> N°OT : {{ intervention.numeroot }} </p>
+          <p class="inter-ot"> N°OT : {{ intervention.id }} </p>
           <p class="inter-ot"> opérateur affecté : {% if intervention.operateur %} {{ intervention.operateur.name }} {% endif %}</p>
     
           <p class="inter-ot-non-cloture"> {% if intervention.cloture == 0 %} non-cloturé {% endif %} </p>
