@@ -2,20 +2,21 @@
 
 namespace App\Controller;
 
-use App\Entity\Client;
-use App\Entity\Operateur;
 use App\Entity\User;
+use DateTimeImmutable;
+use App\Entity\Client;
 use App\Form\PosteType;
+use App\Entity\Operateur;
+use Doctrine\ORM\Mapping\Id;
 use App\Form\PosteOperateurType;
 use App\Form\RegistrationFormType;
-use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Mapping\Id;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpKernel\Attribute\AsController;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 /**
  * @Route("/start")

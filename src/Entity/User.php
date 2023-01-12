@@ -3,16 +3,12 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  */
-class User implements UserInterface, PasswordAuthenticatedUserInterface
+class User
 {
     /**
      * @ORM\Id
@@ -24,47 +20,37 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $Surname;
+    private $surname;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $Name;
+    private $name;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $Email;
+    private $email;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $Password;
+    private $password;
 
     /**
-     * @ORM\Column(type="json")
+     * @ORM\Column(type="text")
      */
-    private $roles = [];
+    private $roles;
 
     /**
      * @ORM\Column(type="datetime_immutable")
      */
-    private $Created_at;
-
-    /**
-     * @ORM\OneToMany(targetEntity=Securite::class, mappedBy="user")
-     */
-    private $securites;
+    private $created_at;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $updated_at;
-
-    public function __construct()
-    {
-        $this->securites = new ArrayCollection();
-    }
 
     public function getId(): ?int
     {
@@ -73,58 +59,58 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getSurname(): ?string
     {
-        return $this->Surname;
+        return $this->surname;
     }
 
-    public function setSurname(string $Surname): self
+    public function setSurname(string $surname): self
     {
-        $this->Surname = $Surname;
+        $this->surname = $surname;
 
         return $this;
     }
 
     public function getName(): ?string
     {
-        return $this->Name;
+        return $this->name;
     }
 
-    public function setName(string $Name): self
+    public function setName(string $name): self
     {
-        $this->Name = $Name;
+        $this->name = $name;
 
         return $this;
     }
 
     public function getEmail(): ?string
     {
-        return $this->Email;
+        return $this->email;
     }
 
-    public function setEmail(string $Email): self
+    public function setEmail(string $email): self
     {
-        $this->Email = $Email;
+        $this->email = $email;
 
         return $this;
     }
 
     public function getPassword(): ?string
     {
-        return $this->Password;
+        return $this->password;
     }
 
-    public function setPassword(string $Password): self
+    public function setPassword(string $password): self
     {
-        $this->Password = $Password;
+        $this->password = $password;
 
         return $this;
     }
 
-    public function getRoles(): ?array
+    public function getRoles(): ?string
     {
         return $this->roles;
     }
 
-    public function setRoles(array $roles): self
+    public function setRoles(string $roles): self
     {
         $this->roles = $roles;
 
@@ -133,62 +119,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getCreatedAt(): ?\DateTimeImmutable
     {
-        return $this->Created_at;
+        return $this->created_at;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $Created_at): self
+    public function setCreatedAt(\DateTimeImmutable $created_at): self
     {
-        $this->Created_at = $Created_at;
+        $this->created_at = $created_at;
 
         return $this;
-    }
-
-    /**
-     * @return Collection<int, Securite>
-     */
-    public function getSecurites(): Collection
-    {
-        return $this->securites;
-    }
-
-    public function addSecurite(Securite $securite): self
-    {
-        if (!$this->securites->contains($securite)) {
-            $this->securites[] = $securite;
-            $securite->setUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeSecurite(Securite $securite): self
-    {
-        if ($this->securites->removeElement($securite)) {
-            // set the owning side to null (unless already changed)
-            if ($securite->getUser() === $this) {
-                $securite->setUser(null);
-            }
-        }
-
-        return $this;
-    }
-
-    public function eraseCredentials()
-    {
-    }
-
-    public function getSalt()
-    {
-    }
-    
-    public function getUserIdentifier(): ?string
-    {
-        return $this->Email;
-    }
-
-    public function getUsername()
-    {
-        return $this->Email;
     }
 
     public function getUpdatedAt(): ?\DateTimeInterface

@@ -14,7 +14,6 @@ security:
 #            lazy: true
 #            provider: users_in_memory
 #*****************************************************
-
     providers:
         users:
             entity:
@@ -27,7 +26,7 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
-            anonymous: true
+            anonymous: lazy
 
             form_login:
                 # "app_login" is the name of the route created previously
@@ -38,10 +37,8 @@ security:
             logout:
                 path:   /start/logout
                 target: /
-
             # https://symfony.com/doc/current/security/impersonating_user.html
             # switch_user: true
-
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
@@ -53,7 +50,6 @@ security:
          - { path: /client, roles: [ROLE_ADMIN, ROLE_CLIENT] }
         # - { path: /client, roles: ROLE_CLIENT }
         # - { path: ^/profile, roles: ROLE_USER }
-
     role_hierarchy:
         # MANAGER hérite du rôle USER
         # => si on souhaite que les managers et admins postent des critiques en leur nom
@@ -62,7 +58,6 @@ security:
         ROLE_ADMIN: ROLE_ADMIN
         ROLE_OPERATEUR: ROLE_OPERATEUR
         ROLE_CLIENT: ROLE_CLIENT
-
 when@test:
     security:
         password_hashers:
@@ -75,4 +70,3 @@ when@test:
                 cost: 4 # Lowest possible value for bcrypt
                 time_cost: 3 # Lowest possible value for argon
                 memory_cost: 10 # Lowest possible value for argon
-

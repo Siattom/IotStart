@@ -33,9 +33,14 @@ class VisiteTechnique
     private $activite;
 
     /**
-     * @ORM\Column(type="smallint")
+     * @ORM\Column(type="integer")
      */
     private $temps_necessaire;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $difficulte;
 
     /**
      * @ORM\Column(type="text")
@@ -93,29 +98,14 @@ class VisiteTechnique
     private $adresse_mail;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Operateur::class, inversedBy="visite")
-     */
-    private $operateur;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=Intervention::class, inversedBy="visite")
-     */
-    private $intervention;
-
-    /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime_immutable")
      */
     private $created_at;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $Updated_at;
-
-    /**
-     * @ORM\Column(type="smallint")
-     */
-    private $difficulte;
+    private $updated_at;
 
     public function getId(): ?int
     {
@@ -166,6 +156,18 @@ class VisiteTechnique
     public function setTempsNecessaire(int $temps_necessaire): self
     {
         $this->temps_necessaire = $temps_necessaire;
+
+        return $this;
+    }
+
+    public function getDifficulte(): ?int
+    {
+        return $this->difficulte;
+    }
+
+    public function setDifficulte(int $difficulte): self
+    {
+        $this->difficulte = $difficulte;
 
         return $this;
     }
@@ -302,36 +304,12 @@ class VisiteTechnique
         return $this;
     }
 
-    public function getOperateur(): ?Operateur
-    {
-        return $this->operateur;
-    }
-
-    public function setOperateur(?Operateur $operateur): self
-    {
-        $this->operateur = $operateur;
-
-        return $this;
-    }
-
-    public function getIntervention(): ?Intervention
-    {
-        return $this->intervention;
-    }
-
-    public function setIntervention(?Intervention $intervention): self
-    {
-        $this->intervention = $intervention;
-
-        return $this;
-    }
-
-    public function getCreatedAt(): ?\DateTimeInterface
+    public function getCreatedAt(): ?\DateTimeImmutable
     {
         return $this->created_at;
     }
 
-    public function setCreatedAt(\DateTimeInterface $created_at): self
+    public function setCreatedAt(\DateTimeImmutable $created_at): self
     {
         $this->created_at = $created_at;
 
@@ -340,24 +318,12 @@ class VisiteTechnique
 
     public function getUpdatedAt(): ?\DateTimeInterface
     {
-        return $this->Updated_at;
+        return $this->updated_at;
     }
 
-    public function setUpdatedAt(?\DateTimeInterface $Updated_at): self
+    public function setUpdatedAt(?\DateTimeInterface $updated_at): self
     {
-        $this->Updated_at = $Updated_at;
-
-        return $this;
-    }
-
-    public function getDifficulte(): ?int
-    {
-        return $this->difficulte;
-    }
-
-    public function setDifficulte(int $difficulte): self
-    {
-        $this->difficulte = $difficulte;
+        $this->updated_at = $updated_at;
 
         return $this;
     }

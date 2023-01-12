@@ -20,37 +20,22 @@ class Securite
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $Titre;
+    private $titre;
 
     /**
      * @ORM\Column(type="text")
      */
-    private $Description;
+    private $description;
 
     /**
      * @ORM\Column(type="datetime_immutable")
      */
-    private $Created_at;
+    private $created_at;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $Updated_at;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=Client::class, inversedBy="securites")
-     */
-    private $client;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="securites")
-     */
-    private $user;
-
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    private $statut;
+    private $updated_at;
 
     public function getId(): ?int
     {
@@ -59,86 +44,49 @@ class Securite
 
     public function getTitre(): ?string
     {
-        return $this->Titre;
+        return $this->titre;
     }
 
-    public function setTitre(string $Titre): self
+    public function setTitre(string $titre): self
     {
-        $this->Titre = $Titre;
+        $this->titre = $titre;
 
         return $this;
     }
 
     public function getDescription(): ?string
     {
-        return $this->Description;
+        return $this->description;
     }
 
-    public function setDescription(string $Description): self
+    public function setDescription(string $description): self
     {
-        $this->Description = $Description;
+        $this->description = $description;
 
         return $this;
     }
 
     public function getCreatedAt(): ?\DateTimeImmutable
     {
-        return $this->Created_at;
+        return $this->created_at;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $Created_at): self
+    public function setCreatedAt(\DateTimeImmutable $created_at): self
     {
-        $this->Created_at = $Created_at;
+        $this->created_at = $created_at;
 
         return $this;
     }
 
     public function getUpdatedAt(): ?\DateTimeInterface
     {
-        return $this->Updated_at;
+        return $this->updated_at;
     }
 
-    public function setUpdatedAt(?\DateTimeInterface $Updated_at): self
+    public function setUpdatedAt(?\DateTimeInterface $updated_at): self
     {
-        $this->Updated_at = $Updated_at;
+        $this->updated_at = $updated_at;
 
         return $this;
     }
-
-    public function getClient(): ?Client
-    {
-        return $this->client;
-    }
-
-    public function setClient(?Client $client): self
-    {
-        $this->client = $client;
-
-        return $this;
-    }
-
-    public function getUser(): ?User
-    {
-        return $this->user;
-    }
-
-    public function setUser(?User $user): self
-    {
-        $this->user = $user;
-
-        return $this;
-    }
-
-    public function isStatut(): ?bool
-    {
-        return $this->statut;
-    }
-
-    public function setStatut(bool $statut): self
-    {
-        $this->statut = $statut;
-
-        return $this;
-    }
-
 }

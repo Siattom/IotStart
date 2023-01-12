@@ -2,26 +2,27 @@
 
 namespace App\Controller\Login;
 
-use App\Entity\Client;
 use App\Entity\User;
+use App\Entity\Client;
+use App\Form\UserType;
+use DateTimeImmutable;
 use App\Form\PosteType;
 use App\Form\UserEditType;
-use App\Form\UserType;
-use App\Repository\InterventionRepository;
 use App\Repository\UserRepository;
-use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use App\Repository\InterventionRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasher;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\HttpKernel\Attribute\AsController;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasher;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 /**
  * On peut préfixer toutes les routes de ce contrôleur

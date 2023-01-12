@@ -3,8 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\ClientRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -22,250 +20,157 @@ class Client
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $Adresse;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $ND;
+    private $name;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $Activity;
+    private $adresse;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
-    private $CodePostal;
+    private $nd;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $Ville;
+    private $activity;
 
     /**
      * @ORM\Column(type="integer")
      */
-    private $Tel;
+    private $code_postal;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $ville;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $tel;
 
     /**
      * @ORM\Column(type="datetime_immutable")
      */
-    private $Created_at;
+    private $created_at;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $Updated_at;
-
-    /**
-     * @ORM\OneToOne(targetEntity=User::class, cascade={"persist", "remove"})
-     */
-    private $user;
-
-    /**
-     * @ORM\OneToMany(targetEntity=Securite::class, mappedBy="client")
-     */
-    private $securites;
-
-    /**
-     * @ORM\OneToMany(targetEntity=Intervention::class, mappedBy="client")
-     */
-    private $interventions;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $Name;
-
-    public function __construct()
-    {
-        $this->securites = new ArrayCollection();
-        $this->interventions = new ArrayCollection();
-    }
+    private $updated_at;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getAdresse(): ?string
+    public function getName(): ?string
     {
-        return $this->Adresse;
+        return $this->name;
     }
 
-    public function setAdresse(string $Adresse): self
+    public function setName(string $name): self
     {
-        $this->Adresse = $Adresse;
+        $this->name = $name;
 
         return $this;
     }
 
-    public function getND(): ?int
+    public function getAdresse(): ?string
     {
-        return $this->ND;
+        return $this->adresse;
     }
 
-    public function setND(int $ND): self
+    public function setAdresse(string $adresse): self
     {
-        $this->ND = $ND;
+        $this->adresse = $adresse;
+
+        return $this;
+    }
+
+    public function getNd(): ?int
+    {
+        return $this->nd;
+    }
+
+    public function setNd(?int $nd): self
+    {
+        $this->nd = $nd;
 
         return $this;
     }
 
     public function getActivity(): ?string
     {
-        return $this->Activity;
+        return $this->activity;
     }
 
-    public function setActivity(string $Activity): self
+    public function setActivity(string $activity): self
     {
-        $this->Activity = $Activity;
+        $this->activity = $activity;
 
         return $this;
     }
 
     public function getCodePostal(): ?int
     {
-        return $this->CodePostal;
+        return $this->code_postal;
     }
 
-    public function setCodePostal(int $CodePostal): self
+    public function setCodePostal(int $code_postal): self
     {
-        $this->CodePostal = $CodePostal;
+        $this->code_postal = $code_postal;
 
         return $this;
     }
 
     public function getVille(): ?string
     {
-        return $this->Ville;
+        return $this->ville;
     }
 
-    public function setVille(string $Ville): self
+    public function setVille(string $ville): self
     {
-        $this->Ville = $Ville;
+        $this->ville = $ville;
 
         return $this;
     }
 
     public function getTel(): ?int
     {
-        return $this->Tel;
+        return $this->tel;
     }
 
-    public function setTel(int $Tel): self
+    public function setTel(int $tel): self
     {
-        $this->Tel = $Tel;
+        $this->tel = $tel;
 
         return $this;
     }
 
     public function getCreatedAt(): ?\DateTimeImmutable
     {
-        return $this->Created_at;
+        return $this->created_at;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $Created_at): self
+    public function setCreatedAt(\DateTimeImmutable $created_at): self
     {
-        $this->Created_at = $Created_at;
+        $this->created_at = $created_at;
 
         return $this;
     }
 
     public function getUpdatedAt(): ?\DateTimeInterface
     {
-        return $this->Updated_at;
+        return $this->updated_at;
     }
 
-    public function setUpdatedAt(?\DateTimeInterface $Updated_at): self
+    public function setUpdatedAt(?\DateTimeInterface $updated_at): self
     {
-        $this->Updated_at = $Updated_at;
-
-        return $this;
-    }
-
-    public function getUser(): ?User
-    {
-        return $this->user;
-    }
-
-    public function setUser(?User $user): self
-    {
-        $this->user = $user;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Securite>
-     */
-    public function getSecurites(): Collection
-    {
-        return $this->securites;
-    }
-
-    public function addSecurite(Securite $securite): self
-    {
-        if (!$this->securites->contains($securite)) {
-            $this->securites[] = $securite;
-            $securite->setClient($this);
-        }
-
-        return $this;
-    }
-
-    public function removeSecurite(Securite $securite): self
-    {
-        if ($this->securites->removeElement($securite)) {
-            // set the owning side to null (unless already changed)
-            if ($securite->getClient() === $this) {
-                $securite->setClient(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Intervention>
-     */
-    public function getInterventions(): Collection
-    {
-        return $this->interventions;
-    }
-
-    public function addIntervention(Intervention $intervention): self
-    {
-        if (!$this->interventions->contains($intervention)) {
-            $this->interventions[] = $intervention;
-            $intervention->setClient($this);
-        }
-
-        return $this;
-    }
-
-    public function removeIntervention(Intervention $intervention): self
-    {
-        if ($this->interventions->removeElement($intervention)) {
-            // set the owning side to null (unless already changed)
-            if ($intervention->getClient() === $this) {
-                $intervention->setClient(null);
-            }
-        }
-
-        return $this;
-    }
-
-    public function getName(): ?string
-    {
-        return $this->Name;
-    }
-
-    public function setName(string $Name): self
-    {
-        $this->Name = $Name;
+        $this->updated_at = $updated_at;
 
         return $this;
     }
